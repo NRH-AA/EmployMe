@@ -41,18 +41,13 @@ export const login = (email, password) => async (dispatch) => {
 		}),
 	});
 
+	const data = await response.json();
+	
 	if (response.ok) {
-		const data = await response.json();
 		dispatch(setUser(data));
-		return null;
-	} else if (response.status < 500) {
-		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
-		}
-	} else {
-		return ["An error occurred. Please try again."];
 	}
+	
+	return data;
 };
 
 export const logout = () => async (dispatch) => {
@@ -67,31 +62,31 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (user) => async (dispatch) => {
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			username,
-			email,
-			password,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			companyName: user.companyName || '',
+			email: user.email,
+			age: user.age,
+			username: user.username,
+			password: user.password,
+			confirmPassword: user.confirmPassword
 		}),
 	});
 
+	const data = await response.json();
+	
 	if (response.ok) {
-		const data = await response.json();
 		dispatch(setUser(data));
-		return null;
-	} else if (response.status < 500) {
-		const data = await response.json();
-		if (data.errors) {
-			return data.errors;
-		}
-	} else {
-		return ["An error occurred. Please try again."];
 	}
+	
+	return data
 };
 
 export default function reducer(state = initialState, action) {

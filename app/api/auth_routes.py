@@ -30,19 +30,19 @@ def authenticate():
 
 @auth_routes.route('/login', methods=['POST'])
 def login():
-    """
-    Logs a user in
-    """
-    form = LoginForm()
-    # Get the csrf_token from the request cookie and put it into the
-    # form manually to validate_on_submit can be used
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        # Add the user to the session, we are logged in!
-        user = User.query.filter(User.email == form.data['email']).first()
-        login_user(user)
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    email = request.get_json()['email']
+    password = request.get_json()['password']
+    
+    user = User.query.filter(User.email == email).first()
+        
+    if not user:
+         return {'email': 'Invalid email provided'}, 401
+        
+    if not user.check_password(password):
+        return {'password': ['Invalid password provided']}, 401
+        
+    login_user(user)
+    return user.to_dict()
 
 
 @auth_routes.route('/logout')
@@ -56,22 +56,64 @@ def logout():
 
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
-    """
-    Creates a new user and logs them in
-    """
-    form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        user = User(
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
-        )
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    first_name = request.get_json()['firstName']
+    last_name = request.get_json()['lastName']
+    company_name = request.get_json()['companyName']
+    email = request.get_json()['email']
+    age = int(request.get_json()['age'])
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    confirm_password = request.get_json()['confirmPassword']
+    
+    errors = {}
+
+    if not first_name or len(first_name) < 4:
+        errors['firstName'] = 'First name must be 4 characters or more'
+        
+    if not first_name or len(last_name) < 4:
+        errors['lastName'] = 'Last name must be 4 characters or more'
+        
+    if company_name and len(company_name) < 4:
+        errors['companyName'] = 'Company name must be 4 characters or more'
+        
+    if not email or len(email) < 4:
+        errors['email'] = 'Email must be 4 characters or more'
+        
+    if not age or age < 16:
+        errors['age'] = 'You must be 16 or older to join EmployMe'
+        
+    if not username or len(username) < 4:
+        errors['username'] = 'Username must be 4 characters or more'
+        
+    if not password or len(password) < 4:
+        errors['password'] = 'Password must be 4 characters or more'
+        
+    if not confirm_password or confirm_password != password:
+        errors['confirm_password'] = 'Confirm password does not match'
+
+    if len(errors) > 0:
+        return {'errors': errors}, 400
+    
+    check_user = User.query.filter(User.email == email).first()
+    
+    if check_user:
+        errors['emailTaken'] = 'Email is already in use'
+        return {'errors': errors}, 400
+
+    user = User(
+        first_name = first_name,
+        last_name = last_name,
+        company_name = company_name or '',
+        username = username,
+        email = email,
+        age = age,
+        password = password
+    )
+    db.session.add(user)
+    db.session.commit()
+    
+    login_user(user)
+    return user.to_dict()
 
 
 @auth_routes.route('/unauthorized')
