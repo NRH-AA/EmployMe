@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 
 class User(db.Model, UserMixin):
@@ -13,6 +14,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    middle_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50), nullable=False)
+    profile_picture = db.Column(db.String(50), default="")
+    age = db.Column(db.Integer, nullable=False)
+    company_name = db.Column(db.String(50))
+    occupation = db.Column(db.String(50))
+    jobs = db.Column(db.Text)
+    education = db.Column(db.Text)
+    skills = db.Column(db.Text)
+    createdAt = db.Column(db.DateTime, default=datetime.now())
+    updatedAt = db.Column(db.DateTime, default=datetime.now())
+
+    posts = db.relationship("Post", back_populates="user")
+    messages = db.relationship("Message")
 
     @property
     def password(self):
@@ -29,5 +45,34 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'profile_picture': self.profile_picture,
+            'age': self.age,
+            'occupation': self.occupation,
+            'jobs': self.jobs,
+            'education': self.education,
+            'skills': self.skills,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt
+        }
+
+    def to_dict_all(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'profile_picture': self.profile_picture,
+            'age': self.age,
+            'occupation': self.occupation,
+            'jobs': self.jobs,
+            'education': self.education,
+            'skills': self.skills,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt,
+            'messages': [message.to_dict() for message in self.messages],
+            'posts': [post.to_dict() for post in self.posts]
         }
