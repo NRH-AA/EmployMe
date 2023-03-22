@@ -25,7 +25,6 @@ class Post(db.Model):
             "user_id": self.user_id,
             "post_title": self.post_title,
             "post_text": self.post_text,
-            "imageURL": self.imageURL,
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             "user": self.user.to_dict(),

@@ -7,7 +7,9 @@ import Logo from './logo.png';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
-
+	
+	if (!sessionUser) return null;
+	
 	return (
 		<div id="navigation-container">
 			<div id="navigation-logo-search-div">
@@ -15,7 +17,7 @@ function Navigation({ isLoaded }){
 				<input id="searchbar-input" type="text" placeholder='Search Bar'/>
 			</div>
 			
-			{isLoaded && sessionUser && <ProfileButton user={sessionUser} />}
+			{isLoaded && <ProfileButton user={sessionUser} />}
 		</div>
 	);
 };
