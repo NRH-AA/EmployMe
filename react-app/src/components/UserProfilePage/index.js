@@ -7,6 +7,7 @@ import EducationModal from "./EducationModal";
 import WorkHistoryModal from "./WorkHistoryModal";
 import AchievementsModal from "./AchievementsModal";
 import RecommendationsModal from "./RecommendationsModal";
+import ProfilePictureModal from "./ProfilePictureModal";
 import Post from './Post';
 import './UserProfile.css';
 
@@ -102,7 +103,12 @@ const UserProfile = ({user}) => {
                     </div>
                     
                     <div id="user-profile-bio-div">
-                        <img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>
+                        <OpenModalButton
+                            className="user-profile-picture-modal"
+                            buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
+                            modalComponent={<ProfilePictureModal user={user} />}
+                        />
+                        {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
                         <div id="user-profile-bio">
                             <div id="user-profile-bio-container">
                                 {!isUpdatingBio ? <>

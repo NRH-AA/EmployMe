@@ -144,3 +144,58 @@
     margin-bottom: 30px;
     margin-left: 20px;
 }
+
+#profile-picture-edit-text {
+    position:fixed;
+    margin-left: 45px;
+    margin-top: 100px;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    pointer-events: none;
+}
+
+
+
+
+#profile-picture-modal-container {
+    background-color: rgb(48, 48, 48);
+    width: 500px;
+    height: auto;
+    text-align: center;
+}
+
+#profile-picture-modal-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 120px;
+}
+
+#profile-picture-modal-remove {
+    position: absolute;
+    margin-left: -70px;
+    margin-top: 40px;
+    border-radius: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(224, 1, 1);
+    border: 2px solid black;
+    opacity: 0.8
+}
+
+
+#upload-img-input {
+    width: 250px;
+    height: 250px;
+    text-indent: 16px;
+    background-color: rgb(54, 54, 54);
+    border: 2px dashed rgb(85, 85, 85);
+    color: rgb(250, 0, 0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+::file-selector-button {
+    display: none;
+}

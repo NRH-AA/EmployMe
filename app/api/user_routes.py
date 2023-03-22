@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import db, User
+from app.utils import (
+    upload_file_to_s3, allowed_file, get_unique_filename)
 
 user_routes = Blueprint('users', __name__)
 
@@ -51,3 +53,37 @@ def update_user(id):
     ret = User.query.get(id)
     
     return ret.to_dict_all()
+
+@user_routes.route('/<int:id>/picture', methods=['POST'])
+@login_required
+def update_user_picture(id):
+    profile_picture = request.get_json()['profile_picture']
+    
+    if not profile_picture:
+        return {'errors': ['Failed to get profile picture']}, 400
+    
+    user = User.query.get(id)
+    user.profile_picture = profile_picture
+    db.session.commit()
+    ret = User.query.get(id)
+    return ret.to_dict_all()
+    
+
+@user_routes.route('/upload', methods=['POST'])
+@login_required
+def upload_image():
+    if "image" in request.files:
+        image = request.files["image"]
+
+    if not allowed_file(image.filename):
+        return {"errors": "file type not permitted"}, 400
+
+    image.filename = get_unique_filename(image.filename)
+
+    upload = upload_file_to_s3(image)
+
+    if "url" not in upload:
+        return upload, 400
+
+    imageURL = upload["url"]
+    return {"url": imageURL}

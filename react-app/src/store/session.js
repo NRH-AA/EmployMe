@@ -116,6 +116,26 @@ export const updateBioData = (userId, info) => async (dispatch) => {
 	return data
 };
 
+export const updateProfilePicture = (userId, url) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}/picture`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			profile_picture: url
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
