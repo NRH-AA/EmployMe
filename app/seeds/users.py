@@ -1,6 +1,7 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
+default_profile_picture = 'https://www.computerhope.com/jargon/g/guest-user.png'
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
@@ -10,6 +11,7 @@ def seed_users():
         password='password',
         first_name = 'Demo',
         last_name = 'User',
+        profile_picture = default_profile_picture,
         age = 120
     )
     hank = User(
@@ -18,20 +20,25 @@ def seed_users():
         password='password',
         first_name = 'Hank',
         last_name = 'Hill',
-        age = 34
+        occupation = 'Sales Manager',
+        company_name = 'Strickland Propane',
+        work_email = 'HankHill@propane.arlen',
+        profile_picture='https://m.media-amazon.com/images/M/MV5BMTUzMTQ4NjcyN15BMl5BanBnXkFtZTgwMDY5MDk0MjE@._V1_QL75_UY281_CR93,0,190,281_.jpg',
+        age = 51
     )
-    bobbie = User(
-        username='bobbie', 
-        email='bobbie@aa.io', 
+    bobby = User(
+        username='bobby', 
+        email='bobby@aa.io', 
         password='password',
-        first_name = 'Bobbie',
+        first_name = 'Bobby',
         last_name = 'Hill',
+        profile_picture='https://static.wikia.nocookie.net/kingofthehill/images/5/59/Bobbeah.jpg',
         age = 16
     )
 
     db.session.add(demo)
     db.session.add(hank)
-    db.session.add(bobbie)
+    db.session.add(bobby)
     db.session.commit()
 
 

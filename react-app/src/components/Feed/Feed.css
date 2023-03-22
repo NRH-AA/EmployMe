@@ -1,0 +1,10 @@
+#feed-container {
+    margin: auto;
+    margin-top: 10px;
+    width: 1024px;
+    height: auto;
+}
+
+#feed-content-container {
+    display: flex;
+}

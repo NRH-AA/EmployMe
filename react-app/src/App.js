@@ -5,6 +5,8 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Feed from "./components/Feed";
+import UserProfile from "./components/UserProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,11 +20,15 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route path='/profile'>
+            <UserProfile />
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
           </Route>
           <Route exact path="/" >
             <LoginFormPage />
+            <Feed />
           </Route>
         </Switch>
       )}
