@@ -23,11 +23,10 @@
 
 #user-profile-bio {
     width: 794px;
-    height: 120px;
+    height: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: -50px;
 }
 
 #user-profile-update-button {
@@ -41,9 +40,37 @@
     flex: auto;
 }
 
+#user-profile-bio-container {
+   
+}
+
+#user-profile-edit-name-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: -20px;
+    margin-bottom: -10px;
+}
+
+.user-profile-edit-age-p {
+    margin-top: 12px;
+    margin-bottom: 1px;
+}
+.user-profile-bio-p {
+    color: red;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-profile-bio-input {
+    width: 150px;
+}
+
 #user-profile-bio-div {
     display: flex;
     align-items: center;
+    height: auto;
+    margin-bottom: 20px;
 }
 
 #user-profile-picture {
@@ -69,8 +96,18 @@
     margin-right: -10px;
 }
 
+.user-profile-qualifications-container {
+    height: 120px;
+    width: 200px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
 .user-profile-qualification {
-    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 190px;
 }
 
 .user-qualifications-p {
@@ -116,4 +153,123 @@
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 20px;
+}
+
+#profile-picture-edit-text {
+    position:fixed;
+    margin-left: 45px;
+    margin-top: 100px;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    pointer-events: none;
+}
+
+
+
+
+#profile-picture-modal-container {
+    background-color: rgb(48, 48, 48);
+    border: 3px solid black;
+    width: 500px;
+    height: auto;
+    text-align: center;
+}
+
+#profile-picture-modal-img {
+    height: 250px;
+    width: 250px;
+    border-radius: 120px;
+}
+
+#profile-picture-modal-remove {
+    position: absolute;
+    margin-left: -70px;
+    margin-top: 40px;
+    border-radius: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(224, 1, 1);
+    border: 2px solid black;
+    opacity: 0.8
+}
+
+
+#upload-img-input {
+    width: 250px;
+    height: 250px;
+    text-indent: 16px;
+    background-color: rgb(54, 54, 54);
+    border: 2px dashed rgb(85, 85, 85);
+    color: rgb(250, 0, 0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#picture-loading-message {
+    position: absolute;
+    margin-top: -140px;
+    margin-left: 210px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.user-profile-button-small {
+    border: none;
+    background-color: rgb(209, 209, 209);
+    box-shadow: 1px 1px 2px 2px rgb(75, 75, 75);
+    font-size: 16px;
+    font-weight: 700;
+    height: 20px;
+    cursor: pointer;
+}
+
+.user-profile-button-small:hover {
+    background-color: rgb(238, 238, 238);
+    box-shadow: 1px 1px 2px 2px rgb(65, 65, 65);
+}
+
+.user-profile-button-small:active {
+    color: blue;
+    background-color: rgb(177, 177, 177);
+    box-shadow: 1px 1px 2px 2px rgb(133, 133, 133);
+}
+
+.user-profile-button-medium {
+    width: 180px;
+    height: 30px;
+}
+
+#user-picture-button-div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+/* Skills Modal */
+#user-skills-container {
+    background-color: rgb(48, 48, 48);
+    width: 500px;
+    height: 600px;
+    text-align: center;
+    
+}
+
+#user-skills-show {
+    background-color: white;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 150px;
+}
+
+
+
+::file-selector-button {
+    display: none;
 }
