@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
+default_image = 'https://www.computerhope.com/jargon/g/guest-user.png'
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -11,18 +12,18 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    username = db.Column(db.String(255), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     work_email = db.Column(db.String(255), nullable=True, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    first_name = db.Column(db.String(50), nullable=False)
-    middle_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50), nullable=False)
-    profile_picture = db.Column(db.String(50), default="")
-    phone_number = db.Column(db.String(10))
+    first_name = db.Column(db.String(255), nullable=False)
+    middle_name = db.Column(db.String(255))
+    last_name = db.Column(db.String(255), nullable=False)
+    profile_picture = db.Column(db.String(255), default=default_image)
+    phone_number = db.Column(db.String(255))
     age = db.Column(db.Integer, nullable=False)
-    company_name = db.Column(db.String(50))
-    occupation = db.Column(db.String(50))
+    company_name = db.Column(db.String(255))
+    occupation = db.Column(db.String(255))
     jobs = db.Column(db.Text)
     education = db.Column(db.Text)
     skills = db.Column(db.Text)
