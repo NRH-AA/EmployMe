@@ -15,11 +15,11 @@ const UserProfile = ({user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
-    const [isUpdatingSkills, setIsUpdatingSkills] = useState(false);
-    const [isUpdatingEducation, setIsUpdatingEducation] = useState(false);
-    const [isUpdatingWork, setIsUpdatingWork] = useState(false);
-    const [isUpdatingAchievements, setIsUpdatingAchievements] = useState(false);
-    const [isUpdatingRec, setIsUpdatingRec] = useState(false);
+    // const [isUpdatingSkills, setIsUpdatingSkills] = useState(false);
+    // const [isUpdatingEducation, setIsUpdatingEducation] = useState(false);
+    // const [isUpdatingWork, setIsUpdatingWork] = useState(false);
+    // const [isUpdatingAchievements, setIsUpdatingAchievements] = useState(false);
+    // const [isUpdatingRec, setIsUpdatingRec] = useState(false);
     
     if (!user) user = sessionUser || null
     
@@ -62,7 +62,7 @@ const UserProfile = ({user}) => {
             && user.middle_name === middleName
             && user.last_name === lastName
             && user.age === age
-            && user.occupation == occupation
+            && user.occupation === occupation
             && user.company_name === company
             && user.work_email === email
             && user.phone_number === phone

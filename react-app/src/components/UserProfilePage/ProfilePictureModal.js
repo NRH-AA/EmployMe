@@ -77,6 +77,7 @@ const ProfilePictureModal = ({user}) => {
                 />
                 </div>
             </>}
+                {imageLoading && <p id="picture-loading-message">Loading...</p>}
             
             <div>
                 <button onClick={() => closeModal()}>Close</button>

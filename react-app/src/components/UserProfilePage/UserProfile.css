@@ -196,6 +196,15 @@
     cursor: pointer;
 }
 
+#picture-loading-message {
+    position: absolute;
+    margin-top: -140px;
+    margin-left: 210px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
 ::file-selector-button {
     display: none;
 }
