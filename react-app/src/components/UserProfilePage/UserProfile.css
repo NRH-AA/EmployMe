@@ -96,8 +96,14 @@
     margin-right: -10px;
 }
 
+.user-profile-qualifications-container {
+    height: 120px;
+    width: 200px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
 .user-profile-qualification {
-    margin-bottom: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -242,6 +248,27 @@
     display: flex;
     justify-content: space-around;
 }
+
+
+
+/* Skills Modal */
+#user-skills-container {
+    background-color: rgb(48, 48, 48);
+    width: 500px;
+    height: 600px;
+    text-align: center;
+    
+}
+
+#user-skills-show {
+    background-color: white;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 150px;
+}
+
+
 
 ::file-selector-button {
     display: none;

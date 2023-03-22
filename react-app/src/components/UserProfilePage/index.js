@@ -195,50 +195,63 @@ const UserProfile = ({user}) => {
                     
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
-                            <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">SKILLS</p>
-                                {user.id === sessionUser.id && <OpenModalButton
-                                    className="user-profile-button-small"
-                                    buttonText="Update"
-                                    modalComponent={<SkillsModal userId={user.id} />}
-                                />}
+                            <div className="user-profile-qualifications-container">
+                                <div className="user-profile-qualification">
+                                    <p className="user-qualifications-p">SKILLS</p>
+                                    {user.id === sessionUser.id && <OpenModalButton
+                                        className="user-profile-button-small"
+                                        buttonText="Update"
+                                        modalComponent={<SkillsModal user={user} />}
+                                    />}
+                                </div>
+                                
+                                {user?.skills && user.skills}
                             </div>
                             
-                            <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">EDUCATION</p>
-                                {user.id === sessionUser.id && <OpenModalButton
-                                    className="user-profile-button-small"
-                                    buttonText="Update"
-                                    modalComponent={<EducationModal userId={user.id} />}
-                                />}
+                            <div className="user-profile-qualifications-container">
+                                <div className="user-profile-qualification">
+                                    <p className="user-qualifications-p">EDUCATION</p>
+                                    {user.id === sessionUser.id && <OpenModalButton
+                                        className="user-profile-button-small"
+                                        buttonText="Update"
+                                        modalComponent={<EducationModal user={user} />}
+                                    />}
+                                </div>
                             </div>
                             
-                            <div className="user-profile-qualification"> 
-                                <p className="user-qualifications-p">WORK HIST.</p>
-                                {user.id === sessionUser.id && <OpenModalButton
-                                    className="user-profile-button-small"
-                                    buttonText="Update"
-                                    modalComponent={<WorkHistoryModal userId={user.id} />}
-                                />}
+                            <div className="user-profile-qualifications-container">
+                                <div className="user-profile-qualification"> 
+                                    <p className="user-qualifications-p">WORK HIST.</p>
+                                    {user.id === sessionUser.id && <OpenModalButton
+                                        className="user-profile-button-small"
+                                        buttonText="Update"
+                                        modalComponent={<WorkHistoryModal user={user} />}
+                                    />}
+                                </div>
                             </div>
                             
-                            <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">ACHIEV.</p>
-                                {user.id === sessionUser.id && <OpenModalButton
-                                    className="user-profile-button-small"
-                                    buttonText="Update"
-                                    modalComponent={<AchievementsModal userId={user.id} />}
-                                />}
+                            <div className="user-profile-qualifications-container">
+                                <div className="user-profile-qualification">
+                                    <p className="user-qualifications-p">ACHIEV.</p>
+                                    {user.id === sessionUser.id && <OpenModalButton
+                                        className="user-profile-button-small"
+                                        buttonText="Update"
+                                        modalComponent={<AchievementsModal user={user} />}
+                                    />}
+                                </div>
                             </div>
                             
-                            <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">REC.</p>
-                                {user.id === sessionUser.id && <OpenModalButton
-                                    className="user-profile-button-small"
-                                    buttonText="Update"
-                                    modalComponent={<RecommendationsModal userId={user.id} />}
-                                />}
+                            <div className="user-profile-qualifications-container">
+                                <div className="user-profile-qualification">
+                                    <p className="user-qualifications-p">REC.</p>
+                                    {user.id === sessionUser.id && <OpenModalButton
+                                        className="user-profile-button-small"
+                                        buttonText="Update"
+                                        modalComponent={<RecommendationsModal user={user} />}
+                                    />}
+                                </div>
                             </div>
+                            
                         </div>
                             
                         <div id="user-profile-posts-div">
