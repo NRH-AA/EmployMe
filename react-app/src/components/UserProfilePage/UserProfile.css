@@ -96,8 +96,18 @@
     margin-right: -10px;
 }
 
+.user-profile-qualifications-container {
+    height: 120px;
+    width: 200px;
+    background-color: grey;
+    border: 1px solid black;
+}
+
 .user-profile-qualification {
-    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 190px;
 }
 
 .user-qualifications-p {
@@ -160,6 +170,7 @@
 
 #profile-picture-modal-container {
     background-color: rgb(48, 48, 48);
+    border: 3px solid black;
     width: 500px;
     height: auto;
     text-align: center;
@@ -204,6 +215,60 @@
     font-weight: 700;
     color: white;
 }
+
+.user-profile-button-small {
+    border: none;
+    background-color: rgb(209, 209, 209);
+    box-shadow: 1px 1px 2px 2px rgb(75, 75, 75);
+    font-size: 16px;
+    font-weight: 700;
+    height: 20px;
+    cursor: pointer;
+}
+
+.user-profile-button-small:hover {
+    background-color: rgb(238, 238, 238);
+    box-shadow: 1px 1px 2px 2px rgb(65, 65, 65);
+}
+
+.user-profile-button-small:active {
+    color: blue;
+    background-color: rgb(177, 177, 177);
+    box-shadow: 1px 1px 2px 2px rgb(133, 133, 133);
+}
+
+.user-profile-button-medium {
+    width: 180px;
+    height: 30px;
+}
+
+#user-picture-button-div {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+/* Skills Modal */
+#user-skills-container {
+    background-color: rgb(48, 48, 48);
+    width: 500px;
+    height: 600px;
+    text-align: center;
+    
+}
+
+#user-skills-show {
+    background-color: white;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 150px;
+}
+
+
 
 ::file-selector-button {
     display: none;

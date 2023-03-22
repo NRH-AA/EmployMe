@@ -67,6 +67,16 @@ def update_user_picture(id):
     db.session.commit()
     ret = User.query.get(id)
     return ret.to_dict_all()
+
+@user_routes.route('/<int:id>/skills', methods=['POST'])
+@login_required
+def update_user_skills(id):
+    skills = request.get_json()['skills']
+    user = User.query.get(id)
+    user.skills = skills or ''
+    db.session.commit()
+    ret = User.query.get(id)
+    return ret.to_dict_all()
     
 
 @user_routes.route('/upload', methods=['POST'])

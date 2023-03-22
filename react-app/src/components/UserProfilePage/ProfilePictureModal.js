@@ -44,7 +44,7 @@ const ProfilePictureModal = ({user}) => {
         e.preventDefault();
         
         if (picture === user.profile_picture) return closeModal();
-        if (!picture) setPicture(default_image);
+        if (!picture) return setPicture(default_image);
         
         const ret = await dispatch(updateProfilePicture(user.id, picture));
         if (ret.errors) {
@@ -55,7 +55,7 @@ const ProfilePictureModal = ({user}) => {
     
     return (
         <div id="profile-picture-modal-container">
-            <h2 style={{margin: "0"}}>Update Profile Picture</h2>
+            <h2 style={{margin: "0", padding: "20px", color: "white"}}>Update Profile Picture</h2>
             
             {errors && errors.map(err => <p key={err}>{err}</p>)}
             {picture && <><img
@@ -79,9 +79,13 @@ const ProfilePictureModal = ({user}) => {
             </>}
                 {imageLoading && <p id="picture-loading-message">Loading...</p>}
             
-            <div>
-                <button onClick={() => closeModal()}>Close</button>
-                <button onClick={(e) => handleSubmitPicture(e)}>Update</button>
+            <div id="user-picture-button-div">
+                <button className="user-profile-button-small user-profile-button-medium" 
+                    onClick={() => closeModal()}
+                >Close</button>
+                <button className="user-profile-button-small user-profile-button-medium" 
+                    onClick={(e) => handleSubmitPicture(e)}
+                >Update</button>
             </div>
         </div>
     );  
