@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBioData } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import SkillsModal from "./SkillsModal";
+import EducationModal from "./EducationModal";
+import WorkHistoryModal from "./WorkHistoryModal";
+import AchievementsModal from "./AchievementsModal";
+import RecommendationsModal from "./RecommendationsModal";
 import Post from './Post';
 import './UserProfile.css';
 
@@ -50,6 +56,16 @@ const UserProfile = ({user}) => {
         
         const newErrors = validateBio();
         if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
+        
+        if (user.first_name === firstName 
+            && user.middle_name === middleName
+            && user.last_name === lastName
+            && user.age === age
+            && user.occupation == occupation
+            && user.company_name === company
+            && user.work_email === email
+            && user.phone_number === phone
+            ) return;
         
         const info = {
             first_name: firstName,
@@ -174,23 +190,43 @@ const UserProfile = ({user}) => {
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
                             <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">SKILLS <button>...</button></p>
+                                <p className="user-qualifications-p">SKILLS
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<SkillsModal userId={user.id} />}
+                                /></p>
                             </div>
                             
                             <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">EDUCATION <button>...</button></p>
+                                <p className="user-qualifications-p">EDUCATION
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<EducationModal userId={user.id} />}
+                                /></p>
                             </div>
                             
                             <div className="user-profile-qualification"> 
-                                <p className="user-qualifications-p">WORK HIST. <button>...</button></p>
+                                <p className="user-qualifications-p">WORK HIST.
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<WorkHistoryModal userId={user.id} />}
+                                /></p>
                             </div>
                             
                             <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">ACHIEV. <button>...</button></p>
+                                <p className="user-qualifications-p">ACHIEV.
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<AchievementsModal userId={user.id} />}
+                                /></p>
                             </div>
                             
                             <div className="user-profile-qualification">
-                                <p className="user-qualifications-p">REC. <button>...</button></p>
+                                <p className="user-qualifications-p">REC.
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<RecommendationsModal userId={user.id} />}
+                                /></p>
                             </div>
                         </div>
                             
