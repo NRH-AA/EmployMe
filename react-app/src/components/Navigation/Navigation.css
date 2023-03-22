@@ -35,6 +35,7 @@
 #navigation-logo {
   width: 65px;
   height: 55px;
+  cursor: pointer;
 }
 
 #profile-dropdown-button {
