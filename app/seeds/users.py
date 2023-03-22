@@ -21,6 +21,7 @@ def seed_users():
         first_name = 'Hank',
         last_name = 'Hill',
         occupation = 'Sales Manager',
+        phone_number = '912-748-4422',
         company_name = 'Strickland Propane',
         work_email = 'HankHill@propane.arlen',
         profile_picture='https://m.media-amazon.com/images/M/MV5BMTUzMTQ4NjcyN15BMl5BanBnXkFtZTgwMDY5MDk0MjE@._V1_QL75_UY281_CR93,0,190,281_.jpg',

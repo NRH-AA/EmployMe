@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import Logo from './logo.png';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
@@ -10,7 +11,7 @@ function Navigation({ isLoaded }){
 	return (
 		<div id="navigation-container">
 			<div id="navigation-logo-search-div">
-				<p>Logo</p>
+				<img id="navigation-logo" src={Logo} />
 				<input id="searchbar-input" type="text" placeholder='Search Bar'/>
 			</div>
 			

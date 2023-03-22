@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     middle_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50), nullable=False)
     profile_picture = db.Column(db.String(50), default="")
+    phone_number = db.Column(db.String(10))
     age = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String(50))
     occupation = db.Column(db.String(50))
@@ -50,6 +51,7 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'profile_picture': self.profile_picture,
+            'phone_number': self.phone_number,
             'age': self.age,
             'company_name': self.company_name,
             'occupation': self.occupation,
@@ -69,10 +71,13 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'profile_picture': self.profile_picture,
+            'phone_number': self.phone_number,
             'age': self.age,
+            'company_name': self.company_name,
             'occupation': self.occupation,
             'jobs': self.jobs,
             'education': self.education,
+            'work_email': self.work_email,
             'skills': self.skills,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,

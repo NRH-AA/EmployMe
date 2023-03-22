@@ -23,16 +23,16 @@ const UserProfile = ({user}) => {
                     <div id="user-profile-bio-div">
                         <img id="user-profile-picture" src={user?.profile_picture || ""}/>
                         <div id="user-profile-bio">
-                            <div className="user-profile-bio-flex"> 
+                            <div> 
                                 <p className="user-profile-p"><b>Name:</b> {user?.first_name} {user?.middle_name} {user?.last_name}</p>
-                                <p className="user-profile-p"><b>Occupation:</b> {user?.occupation}</p>
                                 <p className="user-profile-p"><b>Age:</b> {user?.age}</p>
+                                <p className="user-profile-p"><b>Occupation:</b> {user?.occupation}</p>
                             </div>
                             
-                            <div className="user-profile-bio-flex"> 
+                            <div> 
                                 <p><b>Company: </b> {user?.company_name}</p>
                                 <p><b>Email: </b> {user?.work_email}</p>
-                                <p><b>Joined: </b> {user?.createdAt.split(' ')[3]}</p>
+                                <p><b>Phone: </b> {user?.phone_number}</p>
                             </div>
                             
                         </div>
@@ -41,11 +41,11 @@ const UserProfile = ({user}) => {
                     
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
-                            <p>Skills</p>
-                            <p>Education</p>
-                            <p>Work History</p>
-                            <p>Achievements</p>
-                            <p>Recommendations</p>
+                            <p className="user-qualifications-p">Skills  <button>Update</button></p>
+                            <p className="user-qualifications-p">Education  <button>Update</button></p>
+                            <p className="user-qualifications-p">Work History  <button>Update</button></p>
+                            <p className="user-qualifications-p">Achievements  <button>Update</button></p>
+                            <p className="user-qualifications-p">Recommendations  <button>Update</button></p>
                         </div>
                             
                         <div id="user-profile-posts-div">
