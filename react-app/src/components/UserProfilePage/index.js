@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { login } from "../../store/session";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import Post from './Post'
+import { useSelector } from "react-redux";
+import Post from './Post';
 import './UserProfile.css';
 
 const UserProfile = ({user}) => {
     const sessionUser = useSelector((state) => state.session.user);
+    const [isUpdating, setIsUpdating] = useState(false);
     
-    if (!user) user = sessionUser || ""
+    if (!user) user = sessionUser || null
     
     if (!user) return null;
     
@@ -18,11 +17,19 @@ const UserProfile = ({user}) => {
                 <div className='user-profile-container'>
                     
                     <div id="user-profile-update-button">
-                        {user.id === sessionUser.id && <button>Update</button>}
+                        {(user.id === sessionUser.id && 
+                        !isUpdating) ? 
+                        <button
+                            onClick={() => setIsUpdating(!isUpdating)}
+                        >Update</button> :
+                        <button
+                            onClick={() => setIsUpdating(!isUpdating)}
+                        >Submit</button> 
+                        }
                     </div>
                     
                     <div id="user-profile-bio-div">
-                        <img id="user-profile-picture" src={user?.profile_picture || ""}/>
+                        <img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>
                         <div id="user-profile-bio">
                             <div> 
                                 <p className="user-profile-p"><b>Name:</b> {user?.first_name} {user?.middle_name} {user?.last_name}</p>
@@ -42,11 +49,25 @@ const UserProfile = ({user}) => {
                     
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
-                            <p className="user-qualifications-p">Skills</p>
-                            <p className="user-qualifications-p">Education</p>
-                            <p className="user-qualifications-p">Work History</p>
-                            <p className="user-qualifications-p">Achievements</p>
-                            <p className="user-qualifications-p">Recommendations</p>
+                            <div className="user-profile-qualification">
+                                <p className="user-qualifications-p">SKILLS <button>...</button></p>
+                            </div>
+                            
+                            <div className="user-profile-qualification">
+                                <p className="user-qualifications-p">EDUCATION <button>...</button></p>
+                            </div>
+                            
+                            <div className="user-profile-qualification"> 
+                                <p className="user-qualifications-p">WORK HIST. <button>...</button></p>
+                            </div>
+                            
+                            <div className="user-profile-qualification">
+                                <p className="user-qualifications-p">ACHIEV. <button>...</button></p>
+                            </div>
+                            
+                            <div className="user-profile-qualification">
+                                <p className="user-qualifications-p">REC. <button>...</button></p>
+                            </div>
                         </div>
                             
                         <div id="user-profile-posts-div">
