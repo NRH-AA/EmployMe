@@ -26,11 +26,16 @@ function LoginFormPage() {
     return history.push('/');
   };
   
-  if (sessionUser) return null;
-  
-  if (errors) {
-    console.log(errors)
+  const handleDemoLogin = async (e) => {
+    e.preventDefault();
+    
+    await dispatch(login('demo@aa.io', 'password'));
+    setEmail("");
+    setPassword("");
+    return history.push('/');
   }
+  
+  if (sessionUser) return null;
 
   return (
     <>
@@ -62,7 +67,9 @@ function LoginFormPage() {
             disabled={email.length < 1 || password.length < 1 ? true : false}
           >Log In</button>
           
-          <button className="login-button" type="button">Demo</button>
+          <button className="login-button" type="button"
+            onClick={(e) => handleDemoLogin(e)}
+          >Demo</button>
           
           <button id="login-signup-button" type="button"
             onClick={() => history.push('/signup')}

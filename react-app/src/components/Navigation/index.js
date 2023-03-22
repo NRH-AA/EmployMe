@@ -8,17 +8,15 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
 	return (
-		<ul className={sessionUser ? "" : "hidden"}>
-			<li>
-				<NavLink exact to="/">Home</NavLink>
-			</li>
-			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
-			)}
-		</ul>
+		<div id="navigation-container">
+			<div id="navigation-logo-search-div">
+				<p>Logo</p>
+				<input id="searchbar-input" type="text" placeholder='Search Bar'/>
+			</div>
+			
+			{isLoaded && sessionUser && <ProfileButton user={sessionUser} />}
+		</div>
 	);
-}
+};
 
 export default Navigation;
