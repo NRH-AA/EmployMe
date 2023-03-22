@@ -23,11 +23,10 @@
 
 #user-profile-bio {
     width: 794px;
-    height: 120px;
+    height: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: -50px;
 }
 
 #user-profile-update-button {
@@ -41,9 +40,37 @@
     flex: auto;
 }
 
+#user-profile-bio-container {
+   
+}
+
+#user-profile-edit-name-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: -20px;
+    margin-bottom: -10px;
+}
+
+.user-profile-edit-age-p {
+    margin-top: 12px;
+    margin-bottom: 1px;
+}
+.user-profile-bio-p {
+    color: red;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-profile-bio-input {
+    width: 150px;
+}
+
 #user-profile-bio-div {
     display: flex;
     align-items: center;
+    height: auto;
+    margin-bottom: 20px;
 }
 
 #user-profile-picture {
