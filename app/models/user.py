@@ -26,6 +26,7 @@ class User(db.Model, UserMixin):
     jobs = db.Column(db.Text)
     education = db.Column(db.Text)
     skills = db.Column(db.Text)
+    active = db.Column(db.Boolean, default=True)
     createdAt = db.Column(db.DateTime, default=datetime.now())
     updatedAt = db.Column(db.DateTime, default=datetime.now())
 

@@ -17,6 +17,7 @@ class Post(db.Model):
     updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user = db.relationship("User", back_populates="posts")
+    images = db.relationship("Image")
 
     def to_dict(self):
         return {
@@ -28,4 +29,5 @@ class Post(db.Model):
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             "user": self.user.to_dict(),
+            'images': [image.to_dict() for image in self.images]
         }
