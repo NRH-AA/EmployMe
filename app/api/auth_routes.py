@@ -24,7 +24,7 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        return current_user.to_dict_all()
     return {'errors': ['Unauthorized']}
 
 
@@ -42,7 +42,7 @@ def login():
         return {'password': ['Invalid password provided']}, 401
         
     login_user(user)
-    return user.to_dict()
+    return user.to_dict_all()
 
 
 @auth_routes.route('/logout')

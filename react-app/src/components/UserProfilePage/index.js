@@ -2,6 +2,7 @@ import { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import Post from './Post'
 import './UserProfile.css';
 
 const UserProfile = ({user}) => {
@@ -41,17 +42,15 @@ const UserProfile = ({user}) => {
                     
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
-                            <p className="user-qualifications-p">Skills  <button>Update</button></p>
-                            <p className="user-qualifications-p">Education  <button>Update</button></p>
-                            <p className="user-qualifications-p">Work History  <button>Update</button></p>
-                            <p className="user-qualifications-p">Achievements  <button>Update</button></p>
-                            <p className="user-qualifications-p">Recommendations  <button>Update</button></p>
+                            <p className="user-qualifications-p">Skills</p>
+                            <p className="user-qualifications-p">Education</p>
+                            <p className="user-qualifications-p">Work History</p>
+                            <p className="user-qualifications-p">Achievements</p>
+                            <p className="user-qualifications-p">Recommendations</p>
                         </div>
                             
                         <div id="user-profile-posts-div">
-                            <p>Post One</p>
-                            <p>Post Two</p>
-                            <p>Post Three</p>
+                            {user?.posts?.map(post => <Post post={post}/>)}
                         </div>
                     
                     </div>
