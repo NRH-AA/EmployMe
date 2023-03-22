@@ -7,4 +7,3 @@ __pycache__/
 .db
 app/dev.db
 *.lock
-/migrations
