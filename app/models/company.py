@@ -10,13 +10,13 @@ class Company(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    name = db.Column(db.String(60), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
     profile_picture = db.Column(db.Text)
     description = db.Column(db.Text)
-    country = db.Column(db.String(50), nullable=False)
-    state = db.Column(db.String(50), nullable=False)
-    city = db.Column(db.String(50), nullable=False)
-    street_address = db.Column(db.String(100), nullable=False)
+    country = db.Column(db.String(255), nullable=False)
+    state = db.Column(db.String(255), nullable=False)
+    city = db.Column(db.String(255), nullable=False)
+    street_address = db.Column(db.String(255), nullable=False)
     zipcode = db.Column(db.Integer, nullable=False)
     
     def to_dict(self):
