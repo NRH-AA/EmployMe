@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(255), nullable=False)
     middle_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255), nullable=False)
-    profile_picture = db.Column(db.String(255), default=default_image)
+    profile_picture = db.Column(db.Text, default=default_image)
     phone_number = db.Column(db.String(255))
     age = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String(255))
