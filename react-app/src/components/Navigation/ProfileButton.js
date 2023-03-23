@@ -32,7 +32,7 @@ function ProfileButton({ user }) {
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    await dispatch(logout());
+    dispatch(logout());
     return history.push('/')
   };
 

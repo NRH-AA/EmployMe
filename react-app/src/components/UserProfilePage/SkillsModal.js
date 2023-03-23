@@ -23,8 +23,8 @@ const SkillsModal = ({user}) => {
         if (!skill) return;
         
         const skillArray = skill.split(';');
+        if (skillArray[skillArray.length - 1] === '') skillArray.pop();
         
-        if (skillArray.length >= 10) return setError('You cannot exceed 10 skills.');
         if (skillsArray && skillsArray.length >= 10) return setError('You cannot exceed 10 skills.');
         if (skillsArray && (skillsArray.length + skillArray.length) > 10) return setError('You cannot exceed 10 skills.');
         
@@ -85,7 +85,6 @@ const SkillsModal = ({user}) => {
             <div>
                 <input type="text" placeholder="Type a Skill"
                     id="user-skill-input"
-                    maxLength={20}
                     value={skill}
                     autoFocus
                     onChange={(e) => setSkill(e.target.value)}
