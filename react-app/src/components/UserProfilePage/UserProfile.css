@@ -18,7 +18,7 @@
     height: auto;
     margin: auto;
     box-shadow: 0px 0px 2px 2px black;
-    background: linear-gradient(#c4c4c4, #868686);
+    background: linear-gradient(#c4c4c4, #686868);
 }
 
 #user-profile-bio {
@@ -88,7 +88,7 @@
 
 #user-profile-qualifications {
     width: 220px;
-    height: 600px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -97,10 +97,9 @@
 }
 
 .user-profile-qualifications-container {
-    height: 120px;
+    height: auto;
     width: 200px;
     background-color: grey;
-    border: 1px solid black;
 }
 
 .user-profile-qualification {
@@ -249,7 +248,28 @@
     justify-content: space-around;
 }
 
+#user-profile-skills-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    height: 150px;
+    width: 200px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
 
+.user-skills-p {
+    margin-top: -5px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: default;
+}
+
+.user-skills-p:hover {
+    color: white;
+}
 
 /* Skills Modal */
 #user-skills-container {
@@ -313,6 +333,21 @@
     justify-content: space-around;
     margin-top: 50px;
     padding-bottom: 20px;
+}
+
+
+
+/* Delete Profile Modal*/
+#delete-profile-container {
+    background-color: rgb(148, 148, 148);
+    border: 3px solid black;
+    padding: 25px;
+}
+
+#delete-profile-buttons-div {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
 }
 
 ::file-selector-button {

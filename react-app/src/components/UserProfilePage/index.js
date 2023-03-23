@@ -1,40 +1,39 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
+import { deleteUserProfileThunk } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
-import EducationModal from "./EducationModal";
-import WorkHistoryModal from "./WorkHistoryModal";
-import AchievementsModal from "./AchievementsModal";
-import RecommendationsModal from "./RecommendationsModal";
+// import EducationModal from "./EducationModal";
+// import WorkHistoryModal from "./WorkHistoryModal";
+// import AchievementsModal from "./AchievementsModal";
+// import RecommendationsModal from "./RecommendationsModal";
 import ProfilePictureModal from "./ProfilePictureModal";
+import DeleteProfileModal from "./DeleteProfileModal";
 import Post from './Post';
 import './UserProfile.css';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const {userId} = useParams();
     const sessionUsers = useSelector((state) => state.session.users);
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
-    // const [isUpdatingSkills, setIsUpdatingSkills] = useState(false);
-    // const [isUpdatingEducation, setIsUpdatingEducation] = useState(false);
-    // const [isUpdatingWork, setIsUpdatingWork] = useState(false);
-    // const [isUpdatingAchievements, setIsUpdatingAchievements] = useState(false);
-    // const [isUpdatingRec, setIsUpdatingRec] = useState(false);
     
     let user = null;
     
     if (parseInt(userId) === sessionUser.id) user = sessionUser;
     
-    
     if (!user) {
-        for (let el of sessionUsers) {
-            if (parseInt(userId) === el.id) user = el;
+        if (sessionUsers) {
+            for (let el of sessionUsers) {
+                if (parseInt(userId) === el.id) user = el;
+            }
         }
     }
-    
     
     const [firstName, setFirstName] = useState(user?.first_name || "");
     const [middleName, setMiddleName] = useState(user?.middle_name || "");
@@ -45,12 +44,6 @@ const UserProfile = () => {
     const [email, setEmail] = useState(user?.work_email || "");
     const [phone, setPhone] = useState(user?.phone_number || "");
     const [errors, setErrors] = useState({})
-    
-    useEffect(() => {
-        setErrors(validateBio());
-    }, [firstName, middleName, lastName, age, occupation, company, email, phone])
-    
-    if (!user) return null;
     
     const validateBio = () => {
         const newErrors = {};
@@ -64,6 +57,24 @@ const UserProfile = () => {
         if (phone && (phone.length < 10 || phone.length > 14)) newErrors.phone_number = 'Phone (10-14) characters.';
         
         return newErrors;
+    };
+    
+    useEffect(() => {
+        setErrors(validateBio());
+    }, [firstName, middleName, lastName, age, occupation, company, email, phone])
+    
+    if (!user) {
+        user = {};
+        user.id = -1;
+    };
+    
+    if (user.id !== sessionUser.id && !user.active){
+        return (
+            <>
+                <p>You shouldn't be here.</p>
+                <button onClick={() => history.push('/')}>Go Back</button>
+            </>
+        );
     };
     
     const handleSubmitBio = (e) => {
@@ -96,6 +107,16 @@ const UserProfile = () => {
         dispatch(updateBioData(user.id, info));
     }
     
+    const handleActivateProfile = () => {
+        dispatch(deleteUserProfileThunk(user.id));
+    }
+    
+    const showInvalidFeature = () => {
+        alert('Feature coming soon!');
+    }
+    
+    const userSkills = user?.skills?.split(';') || null;
+    
     return (
         <div id="user-profile-container">
             <div id="user-profile-content-container">
@@ -110,6 +131,21 @@ const UserProfile = () => {
                         <button className="user-profile-button-small"
                             onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
                         >Submit</button> 
+                        }
+                        {(user.id === sessionUser.id && !isUpdatingBio && user.active) ?
+                            <OpenModalButton
+                                className="user-profile-button-small"
+                                buttonText="Delete"
+                                modalComponent={<DeleteProfileModal user={user} />}
+                            />
+                            : user.id === sessionUser.id &&
+                            <button className="user-profile-button-small"
+                                onClick={() => handleActivateProfile()}
+                            >Activate</button>
+                        }
+                        <br></br>
+                        {user.id === sessionUser.id &&
+                            <p>Status: {user.active ? "Active" : "Inactive"}</p>
                         }
                     </div>
                     
@@ -223,57 +259,66 @@ const UserProfile = () => {
                                     />}
                                 </div>
                                 
-                                {user?.skills && user.skills}
+                                <div id="user-profile-skills-div">
+                                    {userSkills?.length > 0 && userSkills.map((el, i) => 
+                                        <p className="user-skills-p" key={i}>{el}</p>
+                                    )}
+                                </div>
                             </div>
                             
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">EDUCATION</p>
-                                    {user.id === sessionUser.id && <OpenModalButton
+                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
                                         modalComponent={<EducationModal user={user} />}
-                                    />}
+                                    />} */}
                                 </div>
                             </div>
                             
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification"> 
                                     <p className="user-qualifications-p">WORK HIST.</p>
-                                    {user.id === sessionUser.id && <OpenModalButton
+                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
                                         modalComponent={<WorkHistoryModal user={user} />}
-                                    />}
+                                    />} */}
                                 </div>
                             </div>
                             
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">ACHIEV.</p>
-                                    {user.id === sessionUser.id && <OpenModalButton
+                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
                                         modalComponent={<AchievementsModal user={user} />}
-                                    />}
+                                    />} */}
                                 </div>
                             </div>
                             
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">REC.</p>
-                                    {user.id === sessionUser.id && <OpenModalButton
+                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
+                                        onClick={showInvalidFeature}
                                         modalComponent={<RecommendationsModal user={user} />}
-                                    />}
+                                    />} */}
                                 </div>
                             </div>
                             
                         </div>
                             
                         <div id="user-profile-posts-div">
-                            {user?.posts?.map(post => <Post post={post}/>)}
+                            {user?.posts?.map(post => <Post key={post.id} post={post}/>)}
                         </div>
                     
                     </div>
