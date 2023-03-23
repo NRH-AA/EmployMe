@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateBioData } from "../../store/session";
+import { useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
 import EducationModal from "./EducationModal";
@@ -11,8 +12,10 @@ import ProfilePictureModal from "./ProfilePictureModal";
 import Post from './Post';
 import './UserProfile.css';
 
-const UserProfile = ({user}) => {
+const UserProfile = () => {
     const dispatch = useDispatch();
+    const {userId} = useParams();
+    const sessionUsers = useSelector((state) => state.session.users);
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     // const [isUpdatingSkills, setIsUpdatingSkills] = useState(false);
@@ -21,7 +24,13 @@ const UserProfile = ({user}) => {
     // const [isUpdatingAchievements, setIsUpdatingAchievements] = useState(false);
     // const [isUpdatingRec, setIsUpdatingRec] = useState(false);
     
-    if (!user) user = sessionUser || null
+    let user;
+    for (let el of sessionUsers) {
+        console.log(el)
+        if (parseInt(userId) === el.id) user = el;
+    }
+    
+    if (!user) user = sessionUser || null;
     
     
     const [firstName, setFirstName] = useState(user?.first_name || "");

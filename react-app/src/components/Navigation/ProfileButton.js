@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logout } from "../../store/session";
 import './Navigation.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
@@ -37,6 +38,11 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  const handleProfileButton = () => {
+    setShowMenu(false);
+    return history.push(`/profile/${sessionUser.id}`) 
+  }
+  
   return (
     <>
       <button id="profile-dropdown-button" onClick={openMenu}>
@@ -47,7 +53,7 @@ function ProfileButton({ user }) {
           <div id="profile-dropdown-container">
             <p>{user.username}</p>
             <p>{user.email}</p>
-            <button onClick={() => history.push('/profile')}>Profile Page</button>
+            <button onClick={() => handleProfileButton()}>Profile Page</button>
             <button>Company Page</button>
             <button onClick={handleLogout}>Log Out</button>
           </div>
