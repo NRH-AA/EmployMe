@@ -106,3 +106,16 @@ def upload_image():
 
     imageURL = upload["url"]
     return {"url": imageURL}
+
+@user_routes.route('/<int:id>/profile', methods=['DELETE'])
+@login_required
+def delete_profile(id):
+    user = User.query.get(id)
+    
+    if not user:
+        return {'errors', ['Unable to find user']}, 400
+    
+    user.active = not user.active
+    db.session.commit()
+    ret = User.query.get(id)
+    return ret.to_dict_all()

@@ -167,6 +167,16 @@ export const getAllUsersThunk = () => async (dispatch) => {
 	return data;
 }
 
+export const deleteUserProfileThunk = (userId) => async (dispatch) => {
+	const res = await fetch(`/api/users/${userId}/profile`, {
+		method: 'DELETE'
+	});
+	
+	const data = await res.json();
+	dispatch(setUser(data))
+	return data;
+}
+
 const initialState = { user: null, users: null };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
