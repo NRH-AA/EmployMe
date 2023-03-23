@@ -5,8 +5,10 @@
 #login-container {
     width: 450px;
     height: 480px;
-    border: 2px solid black;
-    border-radius: 5px;
+    border: 1px solid rgb(184, 184, 184);
+    box-shadow: 0px 0px 2px 2px rgb(102, 102, 102);
+    background: linear-gradient(#dadada, #a0a0a0);
+    border-radius: 2px;
     margin: auto;
     margin-top: 10%;
     text-align: center;
@@ -57,15 +59,16 @@
     border: 2px solid black;
     height: 18px;
     border-radius: 3px;
-    background-color: rgb(236, 236, 236);
+    background-color: rgb(240, 240, 240);
+    outline: none;
 }
 
 .login-button {
     margin-top: 10px;
     height: 30px;
     background-color: rgb(221, 221, 221);
+    box-shadow: 1px 2px 2px 2px rgb(65, 65, 65);
     border: none;
-    box-shadow: 1px 1px 2px 2px rgb(119, 119, 119);
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -73,12 +76,17 @@
 
 .login-button:hover {
     background-color: rgb(236, 236, 236);
-    box-shadow: 1px 1px 2px 3px rgb(107, 107, 107);
+    box-shadow: 1px 2px 2px 3px rgb(41, 41, 41);
+}
+
+.login-button:active {
+    background-color: rgb(214, 214, 214);
+    box-shadow: 1px 1px 2px 2px rgb(80, 80, 80);
 }
 
 .login-button:disabled {
-    background-color: rgb(184, 184, 184);
-    box-shadow: 1px 1px 2px 2px rgb(119, 119, 119);
+    background-color: rgb(197, 197, 197);
+    box-shadow: 1px 1px 2px 2px rgb(95, 95, 95);
     cursor: not-allowed;
 }
 
@@ -89,7 +97,7 @@
     color: blue;
     border: none;
     box-shadow: none;
-    background-color: white;
+    background: none;
     text-decoration: underline;
     cursor: pointer;
 }
