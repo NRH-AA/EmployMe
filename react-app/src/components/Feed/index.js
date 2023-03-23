@@ -14,6 +14,10 @@ const Feed = () => {
         dispatch(getAllUsersThunk());
     }, [dispatch])
     
+    if (!sessionUsers) {
+        dispatch(getAllUsersThunk());
+    }
+    
     if (!sessionUser) return null;
     
     return (

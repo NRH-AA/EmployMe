@@ -25,7 +25,7 @@ const UserProfile = () => {
     
     let user = null;
     
-    if (parseInt(userId) === sessionUser.id) user = sessionUser;
+    if (parseInt(userId) === sessionUser?.id) user = sessionUser;
     
     if (!user) {
         if (sessionUsers) {
@@ -68,7 +68,7 @@ const UserProfile = () => {
         user.id = -1;
     };
     
-    if (user.id !== sessionUser.id && !user.active){
+    if (user?.id !== sessionUser?.id && !user?.active){
         return (
             <>
                 <p>You shouldn't be here.</p>
@@ -117,34 +117,36 @@ const UserProfile = () => {
     
     const userSkills = user?.skills?.split(';') || null;
     
+    if (!user && !sessionUser) return null;
+    
     return (
         <div id="user-profile-container">
             <div id="user-profile-content-container">
                 <div className='user-profile-container'>
                     
                     <div id="user-profile-update-button">
-                        {(user.id === sessionUser.id && 
+                        {(user?.id === sessionUser?.id && 
                         !isUpdatingBio) ? 
                         <button className="user-profile-button-small"
                             onClick={() => setIsUpdatingBio(!isUpdatingBio)}
-                        >Update</button> : user.id === sessionUser.id &&
+                        >Update</button> : user?.id === sessionUser?.id &&
                         <button className="user-profile-button-small"
                             onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
                         >Submit</button> 
                         }
-                        {(user.id === sessionUser.id && !isUpdatingBio && user.active) ?
+                        {(user?.id === sessionUser?.id && !isUpdatingBio && user?.active) ?
                             <OpenModalButton
                                 className="user-profile-button-small"
                                 buttonText="Delete"
                                 modalComponent={<DeleteProfileModal user={user} />}
                             />
-                            : user.id === sessionUser.id &&
+                            : user?.id === sessionUser?.id &&
                             <button className="user-profile-button-small"
                                 onClick={() => handleActivateProfile()}
                             >Activate</button>
                         }
                         <br></br>
-                        {user.id === sessionUser.id &&
+                        {user?.id === sessionUser?.id &&
                             <p>Status: {user.active ? "Active" : "Inactive"}</p>
                         }
                     </div>
@@ -252,7 +254,7 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">SKILLS</p>
-                                    {user.id === sessionUser.id && <OpenModalButton
+                                    {user?.id === sessionUser?.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
                                         modalComponent={<SkillsModal user={user} />}
@@ -260,7 +262,7 @@ const UserProfile = () => {
                                 </div>
                                 
                                 <div id="user-profile-skills-div">
-                                    {userSkills?.length > 0 && userSkills.map((el, i) => 
+                                    {userSkills?.length > 0 && userSkills?.map((el, i) => 
                                         <p className="user-skills-p" key={i}>{el}</p>
                                     )}
                                 </div>
@@ -269,7 +271,9 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">EDUCATION</p>
-                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {user?.id === sessionUser?.id && 
+                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    }
                                     {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
@@ -281,7 +285,9 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification"> 
                                     <p className="user-qualifications-p">WORK HIST.</p>
-                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {user?.id === sessionUser?.id && 
+                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    }
                                     {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
@@ -293,7 +299,9 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">ACHIEV.</p>
-                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {user?.id === sessionUser?.id && 
+                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    }
                                     {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
@@ -305,7 +313,9 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">REC.</p>
-                                    <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    {user?.id === sessionUser?.id && 
+                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
+                                    }
                                     {/* {user.id === sessionUser.id && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
@@ -318,7 +328,7 @@ const UserProfile = () => {
                         </div>
                             
                         <div id="user-profile-posts-div">
-                            {user?.posts?.map(post => <Post key={post.id} post={post}/>)}
+                            {user?.posts?.map(post => <Post key={post.id} post={post} user={user}/>)}
                         </div>
                     
                     </div>
