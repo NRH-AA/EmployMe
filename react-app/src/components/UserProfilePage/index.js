@@ -34,6 +34,12 @@ const UserProfile = ({user}) => {
     const [phone, setPhone] = useState(user?.phone_number || "");
     const [errors, setErrors] = useState({})
     
+    useEffect(() => {
+        setErrors(validateBio());
+    }, [firstName, middleName, lastName, age, occupation, company, email, phone])
+    
+    if (!user) return null;
+    
     const validateBio = () => {
         const newErrors = {};
         if (!firstName || firstName.length < 2 || firstName.length > 20) newErrors.firstName = 'First name (2-20) characters';
@@ -42,15 +48,11 @@ const UserProfile = ({user}) => {
         if (!age || age < 16) newErrors.age = 'Age must be 16 or older'
         if (occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
         if (company && (company.length < 3 || company.length > 30)) newErrors.company = 'Company (3-30) characters';
-        if (email && (email.length < 5 || email.length > 50)) newErrors.email = 'Email (5-50) characters';
+        if (email && (email.length < 5 || email.length > 30)) newErrors.email = 'Email (5-30) characters';
         if (phone && (phone.length < 10 || phone.length > 14)) newErrors.phone_number = 'Phone (10-14) characters.';
         
         return newErrors;
     };
-    
-    useEffect(() => {
-        setErrors(validateBio());
-    }, [firstName, middleName, lastName, age, occupation, company, email, phone])
     
     const handleSubmitBio = (e) => {
         e.preventDefault();
@@ -81,9 +83,6 @@ const UserProfile = ({user}) => {
         
         dispatch(updateBioData(user.id, info));
     }
-    
-    
-    if (!user) return null;
     
     return (
         <div id="user-profile-container">
@@ -121,18 +120,21 @@ const UserProfile = ({user}) => {
                                         <p className="user-profile-bio-p">{errors?.firstName && errors.firstName}</p>
                                         <input type="text" placeholder="First Name"
                                             className="user-profile-bio-input"
+                                            maxLength={20}
                                             value={firstName}
                                             onChange={(e) => setFirstName(e.target.value)}
                                         />
                                         <p className="user-profile-bio-p">{errors?.middleName && errors.middleName}</p>
                                         <input type="text" placeholder="Middle Name"
                                             className="user-profile-bio-input"
+                                            maxLength={20}
                                             value={middleName}
                                             onChange={(e) => setMiddleName(e.target.value)}
                                         />
                                         <p className="user-profile-bio-p">{errors?.lastName && errors.lastName}</p>
                                         <input type="text" placeholder="Last Name"
                                             className="user-profile-bio-input"
+                                            maxLength={30}
                                             value={lastName}
                                             onChange={(e) => setLastName(e.target.value)}
                                         />
@@ -150,6 +152,7 @@ const UserProfile = ({user}) => {
                                     <p className="user-profile-bio-p">{errors?.occupation && errors.occupation}</p>
                                     <input type="text" placeholder="Occupation"
                                         className="user-profile-bio-input"
+                                        maxLength={20}
                                         value={occupation}
                                         onChange={(e) => setOccupation(e.target.value)}
                                     />
@@ -159,7 +162,7 @@ const UserProfile = ({user}) => {
                             
                             <div>
                                 {!isUpdatingBio ? <>
-                                    <p><b>Company: </b></p>
+                                    <p><b>Company: </b> {user?.company_name}</p>
                                     <p><b>Email: </b> {user?.work_email}</p>
                                     <p><b>Phone: </b> {user?.phone_number}</p>
                                 </> : <>
@@ -167,6 +170,7 @@ const UserProfile = ({user}) => {
                                     <p className="user-profile-bio-p">{errors?.company && errors.company}</p>
                                     <input type="text" placeholder="Company Name"
                                         className="user-profile-bio-input"
+                                        maxLength={30}
                                         value={company}
                                         onChange={(e) => setCompany(e.target.value)}
                                     />
@@ -175,6 +179,7 @@ const UserProfile = ({user}) => {
                                     <p className="user-profile-bio-p">{errors?.email && errors.email}</p>
                                     <input type="text" placeholder="Work Email"
                                         className="user-profile-bio-input"
+                                        maxLength={30}
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -183,6 +188,7 @@ const UserProfile = ({user}) => {
                                     <p className="user-profile-bio-p">{errors?.phone_number && errors.phone_number}</p>
                                     <input type="text" placeholder="Phone Number"
                                         className="user-profile-bio-input"
+                                        maxLength={14}
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
                                     />

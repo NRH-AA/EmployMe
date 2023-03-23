@@ -12,8 +12,11 @@ function LoginFormPage() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
+  if (sessionUser) return null;
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const data = await dispatch(login(email, password));
     if (data) {
       if (!data.id) {
@@ -35,7 +38,16 @@ function LoginFormPage() {
     return history.push('/');
   }
   
-  if (sessionUser) return null;
+  
+  const tabSubmitLogin = (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      if (buttonDisabled) return;
+      handleSubmit(e);
+    } 
+  }
+  
+  const buttonDisabled = email.length < 1 || password.length < 1;
 
   return (
     <>
@@ -51,6 +63,7 @@ function LoginFormPage() {
             <label className="login-label"> Email * <br></br>
               <input className="login-input" type="text" value={email} required
                 placeholder="Email"
+                maxLength={30}
                 onChange={(e) => setEmail(e.target.value)}
                 />
             </label>
@@ -59,12 +72,14 @@ function LoginFormPage() {
             <label className="login-label"> Password * <br></br>
               <input className="login-input" type="password" value={password} required
                 placeholder="Password"
+                maxLength={30}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => tabSubmitLogin(e)}
                 />
             </label>
           
           <button className="login-button" type="submit"
-            disabled={email.length < 1 || password.length < 1 ? true : false}
+            disabled={buttonDisabled}
           >Log In</button>
           
           <button className="login-button" type="button"
