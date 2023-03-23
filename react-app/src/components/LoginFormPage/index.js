@@ -40,9 +40,8 @@ function LoginFormPage() {
   
   
   const tabSubmitLogin = (e) => {
-    e.preventDefault();
-    
     if (e.key === "Tab") {
+      e.preventDefault();
       if (buttonDisabled) return;
       handleSubmit(e);
     } 
@@ -64,6 +63,7 @@ function LoginFormPage() {
             <label className="login-label"> Email * <br></br>
               <input className="login-input" type="text" value={email} required
                 placeholder="Email"
+                maxLength={30}
                 onChange={(e) => setEmail(e.target.value)}
                 />
             </label>
@@ -72,6 +72,7 @@ function LoginFormPage() {
             <label className="login-label"> Password * <br></br>
               <input className="login-input" type="password" value={password} required
                 placeholder="Password"
+                maxLength={30}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={(e) => tabSubmitLogin(e)}
                 />
