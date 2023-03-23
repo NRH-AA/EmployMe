@@ -24,13 +24,16 @@ const UserProfile = () => {
     // const [isUpdatingAchievements, setIsUpdatingAchievements] = useState(false);
     // const [isUpdatingRec, setIsUpdatingRec] = useState(false);
     
-    let user;
-    for (let el of sessionUsers) {
-        console.log(el)
-        if (parseInt(userId) === el.id) user = el;
-    }
+    let user = null;
     
-    if (!user) user = sessionUser || null;
+    if (parseInt(userId) === sessionUser.id) user = sessionUser;
+    
+    
+    if (!user) {
+        for (let el of sessionUsers) {
+            if (parseInt(userId) === el.id) user = el;
+        }
+    }
     
     
     const [firstName, setFirstName] = useState(user?.first_name || "");
@@ -103,7 +106,7 @@ const UserProfile = () => {
                         !isUpdatingBio) ? 
                         <button className="user-profile-button-small"
                             onClick={() => setIsUpdatingBio(!isUpdatingBio)}
-                        >Update</button> :
+                        >Update</button> : user.id === sessionUser.id &&
                         <button className="user-profile-button-small"
                             onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
                         >Submit</button> 
