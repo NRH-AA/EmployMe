@@ -253,11 +253,11 @@
 
 /* Skills Modal */
 #user-skills-container {
-    background-color: rgb(48, 48, 48);
+    background: linear-gradient(#777777, #727272);
     width: 500px;
-    height: 600px;
+    height: auto;
     text-align: center;
-    
+    border: 3px solid black;
 }
 
 #user-skills-show {
@@ -265,10 +265,55 @@
     margin: auto;
     margin-bottom: 20px;
     width: 350px;
-    height: 150px;
+    height: auto;
 }
 
+#user-skills-button-span {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
 
+.user-skills-button-small {
+    width: auto;
+    height: 20px;
+    margin-top: 3px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.user-skills-button-medium {
+    width: 80px;
+    height: 20px;
+    margin-top: 10px;
+    box-shadow: 1px 1px 2px 2px rgb(37, 37, 37);
+}
+
+.user-skills-button-large {
+    width: 180px;
+    height: 30px;
+    margin-top: 10px;
+    box-shadow: 1px 1px 2px 2px rgb(32, 32, 32);
+}
+
+#user-skill-input {
+    background-color: rgb(170, 170, 170);
+    border: 2px solid black;
+    font-size: 16px;
+    font-weight: 700;
+    outline: none;
+}
+
+#user-skill-input::placeholder {
+    color: rgb(61, 61, 61);
+}
+
+#user-skills-confirm-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
 
 ::file-selector-button {
     display: none;
