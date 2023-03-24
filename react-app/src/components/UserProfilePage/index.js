@@ -70,12 +70,10 @@ const UserProfile = () => {
     };
     
     if (user?.id !== sessionUser?.id && !user?.active){
-        return (
-            <>
-                <p>You shouldn't be here.</p>
-                <button onClick={() => history.push('/')}>Go Back</button>
-            </>
-        );
+        return (<>
+            <p>You shouldn't be here.</p>
+            <button onClick={() => history.push('/')}>Go Back</button>
+        </>);
     };
     
     const handleSubmitBio = (e) => {
@@ -126,39 +124,41 @@ const UserProfile = () => {
             <div id="user-profile-update-button">
                 <div id="user-profile-update-buttons-div">
                     {(user?.id === sessionUser?.id && !isUpdatingBio) ? 
-                        <button className="user-profile-button-small"
-                            onClick={() => setIsUpdatingBio(!isUpdatingBio)}
-                        >Update</button> : user?.id === sessionUser?.id &&
-                            <button className="user-profile-button-small"
-                                onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
-                        >Submit</button> 
+                    <button className="user-profile-button-small"
+                        onClick={() => setIsUpdatingBio(!isUpdatingBio)}
+                    >Update</button> : user?.id === sessionUser?.id &&
+                    
+                    <button className="user-profile-button-small"
+                        onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
+                    >Submit</button> 
                     }
                     
                     {(user?.id === sessionUser?.id && !isUpdatingBio && user?.active) ?
-                        <OpenModalButton
-                            className="user-profile-button-small"
-                            buttonText="Delete"
-                            modalComponent={<DeleteProfileModal user={user} />}
-                        />
-                        : user?.id === sessionUser?.id &&
-                        <button className="user-profile-button-small"
-                            onClick={() => handleActivateProfile()}
-                        >Activate</button>
+                    <OpenModalButton
+                        className="user-profile-button-small"
+                        buttonText="Delete"
+                        modalComponent={<DeleteProfileModal user={user} />}
+                    />
+                    : user?.id === sessionUser?.id &&
+                    <button className="user-profile-button-small"
+                        onClick={() => handleActivateProfile()}
+                    >Activate</button>
                     }
                 </div>
                 
                 <div id="user-profile-create-post-div">
-                    {user?.id === sessionUser?.id &&
-                        <p>Status: {user.active ? "Active" : "Inactive"}</p>
-                    }
-                    
-                    <OpenModalButton
-                        className="user-profile-button-small"
-                        buttonText="Create Post"
-                        modalComponent={<CreatePostModal/>}
-                    />
-                </div>
+                {user?.id === sessionUser?.id &&
+                    <p>Status: {user.active ? "Active" : "Inactive"}</p>
+                }
                 
+                {user?.id === sessionUser?.id &&
+                <OpenModalButton
+                    className="user-profile-button-small"
+                    buttonText="Create Post"
+                    modalComponent={<CreatePostModal/>}
+                />
+                }
+                </div>
             </div>
         );
     };
@@ -166,103 +166,104 @@ const UserProfile = () => {
     const showUserBio = () => {
         return (
             <div id="user-profile-bio-div">
-                        <OpenModalButton
-                            className="user-profile-picture-modal"
-                            buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
-                            modalComponent={<ProfilePictureModal user={user} />}
+                <OpenModalButton
+                    className="user-profile-picture-modal"
+                    buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
+                    modalComponent={<ProfilePictureModal user={user} />}
+                />
+                
+                {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
+                <div id="user-profile-bio">
+                    <div>
+                        {!isUpdatingBio ? <>
+                            <p className="user-profile-p">Name: <span className="user-profile-bio-span">{user?.first_name} {user?.middle_name} {user?.last_name}</span></p>
+                            <p className="user-profile-p">Age: <span className="user-profile-bio-span">{user?.age}</span></p>
+                            <p className="user-profile-p">Occupation: <span className="user-profile-bio-span">{user?.occupation}</span></p>
+                        </> : <>
+                            <p className="user-profile-p">Name:</p>
+                            <div id="user-profile-edit-name-div">
+                                <p className="user-profile-bio-p">{errors?.firstName && errors.firstName}</p>
+                                <input type="text" placeholder="First Name"
+                                    className="user-profile-bio-input"
+                                    maxLength={20}
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                                
+                                <p className="user-profile-bio-p">{errors?.middleName && errors.middleName}</p>
+                                <input type="text" placeholder="Middle Name"
+                                    className="user-profile-bio-input"
+                                    maxLength={20}
+                                    value={middleName}
+                                    onChange={(e) => setMiddleName(e.target.value)}
+                                 />
+                                 
+                                <p className="user-profile-bio-p">{errors?.lastName && errors.lastName}</p>
+                                <input type="text" placeholder="Last Name"
+                                    className="user-profile-bio-input"
+                                    maxLength={30}
+                                    value={lastName}
+                                     onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </div>
+                                    
+                            <p className="user-profile-p user-profile-edit-age-p">Age:</p>
+                            <p className="user-profile-bio-p">{errors?.age && errors.age}</p>
+                            <input type="number" placeholder="Age"
+                                className="user-profile-bio-input"
+                                value={age}
+                                onChange={(e) => setAge(e.target.value)}
+                            />
+                                    
+                            <p className="user-profile-p user-profile-edit-age-p">Occupation:</p>
+                            <p className="user-profile-bio-p">{errors?.occupation && errors.occupation}</p>
+                            <input type="text" placeholder="Occupation"
+                                className="user-profile-bio-input"
+                                maxLength={20}
+                                value={occupation}
+                                onChange={(e) => setOccupation(e.target.value)}
+                            />
+                            
+                        </>}
+                    </div>
+                            
+                    <div>
+                    {!isUpdatingBio ? <>
+                        <p className="user-profile-p">Company: <span className="user-profile-bio-span">{user?.company_name}</span></p>
+                        <p className="user-profile-p">Email: <span className="user-profile-bio-span">{user?.work_email}</span></p>
+                        <p className="user-profile-p">Phone: <span className="user-profile-bio-span">{user?.phone_number}</span></p>
+                    </> : <>
+                        <p className="user-profile-p user-profile-edit-age-p">Company:</p>
+                        <p className="user-profile-bio-p">{errors?.company && errors.company}</p>
+                        <input type="text" placeholder="Company Name"
+                            className="user-profile-bio-input"
+                            maxLength={30}
+                            value={company}
+                            onChange={(e) => setCompany(e.target.value)}
                         />
-                        {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
-                        <div id="user-profile-bio">
-                            <div>
-                                {!isUpdatingBio ? <>
-                                    <p className="user-profile-p"><b>Name:</b> {user?.first_name} {user?.middle_name} {user?.last_name}</p>
-                                    <p className="user-profile-p"><b>Age:</b> {user?.age}</p>
-                                    <p className="user-profile-p"><b>Occupation:</b> {user?.occupation}</p>
-                                </> : <>
-                                    <p className="user-profile-p"><b>Name:</b></p>
-                                    <div id="user-profile-edit-name-div">
-                                        <p className="user-profile-bio-p">{errors?.firstName && errors.firstName}</p>
-                                        <input type="text" placeholder="First Name"
-                                            className="user-profile-bio-input"
-                                            maxLength={20}
-                                            value={firstName}
-                                            onChange={(e) => setFirstName(e.target.value)}
-                                        />
-                                        <p className="user-profile-bio-p">{errors?.middleName && errors.middleName}</p>
-                                        <input type="text" placeholder="Middle Name"
-                                            className="user-profile-bio-input"
-                                            maxLength={20}
-                                            value={middleName}
-                                            onChange={(e) => setMiddleName(e.target.value)}
-                                        />
-                                        <p className="user-profile-bio-p">{errors?.lastName && errors.lastName}</p>
-                                        <input type="text" placeholder="Last Name"
-                                            className="user-profile-bio-input"
-                                            maxLength={30}
-                                            value={lastName}
-                                            onChange={(e) => setLastName(e.target.value)}
-                                        />
-                                    </div>
                                     
-                                    <p className="user-profile-p user-profile-edit-age-p"><b>Age:</b></p>
-                                    <p className="user-profile-bio-p">{errors?.age && errors.age}</p>
-                                    <input type="number" placeholder="Age"
-                                        className="user-profile-bio-input"
-                                        value={age}
-                                        onChange={(e) => setAge(e.target.value)}
-                                    />
+                        <p className="user-profile-p user-profile-edit-age-p">Email:</p>
+                        <p className="user-profile-bio-p">{errors?.email && errors.email}</p>
+                        <input type="text" placeholder="Work Email"
+                            className="user-profile-bio-input"
+                            maxLength={30}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                                     
-                                    <p className="user-profile-p user-profile-edit-age-p"><b>Occupation:</b></p>
-                                    <p className="user-profile-bio-p">{errors?.occupation && errors.occupation}</p>
-                                    <input type="text" placeholder="Occupation"
-                                        className="user-profile-bio-input"
-                                        maxLength={20}
-                                        value={occupation}
-                                        onChange={(e) => setOccupation(e.target.value)}
-                                    />
-                                </>
-                                }
-                            </div>
-                            
-                            <div>
-                                {!isUpdatingBio ? <>
-                                    <p><b>Company: </b> {user?.company_name}</p>
-                                    <p><b>Email: </b> {user?.work_email}</p>
-                                    <p><b>Phone: </b> {user?.phone_number}</p>
-                                </> : <>
-                                    <p className="user-profile-p user-profile-edit-age-p"><b>Company: </b></p>
-                                    <p className="user-profile-bio-p">{errors?.company && errors.company}</p>
-                                    <input type="text" placeholder="Company Name"
-                                        className="user-profile-bio-input"
-                                        maxLength={30}
-                                        value={company}
-                                        onChange={(e) => setCompany(e.target.value)}
-                                    />
-                                    
-                                    <p className="user-profile-p user-profile-edit-age-p"><b>Email: </b></p>
-                                    <p className="user-profile-bio-p">{errors?.email && errors.email}</p>
-                                    <input type="text" placeholder="Work Email"
-                                        className="user-profile-bio-input"
-                                        maxLength={30}
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                    
-                                    <p className="user-profile-p user-profile-edit-age-p"><b>Phone: </b></p>
-                                    <p className="user-profile-bio-p">{errors?.phone_number && errors.phone_number}</p>
-                                    <input type="text" placeholder="Phone Number"
-                                        className="user-profile-bio-input"
-                                        maxLength={14}
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                    />
-                                </>}
-                            </div>
-                            
+                        <p className="user-profile-p user-profile-edit-age-p">Phone:</p>
+                        <p className="user-profile-bio-p">{errors?.phone_number && errors.phone_number}</p>
+                        <input type="text" placeholder="Phone Number"
+                            className="user-profile-bio-input"
+                            maxLength={14}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                        />
+                    </>}
+                    </div>          
                 </div>
                 
-                {showProfileEditButtons()}
-                
+                {showProfileEditButtons()} 
             </div>
         );
     };
@@ -273,7 +274,6 @@ const UserProfile = () => {
                 <div className='user-profile-container'>
                     
                     {showUserBio()}
-                    
                     
                     <div id="user-profile-bottom-div">
                         <div id="user-profile-qualifications">
@@ -350,19 +350,15 @@ const UserProfile = () => {
                                     />} */}
                                 </div>
                             </div>
-                            
                         </div>
                             
                         <div id="user-profile-posts-div">
                             {user?.posts?.map(post => <Post key={post.id} post={post} user={user}/>)}
                         </div>
-                    
+                        
                     </div>
-                    
                 </div>
-                
             </div>
-            
         </div>
     );
 };

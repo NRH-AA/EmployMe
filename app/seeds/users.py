@@ -11,8 +11,12 @@ def seed_users():
         password='password',
         first_name = 'Demo',
         last_name = 'User',
+        occupation = 'Demo Occupation',
+        phone_number = '123-456-7890',
+        company_name = 'Demo Company Name',
+        work_email = 'SuperDemo@aa.io',
         profile_picture = default_profile_picture,
-        age = 120
+        age = 40
     )
     hank = User(
         username='Hank', 
@@ -33,13 +37,45 @@ def seed_users():
         password='password',
         first_name = 'Bobby',
         last_name = 'Hill',
+        occupation = 'Gamer',
+        phone_number = '912-748-4422',
+        company_name = '',
+        work_email = 'IDontWork@aa.io',
         profile_picture='https://static.wikia.nocookie.net/kingofthehill/images/5/59/Bobbeah.jpg',
         age = 16
     )
-
-    db.session.add(demo)
-    db.session.add(hank)
-    db.session.add(bobby)
+    Peter = User(
+        username='PeterGriffen', 
+        email='peter@aa.io', 
+        password='password',
+        first_name = 'Justin',
+        middle_name = 'Peter',
+        last_name = 'McFinnigan',
+        occupation = 'Actor',
+        phone_number = '144-144-1444',
+        company_name = 'Family Guy Studios',
+        work_email = 'PetersGreat@Quahog.io',
+        profile_picture='https://www.looper.com/img/gallery/the-real-life-inspiration-for-family-guys-peter-griffin/intro-1672162426.jpg',
+        age = 46
+    )
+    Gandalf = User(
+        username='Gandalfgreat', 
+        email='gandalf@aa.io', 
+        password='password',
+        first_name = 'Gandalf',
+        middle_name = 'The',
+        last_name = 'Grey',
+        occupation = 'Wizard',
+        phone_number = '144-144-1444',
+        company_name = '',
+        work_email = 'GandalfTheGrey@Mordor.io',
+        profile_picture='https://cdn.vox-cdn.com/thumbor/JTU_mffWCBNC0NmjqOk6ycI8HDw=/0x0:3823x1595/1400x933/filters:focal(1607x493:2217x1103):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/70505683/ian_mckellan_gandalf_4k_lotr.0.jpg',
+        age = 24000
+    )
+    
+    users = [demo, hank, bobby, Peter, Gandalf]
+    
+    add_users = [db.session.add(user) for user in users]
     db.session.commit()
 
 
