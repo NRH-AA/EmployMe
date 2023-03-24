@@ -1,13 +1,34 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, User, Post
+from app.models import db, User, Post, Image
 
 post_routes = Blueprint('posts', __name__)
 
-@post_routes.route('/<int:id>', methods=['POST'])
+@post_routes.route('', methods=['POST'])
 @login_required
-def create_post(id):
-    pass
+def create_post():
+    data = request.get_json()
+    user_id = data['userId']
+    title = data['title']
+    text = data['text']
+    urls = data['urls']
+    
+    post = Post(
+        post_title = title,
+        post_text = text
+    )
+    
+    for url in urls:
+        image = Image(url = url)
+        db.session.add(image)
+        post.images.append(image)
+        
+    db.session.add(post)
+    user = User.query.get(user_id)
+    user.posts.append(post)
+    db.session.commit()
+    return user.to_dict_all()
+    
 
 @post_routes.route('/<int:id>', methods=['PUT'])
 @login_required
@@ -38,7 +59,18 @@ def update_post(id):
     db.session.commit()
     return user.to_dict_all()
 
-@post_routes.route('/<int:id>/images')
+@post_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
-def add_post_image(id):
-    pass
+def delete_post(id):
+    data = request.get_json()
+    user_id = data['userId']
+    
+    post = Post.query.get(id)
+    
+    if not post:
+        return {'errors': ['Failed to get post']}
+    
+    db.session.delete(post)
+    db.session.commit()
+    user = User.query.get(user_id)
+    return user.to_dict_all()
