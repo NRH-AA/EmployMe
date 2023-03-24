@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
 import { deleteUserProfileThunk } from "../../store/session";
+import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
 // import EducationModal from "./EducationModal";
@@ -119,39 +120,52 @@ const UserProfile = () => {
     
     if (!user && !sessionUser) return null;
     
-    return (
-        <div id="user-profile-container">
-            <div id="user-profile-content-container">
-                <div className='user-profile-container'>
-                    
-                    <div id="user-profile-update-button">
-                        {(user?.id === sessionUser?.id && 
-                        !isUpdatingBio) ? 
+    
+    const showProfileEditButtons = () => {
+        return (
+            <div id="user-profile-update-button">
+                <div id="user-profile-update-buttons-div">
+                    {(user?.id === sessionUser?.id && !isUpdatingBio) ? 
                         <button className="user-profile-button-small"
                             onClick={() => setIsUpdatingBio(!isUpdatingBio)}
                         >Update</button> : user?.id === sessionUser?.id &&
-                        <button className="user-profile-button-small"
-                            onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
-                        >Submit</button> 
-                        }
-                        {(user?.id === sessionUser?.id && !isUpdatingBio && user?.active) ?
-                            <OpenModalButton
-                                className="user-profile-button-small"
-                                buttonText="Delete"
-                                modalComponent={<DeleteProfileModal user={user} />}
-                            />
-                            : user?.id === sessionUser?.id &&
                             <button className="user-profile-button-small"
-                                onClick={() => handleActivateProfile()}
-                            >Activate</button>
-                        }
-                        <br></br>
-                        {user?.id === sessionUser?.id &&
-                            <p>Status: {user.active ? "Active" : "Inactive"}</p>
-                        }
-                    </div>
+                                onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
+                        >Submit</button> 
+                    }
                     
-                    <div id="user-profile-bio-div">
+                    {(user?.id === sessionUser?.id && !isUpdatingBio && user?.active) ?
+                        <OpenModalButton
+                            className="user-profile-button-small"
+                            buttonText="Delete"
+                            modalComponent={<DeleteProfileModal user={user} />}
+                        />
+                        : user?.id === sessionUser?.id &&
+                        <button className="user-profile-button-small"
+                            onClick={() => handleActivateProfile()}
+                        >Activate</button>
+                    }
+                </div>
+                
+                <div id="user-profile-create-post-div">
+                    {user?.id === sessionUser?.id &&
+                        <p>Status: {user.active ? "Active" : "Inactive"}</p>
+                    }
+                    
+                    <OpenModalButton
+                        className="user-profile-button-small"
+                        buttonText="Create Post"
+                        modalComponent={<CreatePostModal/>}
+                    />
+                </div>
+                
+            </div>
+        );
+    };
+    
+    const showUserBio = () => {
+        return (
+            <div id="user-profile-bio-div">
                         <OpenModalButton
                             className="user-profile-picture-modal"
                             buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
@@ -159,7 +173,7 @@ const UserProfile = () => {
                         />
                         {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
                         <div id="user-profile-bio">
-                            <div id="user-profile-bio-container">
+                            <div>
                                 {!isUpdatingBio ? <>
                                     <p className="user-profile-p"><b>Name:</b> {user?.first_name} {user?.middle_name} {user?.last_name}</p>
                                     <p className="user-profile-p"><b>Age:</b> {user?.age}</p>
@@ -245,8 +259,20 @@ const UserProfile = () => {
                                 </>}
                             </div>
                             
-                        </div>
-                    </div>
+                </div>
+                
+                {showProfileEditButtons()}
+                
+            </div>
+        );
+    };
+    
+    return (
+        <div id="user-profile-container">
+            <div id="user-profile-content-container">
+                <div className='user-profile-container'>
+                    
+                    {showUserBio()}
                     
                     
                     <div id="user-profile-bottom-div">

@@ -7,20 +7,17 @@ from app.utils import (
 image_routes = Blueprint('images', __name__)
 
 
-@image_routes.route('/<int:id>', methods=['POST'])
+@image_routes.route('', methods=['PUT'])
 @login_required
-def update_image(id):
+def update_image():
     data = request.get_json()
     user_id = data['userId']
-    url = data['url']
-    
-    image = Image.query.get(id)
+    images = data['images']
 
-    if not image:
-        return {'errors', ['Failed to find image']}, 400
+    for image in images:
+        updateImage = Image.query.get(image['id'])
+        updateImage.url = image['url']
     
-    image.url = url
     db.session.commit()
-    
     user = User.query.get(user_id)
     return user.to_dict_all()

@@ -177,15 +177,58 @@ export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	return data;
 }
 
-export const updateImage = (imageId, url, userId) => async (dispatch) => {
-	const response = await fetch(`/api/images/${imageId}`, {
-		method: "POST",
+export const updateImages = (userId, images) => async (dispatch) => {
+	const response = await fetch(`/api/images`, {
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
 			userId: userId,
-			url: url
+			images: images
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
+export const createPost = (postData) => async (dispatch) => {
+	const response = await fetch(`/api/posts`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: postData.userId,
+			title: postData.title,
+			text: postData.text,
+			urls: postData.urls
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
+export const deletePost = (postId, userId) => async (dispatch) => {
+	const response = await fetch(`/api/posts/${postId}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: userId,
 		})
 	});
 
@@ -200,7 +243,7 @@ export const updateImage = (imageId, url, userId) => async (dispatch) => {
 
 export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	const response = await fetch(`/api/posts/${postId}`, {
-		method: "POST",
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},
