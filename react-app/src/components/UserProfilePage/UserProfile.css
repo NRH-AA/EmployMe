@@ -22,7 +22,7 @@
 }
 
 #user-profile-bio {
-    width: 794px;
+    width: 600px;
     height: auto;
     display: flex;
     justify-content: space-around;
@@ -30,9 +30,8 @@
 }
 
 #user-profile-update-button {
-    float: right;
-    margin-top: 5px;
-    margin-right: 10px;
+    margin-top: -120px;
+    margin-left: 20px;
 }
 
 .user-profile-p {
@@ -40,8 +39,16 @@
     flex: auto;
 }
 
-#user-profile-bio-container {
-   
+#user-profile-update-buttons-div {
+    display: flex;
+    gap: 20px;
+    margin-top: 130px;
+}
+
+#user-profile-create-post-div {
+   display: flex;
+   flex-direction: column;
+   gap: 120px;
 }
 
 #user-profile-edit-name-div {
@@ -270,6 +277,14 @@
     width: 25px;
     border-radius: 15px;
     opacity: 0.7;
+}
+
+.post-remove-image-button:hover {
+    opacity: 0.8;
+}
+
+.post-remove-image-button:active {
+    opacity: 0.5;
 }
 
 .upload-post-img-input {

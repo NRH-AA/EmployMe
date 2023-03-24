@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { updateImage, updatePost } from "../../store/session";
+import { updateImages, updatePost } from "../../store/session";
 
 
 const Post = ({post, user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdating, setIsUpdating] = useState(false);
-    const [pictures, setPictures] = useState(post?.images || []);
+    const [pictures, setPictures] = useState(post.images || []);
     const [imageLoading, setImageLoading] = useState(false);
-    const [title, setTitle] = useState(post?.post_title || '');
-    const [text, setText] = useState(post?.post_text || '');
+    const [title, setTitle] = useState(post.post_title || '');
+    const [text, setText] = useState(post.post_text || '');
     const [errors, setErrors] = useState([]);
     
     if (!user) return null;
@@ -45,13 +45,23 @@ const Post = ({post, user}) => {
     
     const removePicture = (index) => {
         const newPictures = [...pictures];
-        newPictures[index].url = '';
+        newPictures[index] = {id: newPictures[index].id, url: ''};
         setPictures(newPictures)
     }
     
     const handleSubmitEdit = async () => {
-        for (const picture of pictures) {
-            await dispatch(updateImage(picture.id, picture.url, sessionUser.id))
+        const updateData = [];
+        for (let i = 0; i < pictures.length; i++) {
+            const picture = pictures[i]
+            if (picture.url !== post.images[i].url && picture.url !== '') {
+                updateData.push({id: picture.id, url: picture.url})
+            }
+        }
+        
+        if (updateData.length > 0) {
+            await dispatch(updateImages(sessionUser.id, updateData))
+        } else {
+            setPictures(post.images);
         }
         
         if (title === post.post_title && text === post.post_text) return setIsUpdating(!isUpdating);
@@ -136,7 +146,7 @@ const Post = ({post, user}) => {
                             </div>
                         }
                         
-                        {isUpdating && img.url &&
+                        {isUpdating && pictures[i].url &&
                             <button className="post-remove-image-button"
                                 onClick={() => removePicture(i)}
                             >X</button>
