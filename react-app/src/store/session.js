@@ -177,15 +177,15 @@ export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	return data;
 }
 
-export const updateImage = (imageId, url, userId) => async (dispatch) => {
-	const response = await fetch(`/api/images/${imageId}`, {
-		method: "POST",
+export const updateImages = (userId, images) => async (dispatch) => {
+	const response = await fetch(`/api/images`, {
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
 			userId: userId,
-			url: url
+			images: images
 		})
 	});
 
@@ -200,7 +200,7 @@ export const updateImage = (imageId, url, userId) => async (dispatch) => {
 
 export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	const response = await fetch(`/api/posts/${postId}`, {
-		method: "POST",
+		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},

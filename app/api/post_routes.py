@@ -6,6 +6,11 @@ post_routes = Blueprint('posts', __name__)
 
 @post_routes.route('/<int:id>', methods=['POST'])
 @login_required
+def create_post(id):
+    pass
+
+@post_routes.route('/<int:id>', methods=['PUT'])
+@login_required
 def update_post(id):
     data = request.get_json()
     post_title = data['postTitle'] or False
@@ -32,3 +37,8 @@ def update_post(id):
         
     db.session.commit()
     return user.to_dict_all()
+
+@post_routes.route('/<int:id>/images')
+@login_required
+def add_post_image(id):
+    pass
