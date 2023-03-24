@@ -4,7 +4,7 @@ from app.models import db, User, Image
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
-image_routes = Blueprint('posts', __name__)
+image_routes = Blueprint('images', __name__)
 
 
 @image_routes.route('/<int:id>', methods=['POST'])

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { updateImage } from "../../store/session";
+import { updateImage, updatePost } from "../../store/session";
 
 
 const Post = ({post, user}) => {
@@ -9,6 +9,8 @@ const Post = ({post, user}) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [pictures, setPictures] = useState(post?.images || []);
     const [imageLoading, setImageLoading] = useState(false);
+    const [title, setTitle] = useState(post?.post_title || '');
+    const [text, setText] = useState(post?.post_text || '');
     const [errors, setErrors] = useState([]);
     
     if (!user) return null;
@@ -51,6 +53,14 @@ const Post = ({post, user}) => {
         for (const picture of pictures) {
             await dispatch(updateImage(picture.id, picture.url, sessionUser.id))
         }
+        
+        if (title === post.post_title && text === post.post_text) return setIsUpdating(!isUpdating);
+        
+        const postData = {}
+        if (title !== post.post_title) postData.postTitle = title;
+        if (text !== post.post_text) postData.postText = text;
+        
+        await dispatch(updatePost(post.id, sessionUser.id, postData));
 
         setIsUpdating(!isUpdating)
     }
@@ -65,6 +75,43 @@ const Post = ({post, user}) => {
                 <button className="user-profile-button-small post-edit-button"
                     onClick={() => handleSubmitEdit()}
                 >Submit</button>
+        );
+    };
+    
+    const showTitle = () => {
+        return (
+            <div>
+            {!isUpdating ?
+                <h2 className="profile-post-h2">{post.post_title}</h2>
+            :
+                <input className="profile-post-title-input" 
+                    type="text" 
+                    placeholder="Title"
+                    maxLength={50}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    autoFocus
+                />
+            }
+            </div>
+        ); 
+    };
+    
+    const showText = () => {
+        return (
+            <>
+            {!isUpdating ?
+                <p>{post?.post_text}</p>
+            :
+                <textarea className="profile-post-text-input"
+                    type="text" 
+                    placeholder="What would you like to say?"
+                    maxLength={200}
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                />
+            }
+            </>
         );
     };
     
@@ -104,7 +151,8 @@ const Post = ({post, user}) => {
         <div className="profile-post-div-container">
              
              <div className="post-title-bar-div">
-                <h2 className="profile-post-h2">{post.post_title}</h2>
+                
+                {showTitle()}
                 
                 {showUpdateButton()}
             </div>
@@ -112,7 +160,7 @@ const Post = ({post, user}) => {
             {showPostImages()}
             
             <div className="profile-post-text-container">
-                <p>{post?.post_text}</p>
+                {showText()}
             </div>
         </div>
     );
