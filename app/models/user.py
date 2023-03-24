@@ -62,6 +62,7 @@ class User(db.Model, UserMixin):
             'education': self.education,
             'work_email': self.work_email,
             'skills': self.skills,
+            'active': self.active,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }
@@ -83,6 +84,7 @@ class User(db.Model, UserMixin):
             'education': self.education,
             'work_email': self.work_email,
             'skills': self.skills,
+            'active': self.active,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
             'messages': [message.to_dict() for message in self.messages],

@@ -1,5 +1,6 @@
 // constants
 const SET_USER = "session/SET_USER";
+const SET_ALL_USERS = "session/SET_ALL_USERS";
 const REMOVE_USER = "session/REMOVE_USER";
 
 const setUser = (user) => ({
@@ -7,11 +8,14 @@ const setUser = (user) => ({
 	payload: user,
 });
 
+const setAllUsers = (users) => ({
+	type: SET_ALL_USERS,
+	payload: users
+})
+
 const removeUser = () => ({
 	type: REMOVE_USER,
 });
-
-const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -156,13 +160,57 @@ export const updateUserSkills = (userId, text) => async (dispatch) => {
 	return data
 };
 
+export const getAllUsersThunk = () => async (dispatch) => {
+	const res = await fetch('/api/users');
+    const data = await res.json();
+	dispatch(setAllUsers(data))
+	return data;
+}
 
+export const deleteUserProfileThunk = (userId) => async (dispatch) => {
+	const res = await fetch(`/api/users/${userId}/profile`, {
+		method: 'DELETE'
+	});
+	
+	const data = await res.json();
+	dispatch(setUser(data))
+	return data;
+}
+
+export const updateImage = (imageId, url, userId) => async (dispatch) => {
+	const response = await fetch(`/api/images/${imageId}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: userId,
+			url: url
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
+const initialState = { user: null, users: null };
 export default function reducer(state = initialState, action) {
+	let newState = {...state}
 	switch (action.type) {
 		case SET_USER:
-			return { user: action.payload };
+			newState.user = action.payload;
+			return newState;
 		case REMOVE_USER:
-			return { user: null };
+			newState.user = null;
+			return newState;
+		case SET_ALL_USERS:
+			newState.users = action.payload.users;
+			return newState;
 		default:
 			return state;
 	}

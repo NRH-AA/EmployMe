@@ -18,7 +18,7 @@
     height: auto;
     margin: auto;
     box-shadow: 0px 0px 2px 2px black;
-    background: linear-gradient(#c4c4c4, #868686);
+    background: linear-gradient(#c4c4c4, #686868);
 }
 
 #user-profile-bio {
@@ -88,7 +88,7 @@
 
 #user-profile-qualifications {
     width: 220px;
-    height: 600px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -97,10 +97,9 @@
 }
 
 .user-profile-qualifications-container {
-    height: 120px;
+    height: auto;
     width: 200px;
     background-color: grey;
-    border: 1px solid black;
 }
 
 .user-profile-qualification {
@@ -121,38 +120,6 @@
     align-items: center;
     width: 797px;
     gap: 10px;
-}
-
-.profile-post-div-container{
-    max-height: 400px;
-    width: 100%;
-    background-color: rgb(75, 75, 75);
-    border-radius: 10px;
-    box-shadow: 0px 0px 2px 2px black;
-}
-
-.profile-post-h2 {
-    margin-left: 20px;
-    color: black;
-}
-
-.profile-post-img-container {
-    display: flex;
-    flex-wrap: none;
-}
-
-.profile-post-img {
-    min-height: 100px;
-    min-width: 125px;
-    max-height: 200px;
-    max-width: 225px;
-    flex: 25%;
-}
-
-.profile-post-text-container {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 20px;
 }
 
 #profile-picture-edit-text {
@@ -249,6 +216,95 @@
     justify-content: space-around;
 }
 
+#user-profile-skills-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    height: auto;
+    min-height: 50px;
+    width: 200px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid black;
+}
+
+.user-skills-p {
+    margin-top: -5px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: default;
+}
+
+.user-skills-p:hover {
+    color: white;
+}
+
+
+/* Post Componant */
+.profile-post-div-container{
+    max-height: 400px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 2px black;
+}
+
+.post-title-bar-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-edit-button {
+    margin-right: 10px;
+    margin-top: -30px;
+}
+
+.post-remove-image-button {
+    position: absolute;
+    margin-left: -40px;
+    margin-top: 15px;
+    background-color: red;
+    height: 25px;
+    width: 25px;
+    border-radius: 15px;
+    opacity: 0.7;
+}
+
+.upload-post-img-input {
+    width: 262px;
+    height: 200px;
+    text-indent: 16px;
+    background-color: rgb(54, 54, 54);
+    border: 2px dashed rgb(85, 85, 85);
+    color: rgb(250, 0, 0);
+    cursor: pointer;
+}
+
+.profile-post-h2 {
+    margin-left: 20px;
+    color: black;
+}
+
+.profile-post-img-container {
+    display: flex;
+    flex-wrap: none;
+    justify-content: space-between;
+}
+
+.profile-post-img {
+    width: 262px;
+    height: 200px;
+    border: 2px solid black;
+}
+
+.profile-post-text-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    font-weight: 700;
+}
 
 
 /* Skills Modal */
@@ -313,6 +369,21 @@
     justify-content: space-around;
     margin-top: 50px;
     padding-bottom: 20px;
+}
+
+
+
+/* Delete Profile Modal*/
+#delete-profile-container {
+    background-color: rgb(148, 148, 148);
+    border: 3px solid black;
+    padding: 25px;
+}
+
+#delete-profile-buttons-div {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
 }
 
 ::file-selector-button {
