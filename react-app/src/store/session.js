@@ -177,6 +177,27 @@ export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	return data;
 }
 
+export const updateImage = (imageId, url, userId) => async (dispatch) => {
+	const response = await fetch(`/api/images/${imageId}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: userId,
+			url: url
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
 const initialState = { user: null, users: null };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
