@@ -1,6 +1,7 @@
 import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { createPost } from "../../store/session";
 import './CreatePost.css';
 
 const CreatePostModal = () => {
@@ -63,11 +64,37 @@ const CreatePostModal = () => {
         if (index === 3) return setPicture3('');
     }
     
-    const handleSubmit = () => {
-        
-        
-    }
+    const default_image = 'https://www.computerhope.com/jargon/g/guest-user.png';
     
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        if (!title || !text) return setErrors(['Title and text are required.']);
+        
+        const urls = [];
+        
+        if (picture1) {
+            urls.push(picture1);
+        } else urls.push(default_image);
+        
+        if (picture2) {
+            urls.push(picture2);
+        } else urls.push(default_image);
+        
+        if (picture3) {
+            urls.push(picture3);
+        } else urls.push(default_image);
+        
+        const postData = {
+            userId: sessionUser.id,
+            title,
+            text,
+            urls
+        }
+        
+        await dispatch(createPost(postData));
+        return closeModal();
+    }
     
     const showPicutes = () => {
         return (
@@ -168,7 +195,7 @@ const CreatePostModal = () => {
                         onClick={closeModal}
                     >Cancel</button>
                     <button className="create-post-button"
-                    
+                        onClick={handleSubmit}
                     >Submit</button>
                 </div> 
                 

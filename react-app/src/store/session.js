@@ -198,6 +198,49 @@ export const updateImages = (userId, images) => async (dispatch) => {
 	return data
 };
 
+export const createPost = (postData) => async (dispatch) => {
+	const response = await fetch(`/api/posts`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: postData.userId,
+			title: postData.title,
+			text: postData.text,
+			urls: postData.urls
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
+export const deletePost = (postId, userId) => async (dispatch) => {
+	const response = await fetch(`/api/posts/${postId}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: userId,
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	
+	return data
+};
+
 export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	const response = await fetch(`/api/posts/${postId}`, {
 		method: "PUT",

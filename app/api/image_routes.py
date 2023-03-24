@@ -7,11 +7,6 @@ from app.utils import (
 image_routes = Blueprint('images', __name__)
 
 
-@image_routes.route('', methods=['POST'])
-@login_required
-def create_images():
-    pass
-
 @image_routes.route('', methods=['PUT'])
 @login_required
 def update_image():
