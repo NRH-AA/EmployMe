@@ -36,7 +36,13 @@
 
 .user-profile-p {
     font-size: 18px;
-    flex: auto;
+    font-weight: 700;
+    color: rgb(223, 0, 0);
+}
+
+.user-profile-bio-span {
+    font-size: 16px;
+    color: black;
 }
 
 #user-profile-update-buttons-div {

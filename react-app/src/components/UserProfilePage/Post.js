@@ -89,95 +89,90 @@ const Post = ({post, user}) => {
     const showUpdateButton = () => {
         return (
             (user?.id === sessionUser?.id && !isUpdating) ? <div>
-                <button className="user-profile-button-small post-edit-button"
-                    onClick={() => setIsUpdating(!isUpdating)}
-                >Edit</button>
-                <button className="user-profile-button-small post-edit-button"
-                    onClick={() => handlePostDelete()}
-                >Delete</button> </div>
-                :
-                <button className="user-profile-button-small post-edit-button"
-                    onClick={() => handleSubmitEdit()}
-                >Submit</button>
+            <button className="user-profile-button-small post-edit-button"
+                onClick={() => setIsUpdating(!isUpdating)}
+            >Edit</button>
+            
+            <button className="user-profile-button-small post-edit-button"
+                onClick={() => handlePostDelete()}
+            >Delete</button> </div>
+            :
+            <button className="user-profile-button-small post-edit-button"
+                onClick={() => handleSubmitEdit()}
+             >Submit</button>
         );
     };
     
     const showTitle = () => {
-        return (
-            <div>
+        return <div>
             {!isUpdating ?
-                <h2 className="profile-post-h2">{post.post_title}</h2>
+            <h2 className="profile-post-h2">{post.post_title}</h2>
             :
-                <input className="profile-post-title-input" 
-                    type="text" 
-                    placeholder="Title"
-                    maxLength={50}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    autoFocus
-                />
+            <input className="profile-post-title-input" 
+                type="text" 
+                placeholder="Title"
+                maxLength={50}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                autoFocus
+            />
             }
-            </div>
-        ); 
+        </div>
     };
     
     const showText = () => {
-        return (
-            <>
+        return (<>
             {!isUpdating ?
-                <p>{post?.post_text}</p>
+            <p>{post?.post_text}</p>
             :
-                <textarea className="profile-post-text-input"
-                    type="text" 
-                    placeholder="What would you like to say?"
-                    maxLength={200}
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
+            <textarea className="profile-post-text-input"
+                type="text" 
+                placeholder="What would you like to say?"
+                maxLength={200}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+            />
             }
-            </>
-        );
+        </>);
     };
     
     const showPostImages = () => {
         return (
             <div className="profile-post-img-container">
-                {post?.images?.map((img, i) => {
-                    return <div key={img.id || i}>
-                        {(pictures[i] && pictures[i].url && pictures[i].url !== default_image) ?
-                            <img className="profile-post-img"
-                                src={pictures[i].url} 
-                                alt="PostImage"
-                            />
-                            : (isUpdating && pictures[i].url === default_image) &&
-                            <div id="upload-image-container">
-                                <input
-                                    className="upload-post-img-input"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => updateImageFile(e, i)}
-                                />
-                            </div>
-                        }
+            {post?.images?.map((img, i) => 
+            <div key={img.id || i}>
+                {(pictures[i] && pictures[i].url && pictures[i].url !== default_image) ?
+                <img className="profile-post-img"
+                    src={pictures[i].url} 
+                    alt="PostImage"
+                />
+                : (isUpdating && pictures[i].url === default_image) &&
+                <div id="upload-image-container">
+                    <input
+                        className="upload-post-img-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => updateImageFile(e, i)}
+                    />
+                </div>
+                }
                         
-                        {(isUpdating && pictures[i].url && pictures[i].url !== default_image) &&
-                            <button className="post-remove-image-button"
-                                onClick={() => removePicture(i)}
-                            >X</button>
-                        }
-                    </div>
-                })}
+                {(isUpdating && pictures[i].url && pictures[i].url !== default_image) &&
+                    <button className="post-remove-image-button"
+                        onClick={() => removePicture(i)}
+                >X</button>
+                }
+                
+            </div>)}
             </div>
         );
     };
     
     return (
         <div className="profile-post-div-container">
-             
-             <div className="post-title-bar-div">
-                
+            
+            <div className="post-title-bar-div">
                 {showTitle()}
-                
                 {showUpdateButton()}
             </div>
 
@@ -186,6 +181,7 @@ const Post = ({post, user}) => {
             <div className="profile-post-text-container">
                 {showText()}
             </div>
+            
         </div>
     );
 };
