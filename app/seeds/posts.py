@@ -13,8 +13,12 @@ def seed_posts():
         post_text = "Example Post Text 2"
     )
     
-    images = Image.query.all()
-    add_images_post1 = [post1.images.append(image) for image in images]
+    image1 = Image.query.get(1)
+    image2 = Image.query.get(2)
+    image3 = Image.query.get(3)
+    post1.images.append(image1)
+    post1.images.append(image2)
+    post1.images.append(image3)
     
     posts = [post1, post2]
     add_posts = [db.session.add(post) for post in posts]

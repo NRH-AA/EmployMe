@@ -261,6 +261,27 @@
     margin-top: -30px;
 }
 
+.post-remove-image-button {
+    position: absolute;
+    margin-left: -40px;
+    margin-top: 15px;
+    background-color: red;
+    height: 25px;
+    width: 25px;
+    border-radius: 15px;
+    opacity: 0.7;
+}
+
+.upload-post-img-input {
+    width: 262px;
+    height: 200px;
+    text-indent: 16px;
+    background-color: rgb(54, 54, 54);
+    border: 2px dashed rgb(85, 85, 85);
+    color: rgb(250, 0, 0);
+    cursor: pointer;
+}
+
 .profile-post-h2 {
     margin-left: 20px;
     color: black;
@@ -274,7 +295,7 @@
 
 .profile-post-img {
     width: 262px;
-    max-height: 200px;
+    height: 200px;
     border: 2px solid black;
 }
 
