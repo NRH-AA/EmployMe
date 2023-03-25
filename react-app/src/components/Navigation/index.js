@@ -5,6 +5,10 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import Logo from './logo.png';
 
+const showInvalidFeature = () => {
+	alert('Feature coming soon!');
+}
+
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory();
@@ -15,7 +19,12 @@ function Navigation({ isLoaded }){
 		<div id="navigation-container">
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => history.push('/')}/>
-				<input id="searchbar-input" type="text" placeholder='Search Bar'/>
+				<input id="searchbar-input" type="text" 
+					placeholder='Search Bar'
+					value=""
+					onClick={() => showInvalidFeature()}
+					autoFocus
+				/>
 			</div>
 			
 			{isLoaded && <ProfileButton user={sessionUser} />}
