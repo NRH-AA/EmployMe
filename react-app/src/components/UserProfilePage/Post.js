@@ -104,13 +104,15 @@ const Post = ({post, user}) => {
     const showUpdateButton = () => {
         return (
             (user?.active && user?.id === sessionUser?.id && !isUpdating) ? 
-            <div>
+            <div onMouseLeave={() => {if (editButtonPressed) setEditButtonPressed(false)}}>
             <button className="post-edit-ellipsis"
                 onClick={() => setEditButtonPressed(!editButtonPressed)}
             ><i className="fa-solid fa-ellipsis post-edit-ellipsis"></i></button>
             
             {editButtonPressed && 
-                <div className="edit-post-dropdown">
+                <div className="edit-post-dropdown"
+                    onMouseLeave={() => setEditButtonPressed(!editButtonPressed)}
+                >
                     <button className="post-edit-button"
                         onClick={() => {setIsUpdating(!isUpdating); setEditButtonPressed(!editButtonPressed)}}
                     >Edit</button>
