@@ -24,6 +24,12 @@
     border-radius: 50px;
     border: 1px solid rgb(165, 165, 165);
     box-shadow: 0px 0px 2px 2px rgb(83, 83, 83);
+    transition: width 300ms, height 300ms;
+}
+
+.feed-profile-picture:hover {
+    width: 145px;
+    height: 145px;
 }
 
 .user-feed-info-data-div {
@@ -41,7 +47,7 @@
 .feed-info-p {
     font-size: 17px;
     font-weight: 700;
-    color: rgb(226, 0, 0);
+    color: rgb(4, 0, 252);
     margin-bottom: 0px;
     margin-top: 5px;
 }
