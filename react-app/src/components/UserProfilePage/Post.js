@@ -58,13 +58,14 @@ const Post = ({post, user}) => {
     
     const handleSubmitEdit = async () => {
         const updateData = [];
+
         for (let i = 0; i < pictures.length; i++) {
             const picture = pictures[i]
-            if (picture.url !== post.images[i].url && picture.url !== '') {
+            if (picture.url && picture.url !== post.images[i].url && picture.url !== '') {
                 updateData.push({id: picture.id, url: picture.url})
             }
         }
-        
+            
         if (updateData.length > 0) {
             await dispatch(updateImages(sessionUser.id, updateData))
         } else {
