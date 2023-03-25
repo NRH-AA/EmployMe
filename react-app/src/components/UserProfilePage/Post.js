@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateImages, updatePost } from "../../store/session";
 import { deletePost } from "../../store/session";
 
@@ -8,12 +8,17 @@ const Post = ({post, user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [editButtonPressed, setEditButtonPressed] = useState(false);
     const newPictureObjects = [{...post.images[0]}, {...post.images[1]}, {...post.images[2]}];
     const [pictures, setPictures] = useState(newPictureObjects || []);
     const [imageLoading, setImageLoading] = useState(false);
     const [title, setTitle] = useState(post.post_title || '');
     const [text, setText] = useState(post.post_text || '');
     const [errors, setErrors] = useState([]);
+    
+    useEffect(() => {
+        if (!user?.active && isUpdating) setIsUpdating(false);
+    }, [user?.active])
     
     if (!user) return null;
     
@@ -58,13 +63,14 @@ const Post = ({post, user}) => {
     
     const handleSubmitEdit = async () => {
         const updateData = [];
+
         for (let i = 0; i < pictures.length; i++) {
             const picture = pictures[i]
-            if (picture.url !== post.images[i].url && picture.url !== '') {
+            if (picture.url && picture.url !== post.images[i].url && picture.url !== '') {
                 updateData.push({id: picture.id, url: picture.url})
             }
         }
-        
+            
         if (updateData.length > 0) {
             await dispatch(updateImages(sessionUser.id, updateData))
         } else {
@@ -88,16 +94,26 @@ const Post = ({post, user}) => {
     
     const showUpdateButton = () => {
         return (
-            (user?.id === sessionUser?.id && !isUpdating) ? <div>
-            <button className="user-profile-button-small post-edit-button"
-                onClick={() => setIsUpdating(!isUpdating)}
-            >Edit</button>
+            (user?.active && user?.id === sessionUser?.id && !isUpdating) ? 
+            <div>
+            <button className="post-edit-ellipsis"
+                onClick={() => setEditButtonPressed(!editButtonPressed)}
+            ><i className="fa-solid fa-ellipsis post-edit-ellipsis"></i></button>
             
-            <button className="user-profile-button-small post-edit-button"
-                onClick={() => handlePostDelete()}
-            >Delete</button> </div>
-            :
-            <button className="user-profile-button-small post-edit-button"
+            {editButtonPressed && 
+                <div className="edit-post-dropdown">
+                    <button className="post-edit-button"
+                        onClick={() => {setIsUpdating(!isUpdating); setEditButtonPressed(!editButtonPressed)}}
+                    >Edit</button>
+                    
+                    <button className="post-edit-button"
+                        onClick={() => handlePostDelete()}
+                    >Delete</button>
+                </div>
+            }
+            </div>
+            : (user?.active && user?.id === sessionUser?.id && isUpdating) &&
+            <button className="user-profile-button-small post-submit-edit-button"
                 onClick={() => handleSubmitEdit()}
              >Submit</button>
         );

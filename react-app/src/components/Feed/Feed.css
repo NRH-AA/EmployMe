@@ -13,7 +13,7 @@
 .user-feed-info-div {
     display: flex;
     gap: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     text-decoration: none;
     color: black;
 }
@@ -22,12 +22,21 @@
     height: 100px;
     width: 100px;
     border-radius: 50px;
+    border: 1px solid rgb(194, 194, 194);
+    box-shadow: 0px 0px 4px 3px rgb(53, 53, 53);
+    transition: width 200ms, height 200ms, border-radius 200ms;
+}
+
+.feed-profile-picture:hover {
+    width: 145px;
+    height: 145px;
+    border-radius: 100px;
 }
 
 .user-feed-info-data-div {
     width: 600px;
     height: 100px;
-    background-color: rgb(202, 202, 202);
+    background: linear-gradient(#ffffff, #666666);
     border: 2px solid black;
     border-radius: 15px;
     display: flex;
@@ -39,7 +48,7 @@
 .feed-info-p {
     font-size: 17px;
     font-weight: 700;
-    color: red;
+    color: rgb(4, 0, 252);
     margin-bottom: 0px;
     margin-top: 5px;
 }

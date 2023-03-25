@@ -118,15 +118,17 @@ const UserProfile = () => {
     
     if (!user && !sessionUser) return null;
     
+    if (!user?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
     const showProfileEditButtons = () => {
         return (
             <div id="user-profile-update-button">
                 <div id="user-profile-update-buttons-div">
-                    {(user?.id === sessionUser?.id && !isUpdatingBio) ? 
+                    {user?.active && (user?.id === sessionUser?.id && !isUpdatingBio) ? 
                     <button className="user-profile-button-small"
                         onClick={() => setIsUpdatingBio(!isUpdatingBio)}
-                    >Update</button> : user?.id === sessionUser?.id &&
+                    >Update</button> 
+                    : (user?.active && user?.id === sessionUser?.id) &&
                     
                     <button className="user-profile-button-small"
                         onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
@@ -139,8 +141,8 @@ const UserProfile = () => {
                         buttonText="Delete"
                         modalComponent={<DeleteProfileModal user={user} />}
                     />
-                    : user?.id === sessionUser?.id &&
-                    <button className="user-profile-button-small"
+                    : (user?.id === sessionUser?.id) &&
+                    <button className="user-profile-button-small user-profile-activate-button"
                         onClick={() => handleActivateProfile()}
                     >Activate</button>
                     }
@@ -148,12 +150,17 @@ const UserProfile = () => {
                 
                 <div id="user-profile-create-post-div">
                 {user?.id === sessionUser?.id &&
-                    <p>Status: {user.active ? "Active" : "Inactive"}</p>
+                    <p className={user?.active ? "user-profile-status-p" : "user-profile-status-p profile-inactive-status"}>
+                        Status:
+                        <span id={user?.active ? "user-profile-status-p-active" : "user-profile-status-p-inactive"}>
+                            {user?.active ? " Active" : " Inactive"}
+                        </span>
+                    </p>
                 }
                 
-                {user?.id === sessionUser?.id &&
+                {(user?.active && user?.id === sessionUser?.id) &&
                 <OpenModalButton
-                    className="user-profile-button-small"
+                    className="user-profile-button-small profile-create-post-button"
                     buttonText="Create Post"
                     modalComponent={<CreatePostModal/>}
                 />
@@ -169,7 +176,7 @@ const UserProfile = () => {
                 <OpenModalButton
                     className="user-profile-picture-modal"
                     buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
-                    modalComponent={<ProfilePictureModal user={user} />}
+                    modalComponent={user?.id === sessionUser?.id && <ProfilePictureModal user={user} />}
                 />
                 
                 {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
@@ -184,7 +191,7 @@ const UserProfile = () => {
                             <div id="user-profile-edit-name-div">
                                 <p className="user-profile-bio-p">{errors?.firstName && errors.firstName}</p>
                                 <input type="text" placeholder="First Name"
-                                    className="user-profile-bio-input"
+                                    className="user-profile-bio-input login-input"
                                     maxLength={20}
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
@@ -192,7 +199,7 @@ const UserProfile = () => {
                                 
                                 <p className="user-profile-bio-p">{errors?.middleName && errors.middleName}</p>
                                 <input type="text" placeholder="Middle Name"
-                                    className="user-profile-bio-input"
+                                    className="user-profile-bio-input login-input"
                                     maxLength={20}
                                     value={middleName}
                                     onChange={(e) => setMiddleName(e.target.value)}
@@ -200,7 +207,7 @@ const UserProfile = () => {
                                  
                                 <p className="user-profile-bio-p">{errors?.lastName && errors.lastName}</p>
                                 <input type="text" placeholder="Last Name"
-                                    className="user-profile-bio-input"
+                                    className="user-profile-bio-input login-input"
                                     maxLength={30}
                                     value={lastName}
                                      onChange={(e) => setLastName(e.target.value)}
@@ -210,7 +217,7 @@ const UserProfile = () => {
                             <p className="user-profile-p user-profile-edit-age-p">Age:</p>
                             <p className="user-profile-bio-p">{errors?.age && errors.age}</p>
                             <input type="number" placeholder="Age"
-                                className="user-profile-bio-input"
+                                className="user-profile-bio-input login-input"
                                 value={age}
                                 onChange={(e) => setAge(e.target.value)}
                             />
@@ -218,7 +225,7 @@ const UserProfile = () => {
                             <p className="user-profile-p user-profile-edit-age-p">Occupation:</p>
                             <p className="user-profile-bio-p">{errors?.occupation && errors.occupation}</p>
                             <input type="text" placeholder="Occupation"
-                                className="user-profile-bio-input"
+                                className="user-profile-bio-input login-input"
                                 maxLength={20}
                                 value={occupation}
                                 onChange={(e) => setOccupation(e.target.value)}
@@ -236,7 +243,7 @@ const UserProfile = () => {
                         <p className="user-profile-p user-profile-edit-age-p">Company:</p>
                         <p className="user-profile-bio-p">{errors?.company && errors.company}</p>
                         <input type="text" placeholder="Company Name"
-                            className="user-profile-bio-input"
+                            className="user-profile-bio-input login-input"
                             maxLength={30}
                             value={company}
                             onChange={(e) => setCompany(e.target.value)}
@@ -245,7 +252,7 @@ const UserProfile = () => {
                         <p className="user-profile-p user-profile-edit-age-p">Email:</p>
                         <p className="user-profile-bio-p">{errors?.email && errors.email}</p>
                         <input type="text" placeholder="Work Email"
-                            className="user-profile-bio-input"
+                            className="user-profile-bio-input login-input"
                             maxLength={30}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -254,7 +261,7 @@ const UserProfile = () => {
                         <p className="user-profile-p user-profile-edit-age-p">Phone:</p>
                         <p className="user-profile-bio-p">{errors?.phone_number && errors.phone_number}</p>
                         <input type="text" placeholder="Phone Number"
-                            className="user-profile-bio-input"
+                            className="user-profile-bio-input login-input"
                             maxLength={14}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
@@ -280,7 +287,7 @@ const UserProfile = () => {
                             <div className="user-profile-qualifications-container">
                                 <div className="user-profile-qualification">
                                     <p className="user-qualifications-p">SKILLS</p>
-                                    {user?.id === sessionUser?.id && <OpenModalButton
+                                    {(user?.active && user?.id === sessionUser?.id) && <OpenModalButton
                                         className="user-profile-button-small"
                                         buttonText="Update"
                                         modalComponent={<SkillsModal user={user} />}
@@ -294,62 +301,7 @@ const UserProfile = () => {
                                 </div>
                             </div>
                             
-                            <div className="user-profile-qualifications-container">
-                                <div className="user-profile-qualification">
-                                    <p className="user-qualifications-p">EDUCATION</p>
-                                    {user?.id === sessionUser?.id && 
-                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
-                                    }
-                                    {/* {user.id === sessionUser.id && <OpenModalButton
-                                        className="user-profile-button-small"
-                                        buttonText="Update"
-                                        modalComponent={<EducationModal user={user} />}
-                                    />} */}
-                                </div>
-                            </div>
-                            
-                            <div className="user-profile-qualifications-container">
-                                <div className="user-profile-qualification"> 
-                                    <p className="user-qualifications-p">WORK HIST.</p>
-                                    {user?.id === sessionUser?.id && 
-                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
-                                    }
-                                    {/* {user.id === sessionUser.id && <OpenModalButton
-                                        className="user-profile-button-small"
-                                        buttonText="Update"
-                                        modalComponent={<WorkHistoryModal user={user} />}
-                                    />} */}
-                                </div>
-                            </div>
-                            
-                            <div className="user-profile-qualifications-container">
-                                <div className="user-profile-qualification">
-                                    <p className="user-qualifications-p">ACHIEV.</p>
-                                    {user?.id === sessionUser?.id && 
-                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
-                                    }
-                                    {/* {user.id === sessionUser.id && <OpenModalButton
-                                        className="user-profile-button-small"
-                                        buttonText="Update"
-                                        modalComponent={<AchievementsModal user={user} />}
-                                    />} */}
-                                </div>
-                            </div>
-                            
-                            <div className="user-profile-qualifications-container">
-                                <div className="user-profile-qualification">
-                                    <p className="user-qualifications-p">REC.</p>
-                                    {user?.id === sessionUser?.id && 
-                                        <button className="user-profile-button-small" onClick={() => showInvalidFeature()}>Update</button>
-                                    }
-                                    {/* {user.id === sessionUser.id && <OpenModalButton
-                                        className="user-profile-button-small"
-                                        buttonText="Update"
-                                        onClick={showInvalidFeature}
-                                        modalComponent={<RecommendationsModal user={user} />}
-                                    />} */}
-                                </div>
-                            </div>
+                            {/* Add Education, ect here */}
                         </div>
                             
                         <div id="user-profile-posts-div">

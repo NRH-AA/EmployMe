@@ -43,19 +43,33 @@ function ProfileButton({ user }) {
     return history.push(`/profile/${sessionUser.id}`) 
   }
   
+  const showInvalidFeature = () => {
+    alert('Feature coming soon!');
+}
+  
   return (
     <>
       <button id="profile-dropdown-button" onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        <i className="fa-solid fa-circle-user fa-2xl"></i>
       </button>
       <div className={ulClassName} ref={ulRef}>
         {user && (
           <div id="profile-dropdown-container">
-            <p>{user.username}</p>
-            <p>{user.email}</p>
-            <button onClick={() => handleProfileButton()}>Profile Page</button>
-            <button>Company Page</button>
-            <button onClick={handleLogout}>Log Out</button>
+            <p className="profile-dropdown-p">Welcome, {user.first_name} {user.last_name}</p>
+            
+            <div id="profile-dropdown-button-div">
+              <button className="user-dropdown-button"
+                onClick={() => handleProfileButton()}
+              >Profile Page</button>
+              
+              <button className="user-dropdown-button"
+                onClick={() => showInvalidFeature()}
+              >Company Page</button>
+              
+              <button className="user-dropdown-button"
+                onClick={handleLogout}
+              >Log Out</button>
+            </div>
           </div>
         )}
       </div>

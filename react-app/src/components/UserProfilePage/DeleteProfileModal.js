@@ -11,8 +11,7 @@ const DeleteProfileModal = ({user}) => {
     const handleDelete = async () => {
         
         await dispatch(deleteUserProfileThunk(user.id));
-        closeModal();
-        return history.push('/');
+        return closeModal();
     };
     
     return (
