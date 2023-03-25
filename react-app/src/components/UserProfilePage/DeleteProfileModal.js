@@ -1,11 +1,9 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { deleteUserProfileThunk } from "../../store/session";
 
 const DeleteProfileModal = ({user}) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const { closeModal } = useModal();
     
     const handleDelete = async () => {

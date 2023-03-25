@@ -57,3 +57,39 @@
     font-size: 15px;
     color: black;
 }
+
+#feed-footer-div {
+    height: 35px;
+    width: 100%;
+    background: linear-gradient(#dddddd, #636363);
+    border: 1px solid black;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: height 200ms;
+}
+
+#feed-footer-div:hover {
+    height: 40px;
+}
+
+.fa-github, .fa-linkedin {
+    font-size: 25px;
+    transition: font-size 200ms;
+}
+
+.fa-github:hover, .fa-linkedin:hover {
+    font-size: 35px;
+}
+
+.footer-p {
+    color: blue;
+    text-decoration: none;
+}
+
+.footer-p:visited {
+    color: blue;
+}

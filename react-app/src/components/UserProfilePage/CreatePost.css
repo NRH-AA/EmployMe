@@ -18,6 +18,12 @@
     gap: 5px;
 }
 
+.create-post-errors {
+    color: red;
+    font-weight: 700;
+    font-size: 18px;
+}
+
 .create-post-title {
     width: 320px;
     font-weight: 700;

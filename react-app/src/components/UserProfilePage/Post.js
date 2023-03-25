@@ -11,14 +11,17 @@ const Post = ({post, user}) => {
     const [editButtonPressed, setEditButtonPressed] = useState(false);
     const newPictureObjects = [{...post.images[0]}, {...post.images[1]}, {...post.images[2]}];
     const [pictures, setPictures] = useState(newPictureObjects || []);
-    const [imageLoading, setImageLoading] = useState(false);
     const [title, setTitle] = useState(post.post_title || '');
     const [text, setText] = useState(post.post_text || '');
     const [errors, setErrors] = useState([]);
     
     useEffect(() => {
         if (!user?.active && isUpdating) setIsUpdating(false);
-    }, [user?.active])
+    }, [user?.active, isUpdating])
+    
+    useEffect(() => {
+        setErrors(validateEditPost());
+    }, [title, text])
     
     if (!user) return null;
     
@@ -33,7 +36,6 @@ const Post = ({post, user}) => {
         const formData = new FormData();
         formData.append("image", file);
     
-        setImageLoading(true);
         const res = await fetch('/api/users/upload', {
           method: "POST",
           body: formData,
@@ -48,10 +50,6 @@ const Post = ({post, user}) => {
           const newPictures = [...pictures];
           newPictures[index].url = imageUrl;
           setPictures(newPictures);
-          console.log(pictures)
-          console.log(post.images)
-          
-          setImageLoading(false);
         };
     };
     
@@ -61,7 +59,18 @@ const Post = ({post, user}) => {
         setPictures(newPictures)
     }
     
+    const validateEditPost = () => {
+        const newErrors = [];
+        if (!title || !text) newErrors.push('Title and text required');
+        if (title.length > 50 || text.length > 250) newErrors.push('Title (1-50) Text (1-250) characters'); 
+        
+        return newErrors;
+    }
+    
     const handleSubmitEdit = async () => {
+        const newErrors = validateEditPost();
+        if (newErrors.length > 0) return setErrors(newErrors);
+        
         const updateData = [];
 
         for (let i = 0; i < pictures.length; i++) {
@@ -95,13 +104,15 @@ const Post = ({post, user}) => {
     const showUpdateButton = () => {
         return (
             (user?.active && user?.id === sessionUser?.id && !isUpdating) ? 
-            <div>
+            <div onMouseLeave={() => {if (editButtonPressed) setEditButtonPressed(false)}}>
             <button className="post-edit-ellipsis"
                 onClick={() => setEditButtonPressed(!editButtonPressed)}
             ><i className="fa-solid fa-ellipsis post-edit-ellipsis"></i></button>
             
             {editButtonPressed && 
-                <div className="edit-post-dropdown">
+                <div className="edit-post-dropdown"
+                    onMouseLeave={() => setEditButtonPressed(!editButtonPressed)}
+                >
                     <button className="post-edit-button"
                         onClick={() => {setIsUpdating(!isUpdating); setEditButtonPressed(!editButtonPressed)}}
                     >Edit</button>
@@ -112,16 +123,20 @@ const Post = ({post, user}) => {
                 </div>
             }
             </div>
-            : (user?.active && user?.id === sessionUser?.id && isUpdating) &&
-            <button className="user-profile-button-small post-submit-edit-button"
-                onClick={() => handleSubmitEdit()}
-             >Submit</button>
+            : (user?.active && user?.id === sessionUser?.id && isUpdating) && 
+            <div id="edit-post-submit-buttons-div">
+                <button className="user-profile-button-small post-submit-edit-button"
+                    onClick={() => handleSubmitEdit()}
+                >Submit</button>
+                <button className="user-profile-button-small post-submit-edit-button edit-post-cancel-button"
+                    onClick={() => setIsUpdating(!isUpdating)}
+                >Cancel</button>
+            </div>
         );
     };
     
     const showTitle = () => {
-        return <div>
-            {!isUpdating ?
+        return !isUpdating ?
             <h2 className="profile-post-h2">{post.post_title}</h2>
             :
             <input className="profile-post-title-input" 
@@ -132,24 +147,19 @@ const Post = ({post, user}) => {
                 onChange={(e) => setTitle(e.target.value)}
                 autoFocus
             />
-            }
-        </div>
     };
     
     const showText = () => {
-        return (<>
-            {!isUpdating ?
-            <p>{post?.post_text}</p>
+        return !isUpdating ?
+            <p style={{cursor: "default"}}>{post?.post_text}</p>
             :
             <textarea className="profile-post-text-input"
                 type="text" 
                 placeholder="What would you like to say?"
-                maxLength={200}
+                maxLength={250}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
-            }
-        </>);
     };
     
     const showPostImages = () => {
@@ -186,6 +196,10 @@ const Post = ({post, user}) => {
     
     return (
         <div className="profile-post-div-container">
+            
+            {errors && errors.map((error, i) => 
+                <p key={i} className="create-post-errors">{error}</p>
+            )}
             
             <div className="post-title-bar-div">
                 {showTitle()}

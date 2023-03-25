@@ -40,6 +40,7 @@
     font-size: 18px;
     font-weight: 700;
     color: rgb(0, 4, 255);
+    cursor: default;
 }
 
 .user-profile-bio-span {
@@ -63,6 +64,7 @@
 .user-profile-status-p {
     font-weight: 700;
     color: blue;
+    cursor: default;
 }
 
 .profile-inactive-status {
@@ -108,7 +110,7 @@
     margin-bottom: 20px;
 }
 
-#user-profile-picture {
+.user-profile-picture {
     height: 220px;
     width: 220px;
     border-radius: 120px;
@@ -116,6 +118,10 @@
     border: 1px solid rgb(194, 194, 194);
     box-shadow: 0px 0px 4px 3px rgb(53, 53, 53);
     cursor: pointer;
+}
+
+.user-profile-picture-disabled {
+    cursor: default;
 }
 
 #user-profile-bottom-div {
@@ -151,6 +157,7 @@
     font-weight: 700;
     margin-top: 0px;
     color: blue;
+    cursor: default;
 }
 
 #user-profile-posts-div {
@@ -299,6 +306,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 60px;
 }
 
 .post-edit-ellipsis {
@@ -345,6 +353,16 @@
     border-radius: 5px;
 }
 
+#edit-post-submit-buttons-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-post-cancel-button {
+    margin-top: 5px;
+    margin-bottom: -30px;
+}
+
 .post-remove-image-button {
     position: absolute;
     margin-left: -40px;
@@ -377,6 +395,7 @@
 .profile-post-h2 {
     margin-left: 20px;
     color: black;
+    cursor: default;
 }
 
 .profile-post-title-input {

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { deleteUserProfileThunk } from "../../store/session";
+import { deleteUserProfileThunk, setWindowPath } from "../../store/session";
 import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
@@ -22,6 +22,7 @@ const UserProfile = () => {
     const {userId} = useParams();
     const sessionUsers = useSelector((state) => state.session.users);
     const sessionUser = useSelector((state) => state.session.user);
+    const sessionPath = useSelector(state => state.session.path);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     
     let user = null;
@@ -59,6 +60,10 @@ const UserProfile = () => {
         
         return newErrors;
     };
+    
+    useEffect(() => {
+        if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
+    }, [])
     
     useEffect(() => {
         setErrors(validateBio());
@@ -108,10 +113,6 @@ const UserProfile = () => {
     
     const handleActivateProfile = () => {
         dispatch(deleteUserProfileThunk(user.id));
-    }
-    
-    const showInvalidFeature = () => {
-        alert('Feature coming soon!');
     }
     
     const userSkills = user?.skills?.split(';') || null;
@@ -175,7 +176,10 @@ const UserProfile = () => {
             <div id="user-profile-bio-div">
                 <OpenModalButton
                     className="user-profile-picture-modal"
-                    buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
+                    buttonText={<img className={(user?.id === sessionUser?.id) ? "user-profile-picture" : "user-profile-picture user-profile-picture-disabled"} 
+                                    src={user?.profile_picture || ""} 
+                                    alt={user?.first_name}/>
+                               }
                     modalComponent={user?.id === sessionUser?.id && <ProfilePictureModal user={user} />}
                 />
                 
