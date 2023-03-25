@@ -15,8 +15,6 @@ const SkillsModal = ({user}) => {
     
     const skillsArray = skills?.split(';');
     
-    console.log(skillsArray);
-    
     const handleAddSkill = (e) => {
         e.preventDefault();
         
