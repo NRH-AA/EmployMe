@@ -74,7 +74,41 @@ body {
 }
 
 #profile-dropdown-container {
-  width: 120px;
+  width: 220px;
   height: auto;
-  background-color: grey;
+  background-color: rgb(85, 85, 85);
+  border-radius: 10px;
+  border: 3px solid black;
+  margin-right: 20px;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+#profile-dropdown-button-div {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.profile-dropdown-p {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: white;
+}
+
+.user-dropdown-button {
+  font-weight: 700;
+  font-size: 16px;
+  background: linear-gradient(#d8d8d8, #444444);
+  border: 2px solid black;
+  margin-bottom: 2px;
+}
+
+.user-dropdown-button:hover {
+  background: linear-gradient(#ffffff, #a7a7a7);
+}
+
+.user-dropdown-button:active {
+  background: linear-gradient(#868686, #464646);
 }
