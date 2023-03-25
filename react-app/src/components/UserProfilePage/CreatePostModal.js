@@ -164,6 +164,10 @@ const CreatePostModal = () => {
         <div id="create-post-modal-container">
             <h2><u>Create a new post</u></h2>
             
+            {errors && errors.map((error, i) => 
+                <p key={i} className="create-post-errors">{error}</p>
+            )}
+            
             <form onSubmit={handleSubmit}>
                 
                 <div id="create-post-container">

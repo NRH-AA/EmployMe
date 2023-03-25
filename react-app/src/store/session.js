@@ -2,6 +2,7 @@
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
 const REMOVE_USER = "session/REMOVE_USER";
+const SET_PATH = "session/SET_PATH";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -11,10 +12,15 @@ const setUser = (user) => ({
 const setAllUsers = (users) => ({
 	type: SET_ALL_USERS,
 	payload: users
-})
+});
 
 const removeUser = () => ({
 	type: REMOVE_USER,
+});
+
+export const setWindowPath = (path) => ({
+	type: SET_PATH,
+	path
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -263,7 +269,7 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	return data
 };
 
-const initialState = { user: null, users: null };
+const initialState = { user: null, users: null, path: null };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
 	switch (action.type) {
@@ -275,6 +281,9 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case SET_ALL_USERS:
 			newState.users = action.payload.users;
+			return newState;
+		case SET_PATH:
+			newState.path = action.path;
 			return newState;
 		default:
 			return state;
