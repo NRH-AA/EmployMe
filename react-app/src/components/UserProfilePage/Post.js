@@ -89,7 +89,7 @@ const Post = ({post, user}) => {
     
     const showUpdateButton = () => {
         return (
-            (user?.id === sessionUser?.id && !isUpdating) ? <div>
+            (user?.active && user?.id === sessionUser?.id && !isUpdating) ? <div>
             <button className="user-profile-button-small post-edit-button"
                 onClick={() => setIsUpdating(!isUpdating)}
             >Edit</button>
@@ -97,7 +97,7 @@ const Post = ({post, user}) => {
             <button className="user-profile-button-small post-edit-button"
                 onClick={() => handlePostDelete()}
             >Delete</button> </div>
-            :
+            : user?.active &&
             <button className="user-profile-button-small post-edit-button"
                 onClick={() => handleSubmitEdit()}
              >Submit</button>

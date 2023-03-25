@@ -22,12 +22,14 @@
     height: 100px;
     width: 100px;
     border-radius: 50px;
+    border: 1px solid rgb(165, 165, 165);
+    box-shadow: 0px 0px 2px 2px rgb(83, 83, 83);
 }
 
 .user-feed-info-data-div {
     width: 600px;
     height: 100px;
-    background-color: rgb(202, 202, 202);
+    background: linear-gradient(#ffffff, #666666);
     border: 2px solid black;
     border-radius: 15px;
     display: flex;
@@ -39,7 +41,7 @@
 .feed-info-p {
     font-size: 17px;
     font-weight: 700;
-    color: red;
+    color: rgb(226, 0, 0);
     margin-bottom: 0px;
     margin-top: 5px;
 }
