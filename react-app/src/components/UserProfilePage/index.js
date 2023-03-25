@@ -118,6 +118,7 @@ const UserProfile = () => {
     
     if (!user && !sessionUser) return null;
     
+    if (!user?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
     const showProfileEditButtons = () => {
         return (
@@ -149,8 +150,11 @@ const UserProfile = () => {
                 
                 <div id="user-profile-create-post-div">
                 {user?.id === sessionUser?.id &&
-                    <p id={user?.active ? "user-profile-status-p" : "user-profile-status-p-inactive"}>
-                        Status: {user?.active ? "Active" : "Inactive"}
+                    <p className={user?.active ? "user-profile-status-p" : "user-profile-status-p profile-inactive-status"}>
+                        Status:
+                        <span id={user?.active ? "user-profile-status-p-active" : "user-profile-status-p-inactive"}>
+                            {user?.active ? " Active" : " Inactive"}
+                        </span>
                     </p>
                 }
                 
@@ -172,7 +176,7 @@ const UserProfile = () => {
                 <OpenModalButton
                     className="user-profile-picture-modal"
                     buttonText={<img id="user-profile-picture" src={user?.profile_picture || ""} alt={user?.first_name}/>}
-                    modalComponent={<ProfilePictureModal user={user} />}
+                    modalComponent={user?.id === sessionUser?.id && <ProfilePictureModal user={user} />}
                 />
                 
                 {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}

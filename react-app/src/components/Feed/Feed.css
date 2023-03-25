@@ -13,7 +13,7 @@
 .user-feed-info-div {
     display: flex;
     gap: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     text-decoration: none;
     color: black;
 }
@@ -22,14 +22,15 @@
     height: 100px;
     width: 100px;
     border-radius: 50px;
-    border: 1px solid rgb(165, 165, 165);
-    box-shadow: 0px 0px 2px 2px rgb(83, 83, 83);
-    transition: width 300ms, height 300ms;
+    border: 1px solid rgb(194, 194, 194);
+    box-shadow: 0px 0px 4px 3px rgb(53, 53, 53);
+    transition: width 200ms, height 200ms, border-radius 200ms;
 }
 
 .feed-profile-picture:hover {
     width: 145px;
     height: 145px;
+    border-radius: 100px;
 }
 
 .user-feed-info-data-div {
