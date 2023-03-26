@@ -145,27 +145,27 @@ body {
 }
 
 #search-button-submit {
-  margin-left: -80px;
-  margin-right: -80px;
-  height: 30px;
-  width: 30px;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 20px;
-  border: 1px solid rgb(136, 136, 136);
-  background: linear-gradient(#fffefe, #575757);
-  box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
-  cursor: pointer;
+    margin-left: -80px;
+    margin-right: -80px;
+    height: 30px;
+    width: 30px;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 20px;
+    border: 1px solid rgb(160, 160, 160);
+    background: linear-gradient(#fffefe, #575757);
+    box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
+    cursor: pointer;
 }
 
 #search-button-submit:hover {
-  color: rgb(25, 0, 255);
-  background: linear-gradient(#ffffff, #808080);
-  box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#ffffff, #808080);
+    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
 }
 
 #search-button-submit:active {
-  color: rgb(25, 0, 255);
-  background: linear-gradient(#adadad, #111111);
-  box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#adadad, #111111);
+    box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
 }
