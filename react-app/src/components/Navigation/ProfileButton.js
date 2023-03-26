@@ -54,7 +54,9 @@ function ProfileButton({ user }) {
       </button>
       <div className={ulClassName} ref={ulRef}>
         {user && (
-          <div id="profile-dropdown-container">
+          <div id="profile-dropdown-container"
+            onMouseLeave={() => {setShowMenu(false)}}
+          >
             <p className="profile-dropdown-p">Welcome, {user?.first_name} {user?.last_name}</p>
             
             <div id="profile-dropdown-button-div">
