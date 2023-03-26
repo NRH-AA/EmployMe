@@ -94,7 +94,7 @@ def get_searched_users():
         users = User.query.order_by(desc('updatedAt')).limit(10)
     
     userArrayOne = [user.to_dict_all() for user in users]
-    if not usersTwo == '' and usersTwo.count() > 0:
+    if usersTwo != '' and usersTwo.count() > 0:
         userArrayTwo = [user.to_dict_all() for user in usersTwo]
         userArrayOne.append(userArrayTwo)
     

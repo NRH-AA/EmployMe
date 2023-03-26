@@ -99,8 +99,9 @@
 }
 
 .user-profile-bio-input {
-    width: 150px;
+    width: 200px;
     margin-bottom: 2px;
+    font-weight: 700;
 }
 
 #user-profile-bio-div {

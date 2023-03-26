@@ -54,24 +54,24 @@ body {
 }
 
 #profile-dropdown-button {
-  height: 52px;
-  width: 52px;
+  height: 50px;
+  width: 50px;
   border: 1px solid rgb(136, 136, 136);
-  background: linear-gradient(#fffefe, #575757);
-  box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
+  background: linear-gradient(#ececec, #5c5c5c);
+  box-shadow: 0px 0px 4px 2px rgb(88, 88, 88);
   border-radius: 30px;
   margin-right: 10px;
   cursor: pointer;
 }
 
 #profile-dropdown-button:hover {
-  background: linear-gradient(#ffffff, #808080);
-  box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+  background: linear-gradient(#ffffff, #555555);
+  box-shadow: 0px 0px 4px 2px rgb(49, 49, 49);
 }
 
 #profile-dropdown-button:active {
-  background: linear-gradient(#adadad, #111111);
-  box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
+  background: linear-gradient(#c5c5c5, #474747);
+  box-shadow: 0px -2px 6px 4px rgb(247, 247, 247);
 }
 
 
@@ -138,6 +138,10 @@ body {
   outline: none;
 }
 
+#search-type-select-box:hover {
+  color: blue;
+}
+
 #search-type-select-box > option {
   font-weight: 700;
   font-size: 14px;
@@ -153,19 +157,19 @@ body {
     font-size: 15px;
     border-radius: 20px;
     border: 1px solid rgb(160, 160, 160);
-    background: linear-gradient(#fffefe, #575757);
-    box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
+    background: linear-gradient(#fffefe, #7c7c7c);
+    box-shadow: 0px 1px 4px 2px rgb(78, 78, 78);
     cursor: pointer;
 }
 
 #search-button-submit:hover {
     color: rgb(25, 0, 255);
-    background: linear-gradient(#ffffff, #808080);
-    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+    background: linear-gradient(#ffffff, #868686);
+    box-shadow: 0px 1px 4px 2px rgb(26, 26, 26);
 }
 
 #search-button-submit:active {
     color: rgb(25, 0, 255);
-    background: linear-gradient(#adadad, #111111);
-    box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
+    background: linear-gradient(#d6d6d6, #5f5f5f);
+    box-shadow: -1px -2px 6px 4px rgb(247, 247, 247);
 }
