@@ -38,7 +38,7 @@ function Navigation({ isLoaded }){
 	
 	const handleLogoPressed = async () => {
 		await dispatch(getAllUsersThunk());
-		return history.push('/')
+		return history.push('/');
 	}
 	
 	return (
