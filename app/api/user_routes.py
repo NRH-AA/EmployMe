@@ -11,13 +11,13 @@ user_routes = Blueprint('users', __name__)
 @user_routes.route('')
 @login_required
 def all_users():
-    users = User.query.order_by(desc('updatedAt')).all()
+    users = User.query.order_by(desc('updatedAt')).limit(10)
     return {'users': [user.to_dict_all() for user in users]}
 
 @user_routes.route('/')
 @login_required
 def all_users2():
-    users = User.query.order_by(desc('updatedAt')).all()
+    users = User.query.order_by(desc('updatedAt')).limit(10)
     return {'users': [user.to_dict_all() for user in users]}
 
 @user_routes.route('', methods=['POST'])
@@ -25,23 +25,54 @@ def all_users2():
 def get_searched_users():
     data = request.get_json()
     type = data['searchType']
-    sText = str(data['searchText'])
+    sText = data['searchText']
     
     users = ''
     if type == 'name':
         if not sText or sText == '':
-            users = User.query.order_by(asc('first_name')).all()
+            users = User.query.order_by(asc('first_name')).limit(10)
         else:
             split = sText.split(" ")
             
             if len(split) == 3:
-                users = User.query.where(User.first_name == split[0], 
-                                         User.middle_name == split[1], User.last_name == split[2]).all()
+                users = User.query.where(User.first_name.ilike(split[0] + '%%'), 
+                                         User.middle_name.ilike(split[1] + '%%'),
+                                         User.last_name.ilike(split[2] + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%'),
+                                         User.last_name.ilike('%%' + split[2] + '%%')).limit(10)
+                
             elif len(split) == 2:
-                users = User.query.where(User.first_name == split[0], User.middle_name == split[1]).all()
+                users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
             else:
-                users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).all()
+                users = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
+
+    elif type == 'email':
+        if not sText:
+            users = User.query.order_by(asc('work_email')).limit(10)
+        else:
+            users = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
+            if not len(users) > 0:
+                users = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
             
+    elif type == 'occupation':
+        if not sText:
+            users = User.query.order_by(asc('occupation')).limit(10)
+        else:
+            users = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
+            if not users:
+                users = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
+    
+    if users == '':
+        users = User.query.order_by(desc('updatedAt')).limit(10)
+    
     return {'users': [user.to_dict_all() for user in users]}
     
 

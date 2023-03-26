@@ -29,7 +29,7 @@ const UserProfile = () => {
     
     useEffect(() => {
         if (!sessionUsers || !sessionUsers[userId]) dispatch(getSingleUser(parseInt(userId)));
-    }, [dispatch, sessionUser])
+    }, [dispatch, sessionUser, sessionUsers, userId])
     
     if (parseInt(userId) === sessionUser?.id) user = sessionUser;
     
