@@ -63,7 +63,7 @@ const UserProfile = () => {
     
     useEffect(() => {
         if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
-    }, [])
+    }, [dispatch, sessionPath])
     
     useEffect(() => {
         setErrors(validateBio());

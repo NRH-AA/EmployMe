@@ -114,3 +114,37 @@ body {
 .user-dropdown-button:active {
   background: linear-gradient(#868686, #464646);
 }
+
+#search-type-select-box {
+  background-color: rgb(235, 235, 235);
+  border: 2px solid black;
+  border-radius: 10px;
+  max-width: 80px;
+  font-weight: 700;
+  font-size: 14px;
+  outline: none;
+}
+
+#search-type-select-box > option {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: rgb(211, 211, 211);
+}
+
+#search-button-submit {
+  margin-left: -60px;
+  margin-right: -80px;
+  height: 30px;
+  width: 80px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 15px;
+  border: 2px solid black;
+  background: linear-gradient(#e4e4e4, #3d3d3d);
+  cursor: pointer;
+}
+
+#search-button-submit:hover {
+  color: rgb(25, 0, 255);
+  background: linear-gradient(#ffffff, #575757);
+}

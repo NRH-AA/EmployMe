@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User, Post, Image
+from datetime import datetime
 
 post_routes = Blueprint('posts', __name__)
 
@@ -25,6 +26,7 @@ def create_post():
         
     db.session.add(post)
     user = User.query.get(user_id)
+    user.updatedAt = datetime.now()
     user.posts.append(post)
     db.session.commit()
     return user.to_dict_all()
@@ -56,6 +58,9 @@ def update_post(id):
     if post_text:
         post.post_text = post_text
         
+    post.updatedAt = datetime.now()
+    user.updatedAt = datetime.now()
+
     db.session.commit()
     return user.to_dict_all()
 

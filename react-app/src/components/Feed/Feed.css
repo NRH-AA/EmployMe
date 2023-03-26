@@ -1,7 +1,13 @@
+@media screen and (max-height: 1080px) {
+    body {
+        padding-bottom: 50px;
+    }
+}
+
 #feed-container {
     margin: auto;
     margin-top: 10px;
-    width: 1024px;
+    width: 100%;
     height: auto;
 }
 
@@ -13,9 +19,9 @@
 .user-feed-info-div {
     display: flex;
     gap: 10px;
-    margin-bottom: 10px;
     text-decoration: none;
     color: black;
+    margin-bottom: 10px;
 }
 
 .feed-profile-picture {
@@ -63,12 +69,13 @@
     width: 100%;
     background: linear-gradient(#dddddd, #636363);
     border: 1px solid black;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
+    opacity: 0.8;
     transition: height 200ms;
 }
 
