@@ -160,9 +160,11 @@ const CreatePostModal = () => {
         );
     };
     
+    const buttonDisabled = () => !text || !title;
+    
     return (
         <div id="create-post-modal-container">
-            <h2><u>Create a new post</u></h2>
+            <h2>Create a new post</h2>
             
             {errors && errors.map((error, i) => 
                 <p key={i} className="create-post-errors">{error}</p>
@@ -200,6 +202,7 @@ const CreatePostModal = () => {
                     >Cancel</button>
                     <button className="create-post-button"
                         onClick={handleSubmit}
+                        disabled={buttonDisabled()}
                     >Submit</button>
                 </div> 
                 

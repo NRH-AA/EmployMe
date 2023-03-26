@@ -25,6 +25,12 @@ const Post = ({post, user}) => {
     
     if (!user) return null;
     
+    const resetDefaultValues = () => {
+        setTitle(post?.post_title || '');
+        setText(post?.post_text || '');
+        setPictures(newPictureObjects);
+    };
+    
     const default_image = 'https://www.computerhope.com/jargon/g/guest-user.png';
     
     const updateImageFile = (e, index) => {
@@ -101,6 +107,8 @@ const Post = ({post, user}) => {
         dispatch(deletePost(post.id, sessionUser.id))
     }
     
+    const buttonDisabled = () => !text || !title;
+    
     const showUpdateButton = () => {
         return (
             (user?.active && user?.id === sessionUser?.id && !isUpdating) ? 
@@ -114,7 +122,10 @@ const Post = ({post, user}) => {
                     onMouseLeave={() => setEditButtonPressed(!editButtonPressed)}
                 >
                     <button className="post-edit-button"
-                        onClick={() => {setIsUpdating(!isUpdating); setEditButtonPressed(!editButtonPressed)}}
+                        onClick={() => {setIsUpdating(!isUpdating); 
+                            setEditButtonPressed(!editButtonPressed);
+                            resetDefaultValues();
+                        }}
                     >Edit</button>
                     
                     <button className="post-edit-button"
@@ -127,9 +138,10 @@ const Post = ({post, user}) => {
             <div id="edit-post-submit-buttons-div">
                 <button className="user-profile-button-small post-submit-edit-button"
                     onClick={() => handleSubmitEdit()}
+                    disabled={buttonDisabled()}
                 >Submit</button>
                 <button className="user-profile-button-small post-submit-edit-button edit-post-cancel-button"
-                    onClick={() => setIsUpdating(!isUpdating)}
+                    onClick={() => {setIsUpdating(!isUpdating); setErrors([])}}
                 >Cancel</button>
             </div>
         );

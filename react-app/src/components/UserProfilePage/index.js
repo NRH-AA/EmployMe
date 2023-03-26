@@ -29,7 +29,7 @@ const UserProfile = () => {
     
     useEffect(() => {
         if (!sessionUsers || !sessionUsers[userId]) dispatch(getSingleUser(parseInt(userId)));
-    }, [dispatch, sessionUser, sessionUsers, userId])
+    }, [dispatch, sessionUser, userId])
     
     if (parseInt(userId) === sessionUser?.id) user = sessionUser;
     
@@ -137,7 +137,8 @@ const UserProfile = () => {
                     >Update</button> 
                     : (user?.active && user?.id === sessionUser?.id) &&
                     
-                    <button className="user-profile-button-small"
+                    <button className={isUpdatingBio ? "user-profile-button-small update-bio-create-post-margin" 
+                        : "user-profile-button-small"}
                         onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
                     >Submit</button> 
                     }
@@ -148,7 +149,7 @@ const UserProfile = () => {
                         buttonText="Delete"
                         modalComponent={<DeleteProfileModal user={user} />}
                     />
-                    : (user?.id === sessionUser?.id) &&
+                    : (user?.id === sessionUser?.id && !isUpdatingBio) &&
                     <button className="user-profile-button-small user-profile-activate-button"
                         onClick={() => handleActivateProfile()}
                     >Activate</button>
@@ -157,7 +158,9 @@ const UserProfile = () => {
                 
                 <div id="user-profile-create-post-div">
                 {user?.id === sessionUser?.id &&
-                    <p className={user?.active ? "user-profile-status-p" : "user-profile-status-p profile-inactive-status"}>
+                    <p className={(user?.active && isUpdatingBio) ? "user-profile-status-p update-bio-create-post-margin-p"
+                    : (user?.active && !isUpdatingBio) ? "user-profile-status-p"
+                    : "user-profile-status-p profile-inactive-status"}>
                         Status:
                         <span id={user?.active ? "user-profile-status-p-active" : "user-profile-status-p-inactive"}>
                             {user?.active ? " Active" : " Inactive"}
@@ -165,7 +168,7 @@ const UserProfile = () => {
                     </p>
                 }
                 
-                {(user?.active && user?.id === sessionUser?.id) &&
+                {(user?.active && user?.id === sessionUser?.id && !isUpdatingBio) &&
                 <OpenModalButton
                     className="user-profile-button-small profile-create-post-button"
                     buttonText="Create Post"

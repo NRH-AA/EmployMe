@@ -15,7 +15,7 @@ def seed_users():
         phone_number = '123-456-7890',
         company_name = 'Demo Company Name',
         work_email = 'SuperDemo@aa.io',
-        skills = 'Skill1;Skill2;Skill3;Skill4;Skill5;Skill6;',
+        skills = 'Skill1;Skill2;Skill3;Skill4;Skill5;Skill6',
         profile_picture = default_profile_picture,
         age = 40
     )

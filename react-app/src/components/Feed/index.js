@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getAllUsersThunk, setWindowPath } from "../../store/session";
-import './Feed.css';
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import { getAllUsersThunk, setWindowPath } from "../../store/session";
+import InfoModal from "./InfoModal";
+import './Feed.css';
 
 const Feed = () => {
     const dispatch = useDispatch();
@@ -25,9 +26,14 @@ const Feed = () => {
     
     let activeProfiles
     if (sessionSearchedUsers) {
+        console.log(sessionSearchedUsers);
         activeProfiles = sessionSearchedUsers?.filter(user => user.active && user.id !== sessionUser?.id);
     } else {
         activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active && user.id !== sessionUser?.id);
+    }
+    
+    if (!activeProfiles) {
+        dispatch(getAllUsersThunk())
     }
     
     return (
@@ -60,6 +66,12 @@ const Feed = () => {
             </div>
             
             <div id="feed-footer-div">
+                <OpenModalButton
+                    className="info-modal-button"
+                    buttonText={<i className="fa fa-info-circle"></i>}
+                    modalComponent={<InfoModal />}
+                />
+                
                 <NavLink className="footer-p" 
                     to={{pathname: "https://github.com/NRH-AA"}}
                     target="_blank"
