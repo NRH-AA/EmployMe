@@ -9,6 +9,7 @@ const Feed = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const sessionUsers = useSelector((state) => state.session.users);
+    const sessionSearchedUsers = useSelector((state) => state.session.searchedUsers);
     const sessionPath = useSelector(state => state.session.path);
     
     useEffect(() => {
@@ -16,12 +17,18 @@ const Feed = () => {
     }, [dispatch, sessionPath])
     
     useEffect(() => {
-        if (!sessionUsers) dispatch(getAllUsersThunk());
+        if (!sessionUsers?.length > 0) dispatch(getAllUsersThunk());
     }, [dispatch, sessionUsers])
     
     if (!sessionUser) return null;
     
-    const activeProfiles = sessionUsers?.filter(user => user.active) || null;
+    
+    let activeProfiles
+    if (sessionSearchedUsers) {
+        activeProfiles = sessionSearchedUsers?.filter(user => user.active) || null;
+    } else {
+        activeProfiles = sessionUsers?.length > 0 && sessionUsers.filter(user => user.active) || null;
+    }
     
     return (
         <div id="feed-container">

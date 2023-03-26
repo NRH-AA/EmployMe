@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User
-from sqlalchemy import desc, asc
+from sqlalchemy import desc, asc, text
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -17,9 +17,33 @@ def all_users():
 @user_routes.route('/')
 @login_required
 def all_users2():
-    users = User.query.all()
+    users = User.query.order_by(desc('updatedAt')).all()
     return {'users': [user.to_dict_all() for user in users]}
 
+@user_routes.route('', methods=['POST'])
+@login_required
+def get_searched_users():
+    data = request.get_json()
+    type = data['searchType']
+    sText = str(data['searchText'])
+    
+    users = ''
+    if type == 'name':
+        if not sText or sText == '':
+            users = User.query.order_by(asc('first_name')).all()
+        else:
+            split = sText.split(" ")
+            
+            if len(split) == 3:
+                users = User.query.where(User.first_name == split[0], 
+                                         User.middle_name == split[1], User.last_name == split[2]).all()
+            elif len(split) == 2:
+                users = User.query.where(User.first_name == split[0], User.middle_name == split[1]).all()
+            else:
+                users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).all()
+            
+    return {'users': [user.to_dict_all() for user in users]}
+    
 
 @user_routes.route('/<int:id>', methods=['GET'])
 @login_required
