@@ -47,21 +47,20 @@ function Navigation({ isLoaded }){
 					<option value="name">Name</option>
 					<option value="email">Email</option>
 					<option value="occupation">Occupation</option>
-					<option value="posts">Post Count</option>
-					<option value="recommendations">Recommendations</option>
 				</select>
-				
-				<button id="search-button-submit"
-					onClick={() => handleSearch()}
-				>Search</button>
 				
 				<input id="searchbar-input" type="text" 
 					placeholder='Search Bar'
 					value={search}
+					maxLength={100}
 					onKeyDown={(e) => keyDownSearch(e)}
 					onChange={(e) => setSearch(e.target.value)}
 					autoFocus
 				/>
+				
+				<button id="search-button-submit"
+					onClick={() => handleSearch()}
+				><i className="fas fa-search"></i></button>
 				
 				</>}
 			</div>

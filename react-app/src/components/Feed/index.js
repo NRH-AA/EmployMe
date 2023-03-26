@@ -27,7 +27,7 @@ const Feed = () => {
     if (sessionSearchedUsers) {
         activeProfiles = sessionSearchedUsers?.filter(user => user.active) || null;
     } else {
-        activeProfiles = sessionUsers?.length > 0 && sessionUsers.filter(user => user.active) || null;
+        activeProfiles = sessionUsers?.length > 0 && sessionUsers.filter(user => user.active);
     }
     
     return (
