@@ -150,7 +150,8 @@
     align-items: center;
     width: 220px;
     border-bottom: 2px solid black;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
+    height: auto;
 }
 
 .user-qualifications-p {
@@ -281,11 +282,10 @@
     min-height: 50px;
     width: 200px;
     padding-bottom: 5px;
-    /* border-bottom: 2px solid black; */
 }
 
 .user-skills-p {
-    margin-top: -25px;
+    margin-top: -10px;
     font-weight: 700;
     font-size: 15px;
     text-decoration: underline;

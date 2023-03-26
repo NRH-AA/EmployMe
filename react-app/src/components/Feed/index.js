@@ -9,18 +9,26 @@ const Feed = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const sessionUsers = useSelector((state) => state.session.users);
+    const sessionSearchedUsers = useSelector((state) => state.session.searchedUsers);
     const sessionPath = useSelector(state => state.session.path);
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
-        dispatch(getAllUsersThunk());
-    }, [dispatch])
+    }, [dispatch, sessionPath])
     
-
+    useEffect(() => {
+        if (!sessionUsers?.length > 0) dispatch(getAllUsersThunk());
+    }, [dispatch, sessionUsers])
     
     if (!sessionUser) return null;
     
-    const activeProfiles = sessionUsers?.filter(user => user.active) || null;
+    
+    let activeProfiles
+    if (sessionSearchedUsers) {
+        activeProfiles = sessionSearchedUsers?.filter(user => user.active) || null;
+    } else {
+        activeProfiles = sessionUsers?.length > 0 && sessionUsers.filter(user => user.active) || null;
+    }
     
     return (
         <div id="feed-container">
@@ -28,7 +36,8 @@ const Feed = () => {
             
             <div id="feed-content-div">
                 
-                {activeProfiles && activeProfiles.map(user => <div key={user.id}>
+                {activeProfiles && activeProfiles.map(user => 
+                <div key={user.id}>
                     <NavLink className="user-feed-info-div" to={`/profile/${user.id}`}>
                         <img className="feed-profile-picture" src={user.profile_picture} alt={user.first_name}/>
                     <div className="user-feed-info-data-div">
@@ -48,7 +57,7 @@ const Feed = () => {
                 </div>
                 )}
             </div>
-            
+            </div>
             
             <div id="feed-footer-div">
                 <NavLink className="footer-p" 
@@ -62,8 +71,6 @@ const Feed = () => {
                 ><i className="fa-brands fa-linkedin"></i></NavLink>
             </div>
             
-            
-            </div>
         </div>
     );
 };

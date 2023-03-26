@@ -1,6 +1,8 @@
 // constants
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
+const SET_SINGLE_USER = "session/SET_SINGLE_USER";
+const SET_SEARCHED_USERS = "session/SET_SEARCHED_USERS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
 
@@ -11,6 +13,16 @@ const setUser = (user) => ({
 
 const setAllUsers = (users) => ({
 	type: SET_ALL_USERS,
+	payload: users
+});
+
+const setSingleUser = (user) => ({
+	type: SET_SINGLE_USER,
+	payload: user
+});
+
+const setSearchedUsers = (users) => ({
+	type: SET_SEARCHED_USERS,
 	payload: users
 });
 
@@ -173,6 +185,36 @@ export const getAllUsersThunk = () => async (dispatch) => {
 	return data;
 }
 
+export const getSingleUser = (userId) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}`);
+	const data = await response.json();
+	if (response.ok) {
+		dispatch(setSingleUser(data));
+	}
+	return data
+};
+
+export const getSearchedUsers = (searchData) => async (dispatch) => {
+	const response = await fetch(`/api/users`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			searchType: searchData.searchType,
+			searchText: searchData.searchText
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setSearchedUsers(data));
+	}
+	
+	return data
+};
+
 export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	const res = await fetch(`/api/users/${userId}/profile`, {
 		method: 'DELETE'
@@ -269,7 +311,7 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	return data
 };
 
-const initialState = { user: null, users: null, path: null };
+const initialState = { user: null, users: null, searchedUsers: null, path: null };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
 	switch (action.type) {
@@ -280,7 +322,14 @@ export default function reducer(state = initialState, action) {
 			newState.user = null;
 			return newState;
 		case SET_ALL_USERS:
+			newState.searchedUsers = null;
 			newState.users = action.payload.users;
+			return newState;
+		case SET_SINGLE_USER:
+			newState.users = action.payload;
+			return newState;
+		case SET_SEARCHED_USERS:
+			newState.searchedUsers = action.payload.users;
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;

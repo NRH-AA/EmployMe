@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { deleteUserProfileThunk, setWindowPath } from "../../store/session";
+import { deleteUserProfileThunk, setWindowPath, getSingleUser } from "../../store/session";
 import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
@@ -27,13 +27,19 @@ const UserProfile = () => {
     
     let user = null;
     
+    useEffect(() => {
+        if (!sessionUsers || !sessionUsers[userId]) dispatch(getSingleUser(parseInt(userId)));
+    }, [dispatch, sessionUser])
+    
     if (parseInt(userId) === sessionUser?.id) user = sessionUser;
     
     if (!user) {
-        if (sessionUsers) {
+        if (sessionUsers?.length > 0) {
             for (let el of sessionUsers) {
                 if (parseInt(userId) === el.id) user = el;
             }
+        } else if (sessionUsers) {
+            user = sessionUsers;
         }
     }
     
@@ -63,7 +69,7 @@ const UserProfile = () => {
     
     useEffect(() => {
         if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
-    }, [])
+    }, [dispatch, sessionPath])
     
     useEffect(() => {
         setErrors(validateBio());
