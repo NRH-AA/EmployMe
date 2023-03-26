@@ -30,6 +30,10 @@ const Feed = () => {
         activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active && user.id !== sessionUser?.id);
     }
     
+    if (!activeProfiles) {
+        dispatch(getAllUsersThunk())
+    }
+    
     return (
         <div id="feed-container">
             <div id="feed-content-container">
