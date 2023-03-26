@@ -25,6 +25,7 @@ const Feed = () => {
     
     let activeProfiles
     if (sessionSearchedUsers) {
+        console.log(sessionSearchedUsers);
         activeProfiles = sessionSearchedUsers?.filter(user => user.active && user.id !== sessionUser?.id);
     } else {
         activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active && user.id !== sessionUser?.id);

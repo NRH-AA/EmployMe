@@ -28,6 +28,7 @@ def get_searched_users():
     sText = data['searchText']
     
     users = ''
+    usersTwo = ''
     if type == 'name':
         if not sText or sText == '':
             users = User.query.order_by(asc('first_name')).limit(10)
@@ -38,42 +39,66 @@ def get_searched_users():
                 users = User.query.where(User.first_name.ilike(split[0] + '%%'), 
                                          User.middle_name.ilike(split[1] + '%%'),
                                          User.last_name.ilike(split[2] + '%%')).limit(10)
-                if not len(users) > 0:
+                if users == '' or users.count() == 0:
                     users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
                                          User.middle_name.ilike('%%' + split[1] + '%%'),
                                          User.last_name.ilike('%%' + split[2] + '%%')).limit(10)
+                    if users == '' or users.count() == 0:
+                        users = User.query.order_by(desc('updatedAt')).limit(10)
                 
             elif len(split) == 2:
                 users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
-                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
-                if not len(users) > 0:
+                                         User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
+                if users == '' or users.count() == 0:
                     users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
-                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
+                                         User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
+                    if users == '' or users.count() == 0:
+                        users = User.query.order_by(desc('updatedAt')).limit(10)
+            
             else:
                 users = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
-                if not len(users) > 0:
+                if users == '' or users.count() == 0:
                     users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
-
+                    if users == '' or users.count() == 0:
+                        users = User.query.order_by(desc('updatedAt')).limit(10)
+                    
+                if users.count() < 10:
+                    usersTwo = User.query.where(
+                        User.middle_name.ilike('%%' + sText + '%%'),
+                        User.last_name.ilike('%%' + sText + '%%'),
+                        User.work_email.ilike('%%' + sText + '%%'),
+                        User.occupation.ilike('%%' + sText + '%%'),
+                        User.company_name.ilike('%%' + sText + '%%')).limit(10 - users.count())
+                    
     elif type == 'email':
         if not sText:
             users = User.query.order_by(asc('work_email')).limit(10)
         else:
             users = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
-            if not len(users) > 0:
+            if users == '' or users.count() == 0:
                 users = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
+                if users == '' or users.count() == 0:
+                        users = User.query.order_by(desc('updatedAt')).limit(10)
             
     elif type == 'occupation':
         if not sText:
             users = User.query.order_by(asc('occupation')).limit(10)
         else:
             users = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
-            if not users:
+            if users == '' or users.count() == 0:
                 users = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
-    
-    if users == '':
+                if users == '' or users.count() == 0:
+                        users = User.query.order_by(desc('updatedAt')).limit(10)
+                
+    if users == '' or users.count() == 0:
         users = User.query.order_by(desc('updatedAt')).limit(10)
     
-    return {'users': [user.to_dict_all() for user in users]}
+    userArrayOne = [user.to_dict_all() for user in users]
+    if not usersTwo == '' and usersTwo.count() > 0:
+        userArrayTwo = [user.to_dict_all() for user in usersTwo]
+        userArrayOne.append(userArrayTwo)
+    
+    return {'users': userArrayOne}
     
 
 @user_routes.route('/<int:id>', methods=['GET'])

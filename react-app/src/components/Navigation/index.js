@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSearchedUsers } from '../../store/session';
+import { getSearchedUsers, getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import Logo from './logo.png';
@@ -36,10 +36,15 @@ function Navigation({ isLoaded }){
 		};
 	};
 	
+	const handleLogoPressed = async () => {
+		await dispatch(getAllUsersThunk());
+		return history.push('/')
+	}
+	
 	return (
 		<div id="navigation-container">
 			<div id="navigation-logo-search-div">
-				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => history.push('/')}/>
+				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
 				{(sessionPath && sessionPath === '/') && <>
 				<select id="search-type-select-box"
 					onChange={(e) => setSearchOption(e.target.value)}
