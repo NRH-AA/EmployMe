@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User
+from sqlalchemy import desc, asc, text
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -10,28 +11,74 @@ user_routes = Blueprint('users', __name__)
 @user_routes.route('')
 @login_required
 def all_users():
-    """
-    Query for all users and returns them in a list of user dictionaries
-    """
-    users = User.query.all()
+    users = User.query.order_by(desc('updatedAt')).limit(10)
     return {'users': [user.to_dict_all() for user in users]}
 
 @user_routes.route('/')
 @login_required
 def all_users2():
-    """
-    Query for all users and returns them in a list of user dictionaries
-    """
-    users = User.query.all()
+    users = User.query.order_by(desc('updatedAt')).limit(10)
     return {'users': [user.to_dict_all() for user in users]}
 
+@user_routes.route('', methods=['POST'])
+@login_required
+def get_searched_users():
+    data = request.get_json()
+    type = data['searchType']
+    sText = data['searchText']
+    
+    users = ''
+    if type == 'name':
+        if not sText or sText == '':
+            users = User.query.order_by(asc('first_name')).limit(10)
+        else:
+            split = sText.split(" ")
+            
+            if len(split) == 3:
+                users = User.query.where(User.first_name.ilike(split[0] + '%%'), 
+                                         User.middle_name.ilike(split[1] + '%%'),
+                                         User.last_name.ilike(split[2] + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%'),
+                                         User.last_name.ilike('%%' + split[2] + '%%')).limit(10)
+                
+            elif len(split) == 2:
+                users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                                         User.middle_name.ilike('%%' + split[1] + '%%')).limit(10)
+            else:
+                users = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
+                if not len(users) > 0:
+                    users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
+
+    elif type == 'email':
+        if not sText:
+            users = User.query.order_by(asc('work_email')).limit(10)
+        else:
+            users = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
+            if not len(users) > 0:
+                users = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
+            
+    elif type == 'occupation':
+        if not sText:
+            users = User.query.order_by(asc('occupation')).limit(10)
+        else:
+            users = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
+            if not users:
+                users = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
+    
+    if users == '':
+        users = User.query.order_by(desc('updatedAt')).limit(10)
+    
+    return {'users': [user.to_dict_all() for user in users]}
+    
 
 @user_routes.route('/<int:id>', methods=['GET'])
 @login_required
 def user(id):
-    """
-    Query for a user by id and returns that user in a dictionary
-    """
     user = User.query.get(id)
     return user.to_dict_all()
 

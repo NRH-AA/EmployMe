@@ -23,6 +23,7 @@ body {
   height: 25px;
   border: 2px solid rgb(0, 0, 0);
   border-radius: 10px;
+  margin-left: -70px;
   font-weight: 700;
   font-size: 15px;
   outline: none;
@@ -55,15 +56,27 @@ body {
 #profile-dropdown-button {
   height: 52px;
   width: 52px;
-  background: linear-gradient(#afafaf, #020202);
-  border: 2px solid black;
+  border: 1px solid rgb(136, 136, 136);
+  background: linear-gradient(#fffefe, #575757);
+  box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
   border-radius: 30px;
   margin-right: 10px;
   cursor: pointer;
 }
 
+#profile-dropdown-button:hover {
+  background: linear-gradient(#ffffff, #808080);
+  box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+}
+
+#profile-dropdown-button:active {
+  background: linear-gradient(#adadad, #111111);
+  box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
+}
+
+
 #profile-dropdown-button > i {
-   color: rgb(177, 177, 177);
+    color: rgb(4, 0, 255);
 }
 
 #profile-dropdown-button > span {
@@ -95,6 +108,7 @@ body {
   font-weight: 700;
   font-size: 18px;
   color: rgb(0, 26, 255);
+  cursor: default;
 }
 
 .user-dropdown-button {
@@ -103,6 +117,7 @@ body {
   background: linear-gradient(#d8d8d8, #636363);
   border: 2px solid black;
   margin-bottom: 2px;
+  cursor: pointer;
 }
 
 .user-dropdown-button:hover {
@@ -111,4 +126,46 @@ body {
 
 .user-dropdown-button:active {
   background: linear-gradient(#868686, #464646);
+}
+
+#search-type-select-box {
+  background-color: rgb(235, 235, 235);
+  border: 2px solid black;
+  border-radius: 10px;
+  max-width: 80px;
+  font-weight: 700;
+  font-size: 14px;
+  outline: none;
+}
+
+#search-type-select-box > option {
+  font-weight: 700;
+  font-size: 14px;
+  background-color: rgb(211, 211, 211);
+}
+
+#search-button-submit {
+  margin-left: -80px;
+  margin-right: -80px;
+  height: 30px;
+  width: 30px;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 20px;
+  border: 1px solid rgb(136, 136, 136);
+  background: linear-gradient(#fffefe, #575757);
+  box-shadow: 0px 0px 4px 2px rgb(104, 104, 104);
+  cursor: pointer;
+}
+
+#search-button-submit:hover {
+  color: rgb(25, 0, 255);
+  background: linear-gradient(#ffffff, #808080);
+  box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+}
+
+#search-button-submit:active {
+  color: rgb(25, 0, 255);
+  background: linear-gradient(#adadad, #111111);
+  box-shadow: 0px -2px 8px 6px rgb(247, 247, 247);
 }

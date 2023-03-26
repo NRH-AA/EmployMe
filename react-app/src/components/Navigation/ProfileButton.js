@@ -55,7 +55,7 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user && (
           <div id="profile-dropdown-container">
-            <p className="profile-dropdown-p">Welcome, {user.first_name} {user.last_name}</p>
+            <p className="profile-dropdown-p">Welcome, {user?.first_name} {user?.last_name}</p>
             
             <div id="profile-dropdown-button-div">
               <button className="user-dropdown-button"
