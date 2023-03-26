@@ -33,15 +33,12 @@ def seed_posts():
         post_text = "We're taking the hobbits to Isengard. We're taking the hobbits to Isengard. We're taking the hobbits to Isengard, gard, gard"
     )
     
-    image1 = Image.query.get(1)
-    image2 = Image.query.get(2)
-    image3 = Image.query.get(3)
+    images = Image.query.limit(3)
     
     posts = [post1, post2, post3, post4, post5, post6]
     for post in posts:
-        post.images.append(image1)
-        post.images.append(image2)
-        post.images.append(image3)
+        for image in images:
+            post.images.append(image)
     
     add_posts = [db.session.add(post) for post in posts]
     db.session.commit()
