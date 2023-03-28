@@ -1,0 +1,52 @@
+#job-listing-container {
+    width: 600px;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#job-listing-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    border: 1px solid rgb(194, 194, 194);
+    box-shadow: 0px 0px 4px 3px rgb(53, 53, 53);
+}
+
+#job-listing-company-name {
+    margin-top: 0px;
+    margin-left: -20px;
+}
+
+#job-listing-details-container {
+    width: 600px;
+    height: 800px;
+    border-radius: 15px;
+    border: 3px solid black;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#job-listing-details-h2 {
+    color: blue;
+}
+
+#job-listing-details-occupation {
+    display: flex;
+    justify-content: space-between;
+    gap: 200px;
+    font-weight: 700;
+}
+
+.job-listing-details-p {
+    color: blue;
+}
+
+.job-listing-details-p > span {
+    color: black;
+}

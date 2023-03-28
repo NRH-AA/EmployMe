@@ -2,7 +2,6 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .user import User
 from datetime import datetime
 
-
 class Post(db.Model):
     __tablename__ = 'posts'
 
@@ -17,8 +16,8 @@ class Post(db.Model):
     updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user = db.relationship("User", back_populates="posts")
-    images = db.relationship("Image")
-
+    images = db.relationship("PostImage")
+    
     def to_dict(self):
         return {
             "id": self.id,

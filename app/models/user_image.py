@@ -1,21 +1,20 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .user import User
-from .post import Post
-from datetime import datetime
 
-class Image(db.Model):
-    __tablename__ = 'images'
+class UserImage(db.Model):
+    __tablename__ = 'user_images'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey(Post.id))
     url = db.Column(db.Text, nullable=False)
-
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    
     def to_dict(self):
         return {
             'id': self.id,
+            'user_id': self.user_id,
             'url': self.url
         }
