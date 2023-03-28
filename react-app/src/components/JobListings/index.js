@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getJobListing, updateJobListing, changeJobActiveStatus } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import DeleteJobModal from "./DeleteJobModal";
 import './JobListing.css'
 
 
@@ -197,7 +199,12 @@ const JobListing = () => {
                 <button className="job-listing-button"
                     onClick={() => {setIsUpdating(!isUpdating); populateValues()}}
                 >Edit</button>
-                <button className="job-listing-button">Delete</button>
+                {/* <button className="job-listing-button">Delete</button> */}
+                <OpenModalButton
+                    className="job-listing-button"
+                    buttonText="Delete"
+                    modalComponent={<DeleteJobModal jobId={jobId} />}
+                />
                 </> : <>
                 <button className="job-listing-button"
                     onClick={() => {setIsUpdating(!isUpdating); setErrors({}); populateValues()}}

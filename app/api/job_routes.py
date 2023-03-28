@@ -54,3 +54,12 @@ def update_job_active_status(id):
     db.session.commit()
     ret = JobListing.query.get(id)
     return ret.to_dict()
+
+
+@job_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_job_listing(id):
+    job = JobListing.query.get(id)
+    db.session.delete(job)
+    db.session.commit()
+    return {'success': 'Deleted Successfully'}
