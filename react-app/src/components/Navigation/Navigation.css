@@ -173,3 +173,25 @@ body {
     background: linear-gradient(#d6d6d6, #5f5f5f);
     box-shadow: -1px -2px 6px 4px rgb(247, 247, 247);
 }
+
+.create-job-listing-button {
+    margin-right: 20px;
+    font-weight: 700;
+    font-size: 15px;
+    border: 1px solid rgb(160, 160, 160);
+    background: linear-gradient(#fffefe, #7c7c7c);
+    box-shadow: 0px 1px 4px 2px rgb(78, 78, 78);
+    cursor: pointer;
+}
+
+.create-job-listing-button:hover {
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#ffffff, #868686);
+    box-shadow: 0px 1px 4px 2px rgb(26, 26, 26);
+}
+
+.create-job-listing-button:active {
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#d6d6d6, #5f5f5f);
+    box-shadow: -1px -2px 6px 4px rgb(247, 247, 247);
+}
