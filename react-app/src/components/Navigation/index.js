@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSearchedUsers, getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
+import OpenModalButton from "../OpenModalButton";
 import './Navigation.css';
 import Logo from './logo.png';
 
@@ -71,7 +72,14 @@ function Navigation({ isLoaded }){
 				</>}
 			</div>
 			
-			{isLoaded && <ProfileButton user={sessionUser} />}
+			<div>
+				<OpenModalButton
+                    className="create-job-listing-button"
+                    buttonText="Create Job Listing"
+                    modalComponent=""
+                />
+				{isLoaded && <ProfileButton user={sessionUser} />}
+			</div>
 		</div>
 	);
 };

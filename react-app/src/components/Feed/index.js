@@ -41,7 +41,7 @@ const Feed = () => {
             
             <div id="feed-content-div">
                 {(activeProfiles && !activeProfiles.length) &&
-                    <h2>No users found in search.</h2>
+                    <h2>No users or jobs found in search.</h2>
                 }
                 {activeProfiles && activeProfiles.map(data => 
                 <div key={data.id}>
