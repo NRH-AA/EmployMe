@@ -1,0 +1,194 @@
+#job-listing-container {
+    width: 600px;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#job-listing-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 90px;
+    border: 1px solid rgb(194, 194, 194);
+    box-shadow: 0px 0px 4px 3px rgb(53, 53, 53);
+}
+
+#job-listing-company-name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: -20px;
+    cursor: default;
+}
+
+#job-listing-company-status {
+    margin-left: 45px;
+    font-weight: 700;
+}
+
+.job-active-color {
+    color: green;
+    cursor: pointer;
+}
+
+.job-inactive-color {
+    color: red;
+    cursor: pointer;
+}
+
+#job-listing-details-container {
+    width: 600px;
+    height: auto;
+    padding-bottom: 20px;
+    margin-top: 40px;
+    border-radius: 15px;
+    border: 3px solid black;
+    background: linear-gradient(#cecece, #6b6b6b);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.job-listing-error {
+    color: red;
+    font-weight: 700
+}
+
+#job-listing-details-h2 {
+    color: blue;
+    cursor: default;
+}
+
+#job-listing-details-occupation {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+    font-weight: 700;
+}
+
+.job-listing-details-p {
+    color: blue;
+    margin-bottom: 0px;
+    margin-top: 30px;
+    cursor: default;
+}
+
+.job-listing-details-p > span {
+    color: black;
+}
+
+#job-listing-description-div {
+    width: 525px;
+    font-weight: 700;
+}
+
+#job-listing-description-p {
+    cursor: default;
+    margin-bottom: 0px;
+}
+
+#job-listing-description-textarea {
+    width: 500px;
+    height: 150px;
+    font-weight: 700;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: rgb(211, 211, 211);
+    outline: none;
+}
+
+#job-listing-openins-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+#job-listing-openins-div-flex {
+    display: flex;
+    align-items: center;
+}
+
+.job-listing-openings-p {
+    color: blue;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.job-listings-openings-div {
+    display: flex;
+    align-items: center;
+    margin-top: -15px;
+}
+
+.openings-div-margin {
+    margin-top: -15px;
+}
+
+#job-listing-edit-buttons {
+    display: flex;
+    gap: 100px;
+    margin-top: 50px;
+}
+
+.job-listing-button {
+    font-weight: 700;
+    font-size: 18px;
+    border: 1px solid rgb(160, 160, 160);
+    background: linear-gradient(#fffefe, #5a5a5a);
+    box-shadow: 0px 0px 4px 2px rgb(73, 73, 73);
+    width: 180px;
+    height: 30px;
+}
+
+.job-listing-button:hover {
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#ffffff, #636363);
+    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+}
+
+.job-listing-button:active {
+    color: rgb(25, 0, 255);
+    background: linear-gradient(#adadad, #363636);
+    box-shadow: 0px -1px 4px 2px rgb(233, 233, 233);
+}
+
+#job-listing-edit-title {
+    color: blue;
+    margin-bottom: 3px;
+}
+
+#job-listing-wage-div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.job-listing-wage-input {
+    width: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: rgb(211, 211, 211);
+    outline: none;
+}
+
+#job-listing-edit-title-input {
+    width: 250px;
+    font-weight: 700;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: rgb(211, 211, 211);
+    outline: none;
+}
+
+#job-listings-occupation-input {
+    width: 130px;
+    font-weight: 700;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: rgb(211, 211, 211);
+    margin-top: 5px;
+    outline: none;
+}

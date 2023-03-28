@@ -26,7 +26,6 @@ const Feed = () => {
     
     let activeProfiles
     if (sessionSearchedUsers) {
-        console.log(sessionSearchedUsers);
         activeProfiles = sessionSearchedUsers?.filter(user => user.active && user.id !== sessionUser?.id);
     } else {
         activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active && user.id !== sessionUser?.id);
@@ -41,25 +40,46 @@ const Feed = () => {
             <div id="feed-content-container">
             
             <div id="feed-content-div">
-                
-                {activeProfiles && activeProfiles.map(user => 
-                <div key={user.id}>
-                    <NavLink className="user-feed-info-div" to={`/profile/${user.id}`}>
-                        <img className="feed-profile-picture" src={user.profile_picture} alt={user.first_name}/>
-                    <div className="user-feed-info-data-div">
-                        <div>
-                            <p className="feed-info-p">Name: <span>{user.first_name} {user.middle_name} {user.last_name}</span></p>
-                            <p className="feed-info-p">Email: <span>{user.work_email}</span></p>
-                            <p className="feed-info-p">Occupation: <span>{user.occupation}</span></p>
+                {(activeProfiles && !activeProfiles.length) &&
+                    <h2>No users found in search.</h2>
+                }
+                {activeProfiles && activeProfiles.map(data => 
+                <div key={data.id}>
+                    {data.username ? 
+                        <NavLink className="user-feed-info-div" to={`/profile/${data?.id}`}>
+                            <img className="feed-profile-picture" src={data?.profile_picture} alt={data?.first_name}/>
+                        <div className="user-feed-info-data-div">
+                            <div>
+                                <p className="feed-info-p">Name: <span>{data?.first_name} {data?.middle_name} {data?.last_name}</span></p>
+                                <p className="feed-info-p">Email: <span>{data?.work_email}</span></p>
+                                <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                            </div>
+                            
+                            <div>
+                                <p className="feed-info-p">Posts: <span>{data?.posts?.length}</span></p>
+                                <p className="feed-info-p">Reccomendations: <span>0</span></p>
+                                <p className="feed-info-p">Messages: <span>{data?.messages?.length}</span></p>
+                            </div>
                         </div>
-                        
-                        <div>
-                            <p className="feed-info-p">Posts: <span>{user.posts.length}</span></p>
-                            <p className="feed-info-p">Reccomendations: <span>0</span></p>
-                            <p className="feed-info-p">Messages: <span>{user.messages.length}</span></p>
-                        </div>
-                    </div>
-                    </NavLink>
+                        </NavLink>
+                    :
+                        <NavLink className="user-feed-info-div" to={`/job/${data?.id}`}>
+                            <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>
+                            
+                            <div className="user-feed-info-data-div">
+                                <div>
+                                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                                    <p className="feed-info-p">Wage: <span>{`$${data?.wage.min} - $${data?.wage.max}`}</span></p>
+                                    <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
+                                </div>
+                                
+                                <div>
+                                    <p className="feed-info-p">Company: <span>{data?.user.company_name}</span></p>
+                                    <p className="feed-info-p">Email: <span>{data?.user.work_email}</span></p>
+                                </div>
+                            </div>
+                        </NavLink>
+                    }
                 </div>
                 )}
             </div>

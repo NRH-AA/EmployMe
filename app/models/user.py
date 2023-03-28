@@ -32,6 +32,8 @@ class User(db.Model, UserMixin):
     updatedAt = db.Column(db.DateTime, default=datetime.now())
 
     posts = db.relationship("Post", back_populates="user")
+    job_listings = db.relationship("JobListing", back_populates="user")
+    images = db.relationship("UserImage")
     messages = db.relationship("Message")
 
     @property
@@ -87,6 +89,8 @@ class User(db.Model, UserMixin):
             'active': self.active,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
+            'job_listings': [job.to_dict() for job in self.job_listings],
+            'images': [image.to_dict() for image in self.images],
             'messages': [message.to_dict() for message in self.messages],
             'posts': [post.to_dict() for post in self.posts]
         }

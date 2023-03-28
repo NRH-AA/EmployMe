@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, User
+from app.models import db, User, JobListing
 from sqlalchemy import desc, asc, text
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
@@ -27,78 +27,98 @@ def get_searched_users():
     type = data['searchType']
     sText = data['searchText']
     
-    users = ''
-    usersTwo = ''
+    results = None
+    users = []
     if type == 'name':
         if not sText or sText == '':
-            users = User.query.order_by(asc('first_name')).limit(10)
+            results = User.query.order_by(asc('first_name')).limit(10)
         else:
             split = sText.split(" ")
             
             if len(split) == 3:
-                users = User.query.where(User.first_name.ilike(split[0] + '%%'), 
+                results = User.query.where(User.first_name.ilike(split[0] + '%%'), 
                                          User.middle_name.ilike(split[1] + '%%'),
                                          User.last_name.ilike(split[2] + '%%')).limit(10)
-                if users == '' or users.count() == 0:
-                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                
+                if not results or results.count() == 0:
+                    results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'),
                                          User.middle_name.ilike('%%' + split[1] + '%%'),
                                          User.last_name.ilike('%%' + split[2] + '%%')).limit(10)
-                    if users == '' or users.count() == 0:
-                        users = User.query.order_by(desc('updatedAt')).limit(10)
-                
+                    if not results or results.count() == 0:
+                        results = False
+                    
             elif len(split) == 2:
-                users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
                                          User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
-                if users == '' or users.count() == 0:
-                    users = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
+                if not results or results.count() == 0:
+                    results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
                                          User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
-                    if users == '' or users.count() == 0:
-                        users = User.query.order_by(desc('updatedAt')).limit(10)
+                    if not results or results.count() == 0:
+                        results = False
             
             else:
-                users = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
-                if users == '' or users.count() == 0:
-                    users = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
-                    if users == '' or users.count() == 0:
-                        users = User.query.order_by(desc('updatedAt')).limit(10)
+                
+                results = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
+                if not results or results.count() == 0:
+                    results = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
                     
-                if users.count() < 10:
-                    usersTwo = User.query.where(
-                        User.middle_name.ilike('%%' + sText + '%%'),
-                        User.last_name.ilike('%%' + sText + '%%'),
-                        User.work_email.ilike('%%' + sText + '%%'),
-                        User.occupation.ilike('%%' + sText + '%%'),
-                        User.company_name.ilike('%%' + sText + '%%')).limit(10 - users.count())
+                    if not results or results.count() == 0:
+                        results = False
                     
     elif type == 'email':
         if not sText:
-            users = User.query.order_by(asc('work_email')).limit(10)
+            results = User.query.order_by(asc('work_email')).limit(10)
         else:
-            users = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
-            if users == '' or users.count() == 0:
-                users = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
-                if users == '' or users.count() == 0:
-                        users = User.query.order_by(desc('updatedAt')).limit(10)
+            results = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
+            if not results or results.count() == 0:
+                results = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
+                if not results or results.count() == 0:
+                        results = False
             
     elif type == 'occupation':
         if not sText:
-            users = User.query.order_by(asc('occupation')).limit(10)
+            results = User.query.order_by(asc('occupation')).limit(10)
         else:
-            users = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
-            if users == '' or users.count() == 0:
-                users = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
-                if users == '' or users.count() == 0:
-                        users = User.query.order_by(desc('updatedAt')).limit(10)
-                
-    if users == '' or users.count() == 0:
-        users = User.query.order_by(desc('updatedAt')).limit(10)
+            results = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
+            if not results or results.count() == 0:
+                results = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
+                if not results or results.count() == 0:
+                        results = False
+        
+    elif type == 'jobs':
+        if not sText:
+            results = JobListing.query.order_by(asc('updatedAt')).limit(10)
+        else:
+            results = JobListing.query.where(JobListing.occupation.ilike('%%' + sText + '%%'))
     
-    userArrayOne = [user.to_dict_all() for user in users]
-    if usersTwo != '' and usersTwo.count() > 0:
-        userArrayTwo = [user.to_dict_all() for user in usersTwo]
-        userArrayOne.append(userArrayTwo)
+    if not results or results.count() == 0:
+        if type == 'jobs':
+            return {'jobs': []}
+        else:
+            return {'users': []}
     
-    return {'users': userArrayOne}
+    if type == 'jobs':
+        jobs = [job.to_dict() for job in results]
+        return {'users': jobs}    
+    
+    
+    users = [user.to_dict_all() for user in results]
+    userIds = [user.id for user in results]
+    
+    if len(users) < 10:
+        results = User.query.where(User.first_name.ilike(sText + '%%') |
+                                   User.middle_name.ilike(sText + '%%') |
+                                   User.last_name.ilike(sText + '%%') |
+                                   User.company_name.ilike(sText + '%%') |
+                                   User.work_email.ilike(sText + '%%') |
+                                   User.occupation.ilike(sText + '%%')
+                                  ).filter(User.id.not_in(userIds)).limit(10 - len(users))
+        
+        if results.count() > 0:
+            for user in results:
+                users.append(user.to_dict_all())
+    
+    return {'users': users}
     
 
 @user_routes.route('/<int:id>', methods=['GET'])
@@ -110,14 +130,15 @@ def user(id):
 @user_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def update_user(id):
-    first_name = request.get_json()['first_name']
-    middle_name = request.get_json()['middle_name'] or ''
-    last_name = request.get_json()['last_name']
-    age = request.get_json()['age']
-    occupation = request.get_json()['occupation'] or ''
-    company_name = request.get_json()['company_name'] or ''
-    work_email = request.get_json()['work_email'] or ''
-    phone_number = request.get_json()['phone_number'] or ''
+    data = request.get_json()
+    first_name = data['first_name']
+    middle_name = data['middle_name'] or ''
+    last_name = data['last_name']
+    age = data['age']
+    occupation = data['occupation'] or ''
+    company_name = data['company_name'] or ''
+    work_email = data['work_email'] or ''
+    phone_number = data['phone_number'] or ''
     
     user = User.query.get(id)
     

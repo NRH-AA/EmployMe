@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, User, Post, Image
+from app.models import db, User, Post, PostImage
 from datetime import datetime
 
 post_routes = Blueprint('posts', __name__)
@@ -20,7 +20,7 @@ def create_post():
     )
     
     for url in urls:
-        image = Image(url = url)
+        image = PostImage(url = url)
         db.session.add(image)
         post.images.append(image)
         

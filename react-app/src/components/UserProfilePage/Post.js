@@ -9,8 +9,12 @@ const Post = ({post, user}) => {
     const sessionUser = useSelector((state) => state.session.user);
     const [isUpdating, setIsUpdating] = useState(false);
     const [editButtonPressed, setEditButtonPressed] = useState(false);
-    const newPictureObjects = [{...post.images[0]}, {...post.images[1]}, {...post.images[2]}];
-    const [pictures, setPictures] = useState(newPictureObjects || []);
+    const newPictureObjects = [];
+    newPictureObjects[0] = post.images[0] ? {...post.images[0]} : {id: null, url: null}
+    newPictureObjects[1] = post.images[1] ? {...post.images[1]} : {id: null, url: null}
+    newPictureObjects[2] = post.images[2] ? {...post.images[2]} : {id: null, url: null}
+    
+    const [pictures, setPictures] = useState(newPictureObjects);
     const [title, setTitle] = useState(post.post_title || '');
     const [text, setText] = useState(post.post_text || '');
     const [errors, setErrors] = useState([]);
@@ -31,12 +35,16 @@ const Post = ({post, user}) => {
         setPictures(newPictureObjects);
     };
     
-    const default_image = 'https://www.computerhope.com/jargon/g/guest-user.png';
-    
     const updateImageFile = (e, index) => {
         const file = e.target.files[0];
         handleImageUpload(file, index);
-    }
+    };
+    
+    const removePicture = (index) => {
+        const newPictures = [...pictures];
+        newPictures[index] = {id: newPictures[index].id, url: ''};
+        setPictures(newPictures);
+    };
     
     const handleImageUpload = async (file, index) => {
         const formData = new FormData();
@@ -54,16 +62,10 @@ const Post = ({post, user}) => {
           if (!imageUrl) return setErrors(["Failed to upload image. Please try again."])
           
           const newPictures = [...pictures];
-          newPictures[index].url = imageUrl;
+          newPictures[index] = {id: newPictures[index].id, url: imageUrl};
           setPictures(newPictures);
         };
     };
-    
-    const removePicture = (index) => {
-        const newPictures = [...pictures];
-        newPictures[index] = {id: newPictures[index].id, url: ''};
-        setPictures(newPictures)
-    }
     
     const validateEditPost = () => {
         const newErrors = [];
@@ -78,16 +80,16 @@ const Post = ({post, user}) => {
         if (newErrors.length > 0) return setErrors(newErrors);
         
         const updateData = [];
-
+        
         for (let i = 0; i < pictures.length; i++) {
             const picture = pictures[i]
-            if (picture.url && picture.url !== post.images[i].url && picture.url !== '') {
+            if (picture.url && (!post.images[i] || picture.url !== post?.images[i].url)) {
                 updateData.push({id: picture.id, url: picture.url})
             }
         }
             
         if (updateData.length > 0) {
-            await dispatch(updateImages(sessionUser.id, updateData))
+            await dispatch(updateImages(sessionUser.id, post.id, updateData))
         } else {
             setPictures(post.images);
         }
@@ -177,14 +179,14 @@ const Post = ({post, user}) => {
     const showPostImages = () => {
         return (
             <div className="profile-post-img-container">
-            {post?.images?.map((img, i) => 
-            <div key={img.id || i}>
-                {(pictures[i] && pictures[i].url && pictures[i].url !== default_image) ?
+            {pictures?.map((img, i) => 
+            <div key={i}>
+                {(img && img.url) ?
                 <img className="profile-post-img"
-                    src={pictures[i].url} 
+                    src={img.url} 
                     alt="PostImage"
                 />
-                : (isUpdating && pictures[i].url === default_image) &&
+                : (isUpdating && !img.url) &&
                 <div id="upload-image-container">
                     <input
                         className="upload-post-img-input"
@@ -195,7 +197,7 @@ const Post = ({post, user}) => {
                 </div>
                 }
                         
-                {(isUpdating && pictures[i].url && pictures[i].url !== default_image) &&
+                {(isUpdating && img.url) &&
                     <button className="post-remove-image-button"
                         onClick={() => removePicture(i)}
                 >X</button>

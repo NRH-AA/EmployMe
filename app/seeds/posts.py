@@ -1,4 +1,4 @@
-from app.models import db, Post, Image, environment, SCHEMA
+from app.models import db, Post, PostImage, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_posts():
@@ -33,12 +33,8 @@ def seed_posts():
         post_text = "We're taking the hobbits to Isengard. We're taking the hobbits to Isengard. We're taking the hobbits to Isengard, gard, gard"
     )
     
-    images = Image.query.limit(3)
     
     posts = [post1, post2, post3, post4, post5, post6]
-    for post in posts:
-        for image in images:
-            post.images.append(image)
     
     add_posts = [db.session.add(post) for post in posts]
     db.session.commit()
