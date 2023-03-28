@@ -206,6 +206,43 @@ export const getJobListing = (id) => async (dispatch) => {
 	return data
 };
 
+export const updateJobListing = (jobId, jobData) => async (dispatch) => {
+	const response = await fetch(`/api/jobs/${jobId}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			title: jobData.title,
+			description: jobData.description,
+			wageMin: jobData.wageMin,
+			wageMax: jobData.wageMax,
+			occupation: jobData.occupation,
+			openings: jobData.openings,
+			filled: jobData.filled
+		})
+	});
+
+	const data = await response.json();
+	return data;
+};
+
+export const changeJobActiveStatus = (jobId) => async (dispatch) => {
+	const response = await fetch(`/api/jobs/${jobId}/active`, {
+		method: "POST",
+	});
+
+	const data = await response.json();
+	return data;
+};
+
+export const deleteJobListing = (jobId) => async () => {
+	const response = await fetch(`/api/jobs/${jobId}`, {
+		method: "DELETE",
+	});
+	return response;
+};
+
 export const getSearchedUsers = (searchData) => async (dispatch) => {
 	const response = await fetch(`/api/users`, {
 		method: "POST",

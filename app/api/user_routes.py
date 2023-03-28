@@ -130,14 +130,15 @@ def user(id):
 @user_routes.route('/<int:id>', methods=['POST'])
 @login_required
 def update_user(id):
-    first_name = request.get_json()['first_name']
-    middle_name = request.get_json()['middle_name'] or ''
-    last_name = request.get_json()['last_name']
-    age = request.get_json()['age']
-    occupation = request.get_json()['occupation'] or ''
-    company_name = request.get_json()['company_name'] or ''
-    work_email = request.get_json()['work_email'] or ''
-    phone_number = request.get_json()['phone_number'] or ''
+    data = request.get_json()
+    first_name = data['first_name']
+    middle_name = data['middle_name'] or ''
+    last_name = data['last_name']
+    age = data['age']
+    occupation = data['occupation'] or ''
+    company_name = data['company_name'] or ''
+    work_email = data['work_email'] or ''
+    phone_number = data['phone_number'] or ''
     
     user = User.query.get(id)
     
