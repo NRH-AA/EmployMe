@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { getSearchedUsers, getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from "../OpenModalButton";
+import CreateJobModal from './CreateJobModal';
 import './Navigation.css';
 import Logo from './logo.png';
 
@@ -76,7 +77,7 @@ function Navigation({ isLoaded }){
 				<OpenModalButton
                     className="create-job-listing-button"
                     buttonText="Create Job Listing"
-                    modalComponent=""
+                    modalComponent={<CreateJobModal />}
                 />
 				{isLoaded && <ProfileButton user={sessionUser} />}
 			</div>
