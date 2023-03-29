@@ -5,6 +5,7 @@ const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const SET_SEARCHED_USERS = "session/SET_SEARCHED_USERS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
+const SET_JOB_LISTING = "session/SET_JOB_LISTING"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -20,6 +21,11 @@ const setSingleUser = (user) => ({
 	type: SET_SINGLE_USER,
 	payload: user
 });
+
+const setJob = (job) => ({
+	type: SET_JOB_LISTING,
+	payload: job
+})
 
 const setSearchedUsers = (users) => ({
 	type: SET_SEARCHED_USERS,
@@ -194,6 +200,49 @@ export const getSingleUser = (userId) => async (dispatch) => {
 	return data
 };
 
+export const getJobListing = (id) => async (dispatch) => {
+	const response = await fetch(`/api/jobs/${id}`);
+	const data = await response.json();
+	return data
+};
+
+export const updateJobListing = (jobId, jobData) => async (dispatch) => {
+	const response = await fetch(`/api/jobs/${jobId}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			title: jobData.title,
+			description: jobData.description,
+			wageMin: jobData.wageMin,
+			wageMax: jobData.wageMax,
+			occupation: jobData.occupation,
+			openings: jobData.openings,
+			filled: jobData.filled
+		})
+	});
+
+	const data = await response.json();
+	return data;
+};
+
+export const changeJobActiveStatus = (jobId) => async (dispatch) => {
+	const response = await fetch(`/api/jobs/${jobId}/active`, {
+		method: "POST",
+	});
+
+	const data = await response.json();
+	return data;
+};
+
+export const deleteJobListing = (jobId) => async () => {
+	const response = await fetch(`/api/jobs/${jobId}`, {
+		method: "DELETE",
+	});
+	return response;
+};
+
 export const getSearchedUsers = (searchData) => async (dispatch) => {
 	const response = await fetch(`/api/users`, {
 		method: "POST",
@@ -225,7 +274,7 @@ export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	return data;
 }
 
-export const updateImages = (userId, images) => async (dispatch) => {
+export const updateImages = (userId, postId, images) => async (dispatch) => {
 	const response = await fetch(`/api/images`, {
 		method: "PUT",
 		headers: {
@@ -233,6 +282,7 @@ export const updateImages = (userId, images) => async (dispatch) => {
 		},
 		body: JSON.stringify({
 			userId: userId,
+			postId: postId,
 			images: images
 		})
 	});
@@ -311,7 +361,13 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	return data
 };
 
-const initialState = { user: null, users: null, searchedUsers: null, path: null };
+const initialState = { 
+	user: null, 
+	users: null, 
+	searchedUsers: null,
+	job: null,
+	path: null 
+};
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
 	switch (action.type) {
@@ -333,6 +389,9 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;
+			return newState;
+		case SET_JOB_LISTING:
+			newState.job = action.payload.job
 			return newState;
 		default:
 			return state;

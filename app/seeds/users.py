@@ -1,4 +1,4 @@
-from app.models import db, User, environment, SCHEMA
+from app.models import db, User, UserImage, environment, SCHEMA
 from sqlalchemy.sql import text
 
 default_profile_picture = 'https://www.computerhope.com/jargon/g/guest-user.png'

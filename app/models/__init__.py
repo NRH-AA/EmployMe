@@ -3,5 +3,7 @@ from .user import User
 from .company import Company
 from .post import Post
 from .message import Message
-from .image import Image
+from .user_image import UserImage
+from .post_image import PostImage
+from .job_list import JobListing
 from .db import environment, SCHEMA

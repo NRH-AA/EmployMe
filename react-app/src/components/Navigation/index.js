@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSearchedUsers, getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
+import OpenModalButton from "../OpenModalButton";
 import './Navigation.css';
 import Logo from './logo.png';
 
@@ -12,7 +13,7 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const sessionPath = useSelector(state => state.session.path);
 	const [canSearch, setCanSearch] = useState(true);
-	const [searchOption, setSearchOption] = useState('name');
+	const [searchOption, setSearchOption] = useState('jobs');
 	const [search, setSearch] = useState('');
 
 	if (!sessionUser) return null;
@@ -49,6 +50,7 @@ function Navigation({ isLoaded }){
 				<select id="search-type-select-box"
 					onChange={(e) => setSearchOption(e.target.value)}
 				>
+					<option value="jobs">Jobs</option>
 					<option value="name">Name</option>
 					<option value="email">Email</option>
 					<option value="occupation">Occupation</option>
@@ -70,7 +72,14 @@ function Navigation({ isLoaded }){
 				</>}
 			</div>
 			
-			{isLoaded && <ProfileButton user={sessionUser} />}
+			<div>
+				<OpenModalButton
+                    className="create-job-listing-button"
+                    buttonText="Create Job Listing"
+                    modalComponent=""
+                />
+				{isLoaded && <ProfileButton user={sessionUser} />}
+			</div>
 		</div>
 	);
 };
