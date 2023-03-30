@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { updateImages, updatePost } from "../../store/session";
 import { deletePost } from "../../store/session";
 
@@ -181,12 +182,28 @@ const Post = ({post, user}) => {
             <div className="profile-post-img-container">
             {pictures?.map((img, i) => 
             <div key={i}>
-                {(img && img.url) ?
-                <img className="profile-post-img"
-                    src={img.url} 
-                    alt="PostImage"
-                />
-                : (isUpdating && !img.url) &&
+                {(isUpdating && img && img.url) &&
+                    <NavLink to={{pathname: img.url}} target='_blank'>
+                        <img className="profile-post-img"
+                            src={img.url} 
+                            alt="PostImage"
+                        />
+                        <button className="post-remove-image-button"
+                            onClick={() => removePicture(i)}
+                        >X</button>
+                    </NavLink>
+                }
+                
+                {(!isUpdating && img && img.url) &&
+                    <NavLink to={{pathname: img.url}} target='_blank'>
+                        <img className="profile-post-img"
+                            src={img.url} 
+                            alt="PostImage"
+                        />
+                    </NavLink>
+                }
+                
+                {(isUpdating && !img.url) &&
                 <div id="upload-image-container">
                     <input
                         className="upload-post-img-input"
@@ -194,13 +211,11 @@ const Post = ({post, user}) => {
                         accept="image/*"
                         onChange={(e) => updateImageFile(e, i)}
                     />
-                </div>
-                }
-                        
-                {(isUpdating && img.url) &&
+                    
                     <button className="post-remove-image-button"
                         onClick={() => removePicture(i)}
-                >X</button>
+                    >X</button>
+                </div>
                 }
                 
             </div>)}

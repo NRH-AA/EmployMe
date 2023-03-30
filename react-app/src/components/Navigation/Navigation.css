@@ -134,10 +134,13 @@ body {
   border: 2px solid black;
   margin-bottom: 2px;
   cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 500ms;
 }
 
 .user-dropdown-button:hover {
   background: linear-gradient(#ffffff, #a7a7a7);
+  opacity: 1.0;
 }
 
 .user-dropdown-button:active {
@@ -146,7 +149,7 @@ body {
 
 #search-button-submit {
     margin-left: -80px;
-    margin-right: -80px;
+    margin-right: -10px;
     height: 30px;
     width: 30px;
     font-weight: 700;

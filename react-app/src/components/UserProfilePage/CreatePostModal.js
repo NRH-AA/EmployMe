@@ -64,8 +64,6 @@ const CreatePostModal = () => {
         if (index === 3) return setPicture3('');
     }
     
-    const default_image = 'https://www.computerhope.com/jargon/g/guest-user.png';
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -75,15 +73,15 @@ const CreatePostModal = () => {
         
         if (picture1) {
             urls.push(picture1);
-        } else urls.push(default_image);
+        };
         
         if (picture2) {
             urls.push(picture2);
-        } else urls.push(default_image);
+        };
         
         if (picture3) {
             urls.push(picture3);
-        } else urls.push(default_image);
+        };
         
         const postData = {
             userId: sessionUser.id,
