@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSearchedUsers, getAllUsersThunk } from '../../store/session';
+import { getSearchResults, getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from "../OpenModalButton";
 import CreateJobModal from './CreateJobModal';
@@ -14,8 +14,10 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const sessionPath = useSelector(state => state.session.path);
 	const [canSearch, setCanSearch] = useState(true);
-	const [searchOption, setSearchOption] = useState('jobs');
+	const [searchOption, setSearchOption] = useState('Jobs');
+	const [showSearchTypes, setShowSearchTypes] = useState(false);
 	const [search, setSearch] = useState('');
+	const [offset, setOffset] = useState(0);
 
 	if (!sessionUser) return null;
 	
@@ -23,11 +25,12 @@ function Navigation({ isLoaded }){
 		if (!canSearch) return;
 		const data = {
 			searchType: searchOption,
-			searchText: search
+			searchText: search,
+			offset
 		};
 		
 		setCanSearch(false);
-		await dispatch(getSearchedUsers(data));
+		await dispatch(getSearchResults(data));
 		setCanSearch(true);
 	};
 	
@@ -48,14 +51,25 @@ function Navigation({ isLoaded }){
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
 				{(sessionPath && sessionPath === '/') && <>
-				<select id="search-type-select-box"
-					onChange={(e) => setSearchOption(e.target.value)}
-				>
-					<option value="jobs">Jobs</option>
-					<option value="name">Name</option>
-					<option value="email">Email</option>
-					<option value="occupation">Occupation</option>
-				</select>
+				<button id="search-type-select-box"
+					onClick={() => setShowSearchTypes(!showSearchTypes)}
+				><i className="fa fa-caret-down"></i><span>{searchOption}</span></button>
+				
+				{showSearchTypes &&
+					<div id="search-drop-down-div"
+						onMouseLeave={() => setShowSearchTypes(false)}
+					>
+						<p className="search-drop-down-p"
+							onClick={() => {setSearchOption('Jobs'); setShowSearchTypes(!showSearchTypes)}}
+						>Jobs</p>
+						<p className="search-drop-down-p"
+							onClick={() => {setSearchOption('Companies'); setShowSearchTypes(!showSearchTypes)}}
+						>Companies</p>
+						<p className="search-drop-down-p"
+							onClick={() => {setSearchOption('Users'); setShowSearchTypes(!showSearchTypes)}}
+						>Users</p>
+					</div>
+				}
 				
 				<input id="searchbar-input" type="text" 
 					placeholder='Search Bar'
