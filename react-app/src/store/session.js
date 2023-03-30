@@ -2,10 +2,9 @@
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
 const SET_SINGLE_USER = "session/SET_SINGLE_USER";
-const SET_SEARCHED_USERS = "session/SET_SEARCHED_USERS";
+const SET_SEARCH_RESULTS = "session/SET_SEARCH_RESULTS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
-const SET_JOB_LISTING = "session/SET_JOB_LISTING"
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -22,14 +21,9 @@ const setSingleUser = (user) => ({
 	payload: user
 });
 
-const setJob = (job) => ({
-	type: SET_JOB_LISTING,
-	payload: job
-})
-
-const setSearchedUsers = (users) => ({
-	type: SET_SEARCHED_USERS,
-	payload: users
+const setSearchResults = (data) => ({
+	type: SET_SEARCH_RESULTS,
+	payload: data
 });
 
 const removeUser = () => ({
@@ -224,7 +218,8 @@ export const updateJobListing = (jobId, jobData) => async (dispatch) => {
 	});
 
 	const data = await response.json();
-	return data;
+	dispatch(setUser(data.user))
+	return data.job;
 };
 
 export const changeJobActiveStatus = (jobId) => async (dispatch) => {
@@ -243,7 +238,7 @@ export const deleteJobListing = (jobId) => async () => {
 	return response;
 };
 
-export const getSearchedUsers = (searchData) => async (dispatch) => {
+export const getSearchResults = (searchData) => async (dispatch) => {
 	const response = await fetch(`/api/users`, {
 		method: "POST",
 		headers: {
@@ -251,14 +246,15 @@ export const getSearchedUsers = (searchData) => async (dispatch) => {
 		},
 		body: JSON.stringify({
 			searchType: searchData.searchType,
-			searchText: searchData.searchText
+			searchText: searchData.searchText,
+			offset: searchData.offset
 		})
 	});
 
 	const data = await response.json();
 	
 	if (response.ok) {
-		dispatch(setSearchedUsers(data));
+		dispatch(setSearchResults(data));
 	}
 	
 	return data
@@ -361,10 +357,31 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	return data
 };
 
+export const createJobListing = (userId, jobData) => async (dispatch) => {
+	const response = await fetch(`/api/jobs`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			userId: userId,
+			title: jobData.title,
+			description: jobData.description,
+			occupation: jobData.occupation,
+			wageMin: jobData.wageMin,
+			wageMax: jobData.wageMax,
+			openings: jobData.openings
+		})
+	});
+
+	const data = await response.json();
+	return data;
+};
+
 const initialState = { 
 	user: null, 
 	users: null, 
-	searchedUsers: null,
+	searchResults: null,
 	job: null,
 	path: null 
 };
@@ -378,20 +395,18 @@ export default function reducer(state = initialState, action) {
 			newState.user = null;
 			return newState;
 		case SET_ALL_USERS:
-			newState.searchedUsers = null;
+			newState.searchResults = null;
 			newState.users = action.payload.users;
 			return newState;
 		case SET_SINGLE_USER:
 			newState.users = action.payload;
 			return newState;
-		case SET_SEARCHED_USERS:
-			newState.searchedUsers = action.payload.users;
+		case SET_SEARCH_RESULTS:
+			newState.searchResults = action.payload;
+			newState.users = null;
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;
-			return newState;
-		case SET_JOB_LISTING:
-			newState.job = action.payload.job
 			return newState;
 		default:
 			return state;

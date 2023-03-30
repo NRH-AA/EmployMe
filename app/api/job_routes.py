@@ -1,8 +1,40 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, JobListing
+from app.models import db, JobListing, User
 
 job_routes = Blueprint('jobs', __name__)
+
+
+@job_routes.route('', methods=['POST'])
+@login_required
+def create_job():
+    data = request.get_json()
+    user_id = data['userId']
+    title = data['title']
+    description = data['description']
+    occupation = data['occupation']
+    wage_min = data['wageMin']
+    wage_max = data['wageMax']
+    openings = data['openings']
+    
+    if not user_id or not title or not description or not occupation \
+        or not openings:
+            return {'errors', ['Invalid Data Sent From Client']}, 400
+    
+    newJob = JobListing(
+         user_id = user_id,
+         occupation = occupation,
+         wage_min = wage_min,
+         wage_max = wage_max,
+         title = title,
+         description = description,
+         openings = openings,
+         filled = 0
+    )
+
+    db.session.add(newJob)
+    db.session.commit()
+    return newJob.to_dict()
 
 @job_routes.route('/<int:id>', methods=['GET'])
 @login_required
@@ -42,7 +74,9 @@ def update_job_listing(id):
     
     db.session.commit()
     ret = JobListing.query.get(id)
-    return ret.to_dict()
+    user = User.query.get(ret.user.id)
+    
+    return {'job': ret.to_dict(), 'user': user.to_dict_all()}
 
 
 @job_routes.route('/<int:id>/active', methods=['POST'])

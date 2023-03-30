@@ -26,99 +26,44 @@ def get_searched_users():
     data = request.get_json()
     type = data['searchType']
     sText = data['searchText']
+    offset = data['offset'] or 0
     
     results = None
     users = []
-    if type == 'name':
+    if type == 'Jobs':
         if not sText or sText == '':
-            results = User.query.order_by(asc('first_name')).limit(10)
+            results = JobListing.query.order_by('occupation').limit(10).offset(offset)
         else:
-            split = sText.split(" ")
-            
-            if len(split) == 3:
-                results = User.query.where(User.first_name.ilike(split[0] + '%%'), 
-                                         User.middle_name.ilike(split[1] + '%%'),
-                                         User.last_name.ilike(split[2] + '%%')).limit(10)
-                
-                if not results or results.count() == 0:
-                    results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'),
-                                         User.middle_name.ilike('%%' + split[1] + '%%'),
-                                         User.last_name.ilike('%%' + split[2] + '%%')).limit(10)
-                    if not results or results.count() == 0:
-                        results = False
-                    
-            elif len(split) == 2:
-                results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
-                                         User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
-                if not results or results.count() == 0:
-                    results = User.query.where(User.first_name.ilike('%%' + split[0] + '%%'), 
-                                         User.last_name.ilike('%%' + split[1] + '%%')).limit(10)
-                    if not results or results.count() == 0:
-                        results = False
-            
-            else:
-                
-                results = User.query.where(User.first_name.ilike(sText + '%%')).limit(10)
-                if not results or results.count() == 0:
-                    results = User.query.where(User.first_name.ilike('%%' + sText + '%%')).limit(10)
-                    
-                    if not results or results.count() == 0:
-                        results = False
-                    
-    elif type == 'email':
-        if not sText:
-            results = User.query.order_by(asc('work_email')).limit(10)
-        else:
-            results = User.query.where(User.work_email.ilike(sText + '%%')).limit(10)
-            if not results or results.count() == 0:
-                results = User.query.where(User.work_email.ilike('%%' + sText + '%%')).limit(10)
-                if not results or results.count() == 0:
-                        results = False
-            
-    elif type == 'occupation':
-        if not sText:
-            results = User.query.order_by(asc('occupation')).limit(10)
-        else:
-            results = User.query.where(User.occupation.ilike(sText + '%%')).limit(10)
-            if not results or results.count() == 0:
-                results = User.query.where(User.occupation.ilike('%%' + sText + '%%')).limit(10)
-                if not results or results.count() == 0:
-                        results = False
+            results = JobListing.query.where(
+                JobListing.occupation.ilike(sText + '%%') |
+                JobListing.title.ilike(sText + '%%')
+            ).limit(10).offset(offset)
         
-    elif type == 'jobs':
-        if not sText:
-            results = JobListing.query.order_by(asc('updatedAt')).limit(10)
-        else:
-            results = JobListing.query.where(JobListing.occupation.ilike('%%' + sText + '%%'))
-    
-    if not results or results.count() == 0:
-        if type == 'jobs':
-            return {'jobs': []}
-        else:
-            return {'users': []}
-    
-    if type == 'jobs':
+        
         jobs = [job.to_dict() for job in results]
-        return {'users': jobs}    
+        return {'users': [], 'companies': [], 'jobs': jobs}
     
     
-    users = [user.to_dict_all() for user in results]
-    userIds = [user.id for user in results]
+    elif type == 'Companies':
+        return {'users': [], 'companies': [], 'jobs': []}    
     
-    if len(users) < 10:
-        results = User.query.where(User.first_name.ilike(sText + '%%') |
-                                   User.middle_name.ilike(sText + '%%') |
-                                   User.last_name.ilike(sText + '%%') |
-                                   User.company_name.ilike(sText + '%%') |
-                                   User.work_email.ilike(sText + '%%') |
-                                   User.occupation.ilike(sText + '%%')
-                                  ).filter(User.id.not_in(userIds)).limit(10 - len(users))
-        
-        if results.count() > 0:
-            for user in results:
-                users.append(user.to_dict_all())
+    elif type == 'Users':
+        if not sText or sText == '':
+            results = User.query.order_by('updatedAt').limit(10).offset(offset)
+        else:
+            results = User.query.where(
+                User.first_name.ilike(sText + '%%') |
+                User.middle_name.ilike(sText + '%%') |
+                User.last_name.ilike(sText + '%%') |
+                User.work_email.ilike(sText + '%%') |
+                User.occupation.ilike(sText + '%%')
+            ).limit(10).offset(offset)
+            
+        users = [user.to_dict() for user in results]
+        return {'users': users, 'companies': [], 'jobs': []}
     
-    return {'users': users}
+    
+    return {'users': [], 'companies': [], 'jobs': []}
     
 
 @user_routes.route('/<int:id>', methods=['GET'])

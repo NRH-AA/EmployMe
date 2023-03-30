@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import UserJobListingsPage from "./UserJobListingsPage";
 import { logout } from "../../store/session";
 import './Navigation.css';
 
@@ -67,6 +69,12 @@ function ProfileButton({ user }) {
               <button className="user-dropdown-button"
                 onClick={() => showInvalidFeature()}
               >Company Page</button>
+              
+              <OpenModalButton
+                  className="user-dropdown-button"
+                  buttonText="Job Listings"
+                  modalComponent={<UserJobListingsPage />}
+              />
               
               <button className="user-dropdown-button"
                 onClick={handleLogout}
