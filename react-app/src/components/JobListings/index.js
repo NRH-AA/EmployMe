@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getJobListing, updateJobListing, changeJobActiveStatus } from "../../store/session";
+import { getJobListing, updateJobListing, changeJobActiveStatus, setWindowPath } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import DeleteJobModal from "./DeleteJobModal";
 import './JobListing.css'
@@ -10,6 +10,7 @@ import './JobListing.css'
 const JobListing = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const sessionPath = useSelector(state => state.session.path);
     const [job, setJob] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
     const [title, setTitle] = useState(job?.title || '');
@@ -25,7 +26,7 @@ const JobListing = () => {
     
     const getJobListingData = async () => {
         const jobListing = await dispatch(getJobListing(jobId));
-        setJob(jobListing);
+        setJob({...jobListing});
     };
     
     const validateData = () => {
@@ -40,14 +41,18 @@ const JobListing = () => {
     }
     
     useEffect(() => {
-        if (!job) getJobListingData();
-    }, [dispatch]);
+        if (!sessionPath || !sessionPath.includes('/job')) dispatch(setWindowPath(window.location.pathname));
+    }, [dispatch, sessionPath])
+    
+    useEffect(() => {
+        if (!job || jobId !== job.id) getJobListingData();
+    }, [dispatch, jobId]);
     
     useEffect(() => {
         if (isUpdating) validateData()
     }, [title, description, wageMin, wageMax, occupation, filled, openings]);
     
-    if (!job || !sessionUser) return null;
+    if (!job || !job.id || !sessionUser) return null;
     
     const populateValues = () => {
         setTitle(job.title);
@@ -199,7 +204,6 @@ const JobListing = () => {
                 <button className="job-listing-button"
                     onClick={() => {setIsUpdating(!isUpdating); populateValues()}}
                 >Edit</button>
-                {/* <button className="job-listing-button">Delete</button> */}
                 <OpenModalButton
                     className="job-listing-button"
                     buttonText="Delete"
@@ -225,13 +229,15 @@ const JobListing = () => {
                 <img id="job-listing-image" src={job?.user?.profile_picture} alt={job?.user?.first_name}/>
                 <div> 
                     <h2 id="job-listing-company-name">{job?.user?.company_name}</h2>
+                    {job?.user?.id === sessionUser.id && 
                     <span id="job-listing-company-status"
-                        className={(job?.user?.id === sessionUser.id) &&
-                            job?.active ? "job-active-color" : 
+                        className={job?.active ?
+                            "job-active-color" : 
                             "job-inactive-color"
                         }
                         onClick={() => handleChangeActive()}
                     >Status: {job?.active ? "Active" : "Inactive"}</span>
+                    }
                 </div>
             </div>
             

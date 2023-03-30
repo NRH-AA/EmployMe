@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import { getAllUsersThunk, setWindowPath } from "../../store/session";
@@ -10,30 +10,83 @@ const Feed = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const sessionUsers = useSelector((state) => state.session.users);
-    const sessionSearchedUsers = useSelector((state) => state.session.searchedUsers);
+    const sessionSearchedUsers = useSelector((state) => state.session.searchResults);
     const sessionPath = useSelector(state => state.session.path);
+    const [feedType, setFeedType] = useState(null);
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
     }, [dispatch, sessionPath])
     
     useEffect(() => {
-        if (!sessionUsers?.length > 0) dispatch(getAllUsersThunk());
+        if (!sessionUsers?.length > 0 && !sessionSearchedUsers) dispatch(getAllUsersThunk());
     }, [dispatch, sessionUsers])
     
     if (!sessionUser) return null;
     
-    
     let activeProfiles
-    if (sessionSearchedUsers) {
-        activeProfiles = sessionSearchedUsers?.filter(user => user.active && user.id !== sessionUser?.id);
+    if (sessionSearchedUsers && sessionSearchedUsers?.users?.length > 0 || sessionSearchedUsers?.jobs?.length > 0 || sessionSearchedUsers?.companies?.length > 0) {
+        if (sessionSearchedUsers?.users?.length) {
+            activeProfiles = sessionSearchedUsers?.users?.filter(user => user.active && user.id !== sessionUser?.id);
+            if (feedType !== 'user') setFeedType('user');
+        } else if (sessionSearchedUsers?.companies?.length) {
+            activeProfiles = sessionSearchedUsers?.companies?.filter(company => company.active && company.user.id !== sessionUser?.id);
+            if (feedType !== 'company') setFeedType('company');
+        } else if (sessionSearchedUsers?.jobs?.length) {
+            activeProfiles = sessionSearchedUsers?.jobs?.filter(job => job.active && job.user.id !== sessionUser?.id);
+            console.log('Entered Jobs')
+            if (feedType !== 'job') setFeedType('job');
+        }
     } else {
-        activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active && user.id !== sessionUser?.id);
+        if (!activeProfiles) {
+            activeProfiles = sessionUsers?.length > 0 && sessionUsers?.filter(user => user.active);
+            if (feedType !== 'user') setFeedType('user');
+        }
     }
     
-    if (!activeProfiles) {
-        dispatch(getAllUsersThunk())
-    }
+    if (!activeProfiles) dispatch(getAllUsersThunk());
+    
+    const showSearchedUsers = (data) => {
+        return (
+            <NavLink className="user-feed-info-div" to={`/profile/${data?.id}`}>
+            <img className="feed-profile-picture" src={data?.profile_picture} alt={data?.first_name}/>
+            <div className="user-feed-info-data-div">
+                <div>
+                    <p className="feed-info-p">Name: <span>{data?.first_name} {data?.middle_name} {data?.last_name}</span></p>
+                    <p className="feed-info-p">Email: <span>{data?.work_email}</span></p>
+                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                </div>
+                            
+                <div>
+                    <p className="feed-info-p">Posts: <span>{data?.posts?.length}</span></p>
+                    <p className="feed-info-p">Reccomendations: <span>0</span></p>
+                    <p className="feed-info-p">Messages: <span>{data?.messages?.length}</span></p>
+                </div>
+            </div>
+            </NavLink>
+        );
+    };
+    
+    const showSeachedJobs = (data) => {
+        return (
+            <NavLink className="user-feed-info-div" to={`/job/${data?.id}`}>
+            <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>
+                            
+            <div className="user-feed-info-data-div">
+                <div>
+                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                    <p className="feed-info-p">Wage: <span>{`$${data?.wage?.min} - $${data?.wage?.max}`}</span></p>
+                    <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
+                </div>
+                                
+                <div>
+                    <p className="feed-info-p">Company: <span>{data?.user?.company_name}</span></p>
+                    <p className="feed-info-p">Email: <span>{data?.user?.work_email}</span></p>
+                </div>
+             </div>
+            </NavLink>
+        );
+    };
     
     return (
         <div id="feed-container">
@@ -45,40 +98,17 @@ const Feed = () => {
                 }
                 {activeProfiles && activeProfiles.map(data => 
                 <div key={data.id}>
-                    {data.username ? 
-                        <NavLink className="user-feed-info-div" to={`/profile/${data?.id}`}>
-                            <img className="feed-profile-picture" src={data?.profile_picture} alt={data?.first_name}/>
-                        <div className="user-feed-info-data-div">
-                            <div>
-                                <p className="feed-info-p">Name: <span>{data?.first_name} {data?.middle_name} {data?.last_name}</span></p>
-                                <p className="feed-info-p">Email: <span>{data?.work_email}</span></p>
-                                <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
-                            </div>
-                            
-                            <div>
-                                <p className="feed-info-p">Posts: <span>{data?.posts?.length}</span></p>
-                                <p className="feed-info-p">Reccomendations: <span>0</span></p>
-                                <p className="feed-info-p">Messages: <span>{data?.messages?.length}</span></p>
-                            </div>
-                        </div>
-                        </NavLink>
+                    {(feedType === 'user') ? 
+                    <>
+                    {showSearchedUsers(data)}
+                    </>
+                    : (feedType === 'job') ?
+                    <>
+                    {showSeachedJobs(data)}
+                    </>
                     :
-                        <NavLink className="user-feed-info-div" to={`/job/${data?.id}`}>
-                            <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>
-                            
-                            <div className="user-feed-info-data-div">
-                                <div>
-                                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
-                                    <p className="feed-info-p">Wage: <span>{`$${data?.wage.min} - $${data?.wage.max}`}</span></p>
-                                    <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
-                                </div>
-                                
-                                <div>
-                                    <p className="feed-info-p">Company: <span>{data?.user.company_name}</span></p>
-                                    <p className="feed-info-p">Email: <span>{data?.user.work_email}</span></p>
-                                </div>
-                            </div>
-                        </NavLink>
+                    <>
+                    </>
                     }
                 </div>
                 )}
