@@ -5,8 +5,8 @@
 #signup-container {
     width: 450px;
     height: auto;
-    border: 1px solid rgb(184, 184, 184);
-    box-shadow: 0px 0px 2px 2px rgb(102, 102, 102);
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0px 0px 2px 2px rgb(41, 41, 41);
     background: linear-gradient(#dadada, #afafaf);
     border-radius: 5px;
     margin: auto;
@@ -91,7 +91,7 @@
 
 .signup-back-button {
     margin-top: 190px;
-    margin-left: -30px;
+    margin-left: 0px;
     margin-bottom: 10px;
     height: 22px;
     width: 100px;

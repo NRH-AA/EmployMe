@@ -59,7 +59,7 @@ def get_searched_users():
                 User.occupation.ilike(sText + '%%')
             ).order_by(asc(User.first_name)).limit(10).offset(offset)
             
-        users = [user.to_dict() for user in results]
+        users = [user.to_dict_all() for user in results]
         return {'users': users, 'companies': [], 'jobs': []}
     
     

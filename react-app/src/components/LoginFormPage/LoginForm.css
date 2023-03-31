@@ -5,8 +5,8 @@
 #login-container {
     width: 450px;
     height: 480px;
-    border: 1px solid rgb(184, 184, 184);
-    box-shadow: 0px 0px 2px 2px rgb(102, 102, 102);
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0px 0px 2px 2px rgb(41, 41, 41);
     background: linear-gradient(#dadada, #a0a0a0);
     border-radius: 2px;
     margin: auto;
