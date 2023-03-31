@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSearchResults, getAllUsersThunk } from '../../store/session';
+import { getSearchResults, getAllUsersThunk, setSearchParams } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from "../OpenModalButton";
 import CreateJobModal from './CreateJobModal';
@@ -17,20 +17,21 @@ function Navigation({ isLoaded }){
 	const [searchOption, setSearchOption] = useState('Jobs');
 	const [showSearchTypes, setShowSearchTypes] = useState(false);
 	const [search, setSearch] = useState('');
-	const [offset, setOffset] = useState(0);
 
 	if (!sessionUser) return null;
 	
 	const handleSearch = async () => {
 		if (!canSearch) return;
-		const data = {
-			searchType: searchOption,
-			searchText: search,
-			offset
-		};
+		
+		const searchParams = {
+			type: searchOption,
+			text: search,
+			offset: 0
+		}
 		
 		setCanSearch(false);
-		await dispatch(getSearchResults(data));
+		await dispatch(setSearchParams(searchParams));
+		await dispatch(getSearchResults(searchParams));
 		setCanSearch(true);
 	};
 	
@@ -71,6 +72,10 @@ function Navigation({ isLoaded }){
 					</div>
 				}
 				
+				<button id="search-button-submit"
+					onClick={() => handleSearch()}
+				><i className="fas fa-search"></i></button>
+				
 				<input id="searchbar-input" type="text" 
 					placeholder='Search Bar'
 					value={search}
@@ -79,10 +84,6 @@ function Navigation({ isLoaded }){
 					onChange={(e) => setSearch(e.target.value)}
 					autoFocus
 				/>
-				
-				<button id="search-button-submit"
-					onClick={() => handleSearch()}
-				><i className="fas fa-search"></i></button>
 				
 				</>}
 			</div>

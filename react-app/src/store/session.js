@@ -5,6 +5,7 @@ const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const SET_SEARCH_RESULTS = "session/SET_SEARCH_RESULTS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
+const SET_SEARCH_PARAMS = "session/SET_SEARCH_PARAMS";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -16,7 +17,7 @@ const setAllUsers = (users) => ({
 	payload: users
 });
 
-const setSingleUser = (user) => ({
+const setSingleUserAction = (user) => ({
 	type: SET_SINGLE_USER,
 	payload: user
 });
@@ -33,6 +34,11 @@ const removeUser = () => ({
 export const setWindowPath = (path) => ({
 	type: SET_PATH,
 	path
+});
+
+export const setSearchParams = (params) => ({
+	type: SET_SEARCH_PARAMS,
+	params
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -158,6 +164,15 @@ export const updateProfilePicture = (userId, url) => async (dispatch) => {
 	return data
 };
 
+export const updateUserInfoThunk = (userId) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}`);
+	const data = await response.json();
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	return data
+}
+
 export const updateUserSkills = (userId, text) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}/skills`, {
 		method: "POST",
@@ -189,7 +204,7 @@ export const getSingleUser = (userId) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}`);
 	const data = await response.json();
 	if (response.ok) {
-		dispatch(setSingleUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	return data
 };
@@ -231,10 +246,13 @@ export const changeJobActiveStatus = (jobId) => async (dispatch) => {
 	return data;
 };
 
-export const deleteJobListing = (jobId) => async () => {
+export const deleteJobListing = (jobId, userId) => async (dispatch) => {
 	const response = await fetch(`/api/jobs/${jobId}`, {
 		method: "DELETE",
 	});
+	
+	await dispatch(updateUserInfoThunk(userId));
+	
 	return response;
 };
 
@@ -245,8 +263,8 @@ export const getSearchResults = (searchData) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			searchType: searchData.searchType,
-			searchText: searchData.searchText,
+			searchType: searchData.type,
+			searchText: searchData.text,
 			offset: searchData.offset
 		})
 	});
@@ -382,8 +400,9 @@ const initialState = {
 	user: null, 
 	users: null, 
 	searchResults: null,
+	searchParams: {type: null, text: null},
 	job: null,
-	path: null 
+	path: null
 };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
@@ -400,10 +419,15 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case SET_SINGLE_USER:
 			newState.users = action.payload;
+			newState.searchResults = null;
+			newState.users = null;
 			return newState;
 		case SET_SEARCH_RESULTS:
 			newState.searchResults = action.payload;
 			newState.users = null;
+			return newState;
+		case SET_SEARCH_PARAMS:
+			newState.searchParams = action.params;
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;

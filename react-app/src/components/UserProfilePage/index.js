@@ -183,16 +183,18 @@ const UserProfile = () => {
     const showUserBio = () => {
         return (
             <div id="user-profile-bio-div">
+                
                 <OpenModalButton
                     className="user-profile-picture-modal"
                     buttonText={<img className={(user?.id === sessionUser?.id) ? "user-profile-picture" : "user-profile-picture user-profile-picture-disabled"} 
                                     src={user?.profile_picture || ""} 
                                     alt={user?.first_name}/>
-                               }
+                                }
                     modalComponent={user?.id === sessionUser?.id && <ProfilePictureModal user={user} />}
                 />
+                    {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
                 
-                {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
+                
                 <div id="user-profile-bio">
                     <div>
                         {!isUpdatingBio ? <>

@@ -5,7 +5,7 @@
 #user-profile-container {
     margin: auto;
     margin-top: 10px;
-    width: 1024px;
+    width: 1200px;
     height: auto;
 }
 
@@ -16,19 +16,21 @@
 .user-profile-container {
     height: auto;
     min-height: 700px;
+    width: 1100px;
     margin: auto;
     box-shadow: 0px 0px 2px 2px black;
-    background: linear-gradient(#c4c4c4, #7a7a7a);
-    padding-bottom: 20px;
+    background: linear-gradient(#e4e4e4, #7a7a7a);
+    padding: 20px;
     margin-top: 20px;
 }
 
 #user-profile-bio {
-    width: 600px;
+    width: 720px;
     height: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-top: -80px;
 }
 
 #user-profile-update-button {
@@ -106,6 +108,7 @@
 
 #user-profile-bio-div {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     height: auto;
     margin-bottom: 20px;
@@ -184,7 +187,7 @@
 
 
 #profile-picture-modal-container {
-    background-color: rgb(48, 48, 48);
+    background: linear-gradient(#d8d8d8, #858585);
     border: 3px solid black;
     width: 500px;
     height: auto;
@@ -303,6 +306,7 @@
     margin-top: -10px;
     font-weight: 700;
     font-size: 15px;
+    color: blue;
     text-decoration: underline;
     cursor: default;
 }
@@ -311,16 +315,19 @@
 /* Post Componant */
 .profile-post-div-container{
     height: auto;
-    width: 750px;
-    background-color: rgb(255, 255, 255);
+    width: 800px;
+    background: linear-gradient(#e6e6e6, #777777);
     border-radius: 10px;
     box-shadow: 0px 0px 2px 2px black;
+    padding: 10px;
+    margin-left: 150px;
 }
 
 .post-title-bar-div {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: blue;
     height: 60px;
 }
 
@@ -330,6 +337,7 @@
     border: none;
     background: none;
     font-size: 22px;
+    color: blue;
     cursor: pointer;
 }
 
@@ -421,7 +429,6 @@
 
 .profile-post-h2 {
     margin-left: 20px;
-    color: black;
     cursor: default;
 }
 
@@ -462,8 +469,9 @@
 .profile-post-img {
     width: 235px;
     height: 200px;
-    border: 2px solid black;
-    box-shadow: 0px 0px 3px 2px rgb(66, 66, 66);
+    border: 2px solid rgb(0, 25, 245);
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px 4px rgb(1, 0, 63);
 }
 
 .profile-post-text-container {

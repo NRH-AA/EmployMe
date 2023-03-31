@@ -40,15 +40,24 @@
 }
 
 .user-feed-info-data-div {
-    width: 600px;
-    height: 100px;
+    width: 650px;
+    height: auto;
     background: linear-gradient(#ffffff, #666666);
     border: 2px solid black;
     border-radius: 15px;
     display: flex;
-    gap: 150px;
-    padding-left: 20px;
+    justify-content: space-between;
     align-items: center;
+}
+
+.user-feed-info-data-div-inner1 {
+    margin-left: 30px;
+    width: 450px;
+}
+
+.user-feed-info-data-div-inner2 {
+    margin-right: 40px;
+    width: 200px;
 }
 
 .feed-info-p {
@@ -83,12 +92,13 @@
     height: 40px;
 }
 
-.fa-github, .fa-linkedin {
+.fa-github, .fa-linkedin, .fa-info-circle {
     font-size: 25px;
+    color: blue;
     transition: font-size 200ms;
 }
 
-.fa-github:hover, .fa-linkedin:hover {
+.fa-github:hover, .fa-linkedin:hover, .fa-info-circle:hover {
     font-size: 35px;
 }
 
@@ -102,18 +112,13 @@
 }
 
 .info-modal-button {
+    background: none;
+    border: none;
+}
+
+.info-modal-button {
     border: none;
     background: none;
-}
-
-.fa-info-circle {
-    font-size: 24px;
-    color: blue;
-    transition: font-size 200ms;
-}
-
-.fa-info-circle:hover {
-    font-size: 35px;
 }
 
 #info-modal-container {
@@ -133,6 +138,7 @@
     margin: 0px;
     text-decoration: underline;
     text-align: center;
+    color: blue;
 }
 
 #info-modal-container > p {

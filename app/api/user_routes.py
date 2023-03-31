@@ -37,7 +37,7 @@ def get_searched_users():
             results = JobListing.query.where(
                 JobListing.occupation.ilike(sText + '%%') |
                 JobListing.title.ilike(sText + '%%')
-            ).limit(10).offset(offset)
+            ).order_by(desc(JobListing.occupation)).limit(10).offset(offset)
         
         
         jobs = [job.to_dict() for job in results]
@@ -57,9 +57,9 @@ def get_searched_users():
                 User.last_name.ilike(sText + '%%') |
                 User.work_email.ilike(sText + '%%') |
                 User.occupation.ilike(sText + '%%')
-            ).limit(10).offset(offset)
+            ).order_by(asc(User.first_name)).limit(10).offset(offset)
             
-        users = [user.to_dict() for user in results]
+        users = [user.to_dict_all() for user in results]
         return {'users': users, 'companies': [], 'jobs': []}
     
     
