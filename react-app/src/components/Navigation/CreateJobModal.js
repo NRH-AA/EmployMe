@@ -2,7 +2,7 @@ import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createJobListing } from "../../store/session";
+import { createJobListing, updateUserInfoThunk } from "../../store/session";
 import './CreateJob.css'
 
 const CreateJobModal = () => {
@@ -21,9 +21,9 @@ const CreateJobModal = () => {
     const validateForm = () => {
         const newErrors = {};
         
-        if (!title || (title.length < 4 || title.length > 50)) newErrors.title = 'Title (4-50) characters';
-        if (!description || (description.length < 10 || description.length > 300)) newErrors.description = 'Description (10-300) characters';
-        if (!occupation || (occupation.length < 4 || occupation.length > 20)) newErrors.occupation = 'Occupation (4-20) characters';
+        if (title && (title.length < 4 || title.length > 50)) newErrors.title = 'Title (4-50) characters';
+        if (description && (description.length < 10 || description.length > 300)) newErrors.description = 'Description (10-300) characters';
+        if (occupation && (occupation.length < 4 || occupation.length > 20)) newErrors.occupation = 'Occupation (4-20) characters';
         if (wageMin > wageMax) newErrors.wage = 'Minumum greater than maximum';
         if (openings < 1) newErrors.openings = 'Must have 1 opening';
         
@@ -45,6 +45,10 @@ const CreateJobModal = () => {
     const handleSubmit = async () => {
         if (Object.keys(errors).length > 0) return;
         
+        if (!title) return setErrors({title: 'Title Required'});
+        if (!description) return setErrors({description: 'Description Required'});
+        if (!occupation) return setErrors({occupation: 'Occupation Required'});
+        
         const jobData = {
             title,
             description,
@@ -56,6 +60,7 @@ const CreateJobModal = () => {
         
         const newJob = await dispatch(createJobListing(sessionUser.id, jobData));
         if (newJob?.id) {
+            await dispatch(updateUserInfoThunk(sessionUser.id));
             return history.push(`/job/${newJob.id}`);
         };
         return;

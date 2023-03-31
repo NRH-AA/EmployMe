@@ -16,7 +16,7 @@ const setAllUsers = (users) => ({
 	payload: users
 });
 
-const setSingleUser = (user) => ({
+const setSingleUserAction = (user) => ({
 	type: SET_SINGLE_USER,
 	payload: user
 });
@@ -158,6 +158,15 @@ export const updateProfilePicture = (userId, url) => async (dispatch) => {
 	return data
 };
 
+export const updateUserInfoThunk = (userId) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}`);
+	const data = await response.json();
+	if (response.ok) {
+		dispatch(setUser(data));
+	}
+	return data
+}
+
 export const updateUserSkills = (userId, text) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}/skills`, {
 		method: "POST",
@@ -189,7 +198,7 @@ export const getSingleUser = (userId) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}`);
 	const data = await response.json();
 	if (response.ok) {
-		dispatch(setSingleUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	return data
 };
@@ -231,10 +240,13 @@ export const changeJobActiveStatus = (jobId) => async (dispatch) => {
 	return data;
 };
 
-export const deleteJobListing = (jobId) => async () => {
+export const deleteJobListing = (jobId, userId) => async (dispatch) => {
 	const response = await fetch(`/api/jobs/${jobId}`, {
 		method: "DELETE",
 	});
+	
+	await dispatch(updateUserInfoThunk(userId));
+	
 	return response;
 };
 

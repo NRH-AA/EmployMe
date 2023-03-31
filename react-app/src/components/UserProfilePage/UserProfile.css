@@ -187,7 +187,7 @@
 
 
 #profile-picture-modal-container {
-    background-color: rgb(48, 48, 48);
+    background: linear-gradient(#d8d8d8, #858585);
     border: 3px solid black;
     width: 500px;
     height: auto;
@@ -315,10 +315,12 @@
 /* Post Componant */
 .profile-post-div-container{
     height: auto;
-    width: 750px;
+    width: 800px;
     background: linear-gradient(#e6e6e6, #777777);
     border-radius: 10px;
     box-shadow: 0px 0px 2px 2px black;
+    padding: 10px;
+    margin-left: 150px;
 }
 
 .post-title-bar-div {
@@ -467,9 +469,9 @@
 .profile-post-img {
     width: 235px;
     height: 200px;
-    border: 2px solid rgb(0, 237, 245);
+    border: 2px solid rgb(0, 25, 245);
     border-radius: 20px;
-    box-shadow: 0px 0px 4px 4px rgb(0, 63, 63);
+    box-shadow: 0px 0px 4px 4px rgb(1, 0, 63);
 }
 
 .profile-post-text-container {

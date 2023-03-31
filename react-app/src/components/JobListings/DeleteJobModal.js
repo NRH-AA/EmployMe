@@ -10,7 +10,7 @@ const DeleteJobModal = ({jobId}) => {
     const { closeModal } = useModal();
     
     const handleDelete = () => {
-        dispatch(deleteJobListing(jobId));
+        dispatch(deleteJobListing(jobId, sessionUser.id));
         closeModal();
         return history.push(`/profile/${sessionUser.id}`);
     }

@@ -7,7 +7,6 @@ const UserJobListingsPage = () => {
     const sessionUser = useSelector((state) => state.session.user);
     const { closeModal } = useModal();
     
-    
     return (
         <div id="user-job-listings-container">
             

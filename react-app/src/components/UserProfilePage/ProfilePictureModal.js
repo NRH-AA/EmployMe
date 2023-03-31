@@ -55,7 +55,7 @@ const ProfilePictureModal = ({user}) => {
     
     return (
         <div id="profile-picture-modal-container">
-            <h2 style={{margin: "0", padding: "20px", color: "white"}}>Update Profile Picture</h2>
+            <h2 style={{margin: "0", padding: "20px", color: "blue"}}>Update Profile Picture</h2>
             
             {errors && errors.map(err => <p key={err}>{err}</p>)}
             {picture && <><img
