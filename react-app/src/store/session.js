@@ -263,8 +263,8 @@ export const getSearchResults = (searchData) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			searchType: searchData.searchType,
-			searchText: searchData.searchText,
+			searchType: searchData.type,
+			searchText: searchData.text,
 			offset: searchData.offset
 		})
 	});
