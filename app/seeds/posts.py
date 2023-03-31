@@ -10,7 +10,7 @@ def seed_posts():
         newPost = Post(
             user_id = randint(1, 20),
             post_title = fake.sentence(),
-            post_text = fake.paragraph()
+            post_text = fake.paragraph(nb_sentences=5)
         )
         
         db.session.add(newPost)
