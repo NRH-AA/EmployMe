@@ -18,7 +18,7 @@
     min-height: 700px;
     margin: auto;
     box-shadow: 0px 0px 2px 2px black;
-    background: linear-gradient(#c4c4c4, #7a7a7a);
+    background: linear-gradient(#e4e4e4, #7a7a7a);
     padding-bottom: 20px;
     margin-top: 20px;
 }
@@ -312,9 +312,10 @@
 .profile-post-div-container{
     height: auto;
     width: 750px;
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(#008db1, #00495c);
     border-radius: 10px;
-    box-shadow: 0px 0px 2px 2px black;
+    box-shadow: 0px 0px 4px 4px black;
+    color: white;
 }
 
 .post-title-bar-div {
@@ -330,6 +331,7 @@
     border: none;
     background: none;
     font-size: 22px;
+    color: white;
     cursor: pointer;
 }
 
@@ -421,7 +423,6 @@
 
 .profile-post-h2 {
     margin-left: 20px;
-    color: black;
     cursor: default;
 }
 
@@ -462,8 +463,9 @@
 .profile-post-img {
     width: 235px;
     height: 200px;
-    border: 2px solid black;
-    box-shadow: 0px 0px 3px 2px rgb(66, 66, 66);
+    border: 2px solid rgb(0, 237, 245);
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px 4px rgb(0, 63, 63);
 }
 
 .profile-post-text-container {

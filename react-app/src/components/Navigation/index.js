@@ -71,6 +71,10 @@ function Navigation({ isLoaded }){
 					</div>
 				}
 				
+				<button id="search-button-submit"
+					onClick={() => handleSearch()}
+				><i className="fas fa-search"></i></button>
+				
 				<input id="searchbar-input" type="text" 
 					placeholder='Search Bar'
 					value={search}
@@ -79,10 +83,6 @@ function Navigation({ isLoaded }){
 					onChange={(e) => setSearch(e.target.value)}
 					autoFocus
 				/>
-				
-				<button id="search-button-submit"
-					onClick={() => handleSearch()}
-				><i className="fas fa-search"></i></button>
 				
 				</>}
 			</div>

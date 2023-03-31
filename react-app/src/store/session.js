@@ -400,6 +400,8 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case SET_SINGLE_USER:
 			newState.users = action.payload;
+			newState.searchResults = null;
+			newState.users = null;
 			return newState;
 		case SET_SEARCH_RESULTS:
 			newState.searchResults = action.payload;
