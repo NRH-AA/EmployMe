@@ -25,7 +25,7 @@ const Post = ({post, user}) => {
     }, [user?.active, isUpdating])
     
     useEffect(() => {
-        setErrors(validateEditPost());
+        if (isUpdating) setErrors(validateEditPost());
     }, [title, text])
     
     if (!user) return null;
