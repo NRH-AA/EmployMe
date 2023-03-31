@@ -5,6 +5,7 @@ const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const SET_SEARCH_RESULTS = "session/SET_SEARCH_RESULTS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
+const SET_SEARCH_PARAMS = "session/SET_SEARCH_PARAMS";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -33,6 +34,11 @@ const removeUser = () => ({
 export const setWindowPath = (path) => ({
 	type: SET_PATH,
 	path
+});
+
+export const setSearchParams = (params) => ({
+	type: SET_SEARCH_PARAMS,
+	params
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -394,8 +400,9 @@ const initialState = {
 	user: null, 
 	users: null, 
 	searchResults: null,
+	searchParams: {type: null, text: null},
 	job: null,
-	path: null 
+	path: null
 };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
@@ -418,6 +425,9 @@ export default function reducer(state = initialState, action) {
 		case SET_SEARCH_RESULTS:
 			newState.searchResults = action.payload;
 			newState.users = null;
+			return newState;
+		case SET_SEARCH_PARAMS:
+			newState.searchParams = action.params;
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;

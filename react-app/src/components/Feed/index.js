@@ -13,6 +13,7 @@ const Feed = () => {
     const sessionSearchedUsers = useSelector((state) => state.session.searchResults);
     const sessionPath = useSelector(state => state.session.path);
     const [feedType, setFeedType] = useState(null);
+    const [offset, setOffset] = useState(0);
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
@@ -45,6 +46,12 @@ const Feed = () => {
     }
     
     if (!activeProfiles) dispatch(getAllUsersThunk());
+    
+    
+    const handleSearchExtend = () => {
+        
+    }
+    
     
     const showSearchedUsers = (data) => {
         return (
@@ -114,6 +121,10 @@ const Feed = () => {
                 )}
             </div>
             </div>
+            
+            {/* <button
+                onClick={() => handleSearchExtend()}
+            >Show More</button> */}
             
             <div id="feed-footer-div">
                 <OpenModalButton
