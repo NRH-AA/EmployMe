@@ -41,7 +41,7 @@
 
 .user-feed-info-data-div {
     width: 650px;
-    height: auto;
+    height: 100px;
     background: linear-gradient(#ffffff, #666666);
     border: 2px solid black;
     border-radius: 15px;

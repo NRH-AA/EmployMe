@@ -168,12 +168,15 @@ const UserProfile = () => {
                     </p>
                 }
                 
-                {(user?.active && user?.id === sessionUser?.id && !isUpdatingBio) &&
+                {(user?.active && user?.id === sessionUser?.id && !isUpdatingBio) && <div id="create-post-div-button">
                 <OpenModalButton
-                    className="user-profile-button-small profile-create-post-button"
-                    buttonText="Create Post"
+                    className="profile-create-post-button"
+                    buttonText={<i className="fa-solid fa-pen-to-square"></i>}
                     modalComponent={<CreatePostModal/>}
                 />
+                
+                <span className="profile-create-post-button-tooltip">Create Post</span>
+                </div>
                 }
                 </div>
             </div>
@@ -202,9 +205,12 @@ const UserProfile = () => {
                             <p className="user-profile-p">Age: <span className="user-profile-bio-span">{user?.age}</span></p>
                             <p className="user-profile-p">Occupation: <span className="user-profile-bio-span">{user?.occupation}</span></p>
                         </> : <>
-                            <p className="user-profile-p">Name:</p>
+                            <p className="user-profile-p">Name: 
+                                {errors?.firstName && <> <span className="user-profile-bio-p">
+                                    <i className="fa-solid fa-circle-exclamation"></i> {errors?.firstName && errors.firstName}
+                                </span> </>}
+                            </p>
                             <div id="user-profile-edit-name-div">
-                                <p className="user-profile-bio-p">{errors?.firstName && errors.firstName}</p>
                                 <input type="text" placeholder="First Name"
                                     className="user-profile-bio-input login-input"
                                     maxLength={20}
@@ -212,7 +218,6 @@ const UserProfile = () => {
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
                                 
-                                <p className="user-profile-bio-p">{errors?.middleName && errors.middleName}</p>
                                 <input type="text" placeholder="Middle Name"
                                     className="user-profile-bio-input login-input"
                                     maxLength={20}
@@ -220,7 +225,7 @@ const UserProfile = () => {
                                     onChange={(e) => setMiddleName(e.target.value)}
                                  />
                                  
-                                <p className="user-profile-bio-p">{errors?.lastName && errors.lastName}</p>
+                                {errors?.lastName && <> <p className="user-profile-bio-p"><i className="fa-solid fa-circle-exclamation"></i> {errors.lastName}</p> </>}
                                 <input type="text" placeholder="Last Name"
                                     className="user-profile-bio-input login-input"
                                     maxLength={30}
@@ -229,16 +234,22 @@ const UserProfile = () => {
                                 />
                             </div>
                                     
-                            <p className="user-profile-p user-profile-edit-age-p">Age:</p>
-                            <p className="user-profile-bio-p">{errors?.age && errors.age}</p>
+                            <p className="user-profile-p user-profile-edit-age-p">Age: {errors?.age && <>
+                                <i className="fa-solid fa-circle-exclamation"></i> 
+                                <span className="user-profile-bio-p">{errors.age}</span> </>}
+                            </p>
                             <input type="number" placeholder="Age"
                                 className="user-profile-bio-input login-input"
                                 value={age}
                                 onChange={(e) => setAge(e.target.value)}
                             />
                                     
-                            <p className="user-profile-p user-profile-edit-age-p">Occupation:</p>
-                            <p className="user-profile-bio-p">{errors?.occupation && errors.occupation}</p>
+                            <p className="user-profile-p user-profile-edit-age-p">Occupation: 
+                                {errors?.occupation && <> 
+                                <span className="user-profile-bio-p">
+                                    <i className="fa-solid fa-circle-exclamation"></i> {errors.occupation}
+                                </span> </>}
+                            </p>
                             <input type="text" placeholder="Occupation"
                                 className="user-profile-bio-input login-input"
                                 maxLength={20}
@@ -255,8 +266,11 @@ const UserProfile = () => {
                         <p className="user-profile-p">Email: <span className="user-profile-bio-span">{user?.work_email}</span></p>
                         <p className="user-profile-p">Phone: <span className="user-profile-bio-span">{user?.phone_number}</span></p>
                     </> : <>
-                        <p className="user-profile-p user-profile-edit-age-p">Company:</p>
-                        <p className="user-profile-bio-p">{errors?.company && errors.company}</p>
+                        <p className="user-profile-p user-profile-edit-age-p">Company:
+                            {errors?.company && <> <span className="user-profile-bio-p">
+                                <i className="fa-solid fa-circle-exclamation"></i> {errors.company}
+                            </span> </>}
+                        </p>
                         <input type="text" placeholder="Company Name"
                             className="user-profile-bio-input login-input"
                             maxLength={30}
@@ -264,8 +278,11 @@ const UserProfile = () => {
                             onChange={(e) => setCompany(e.target.value)}
                         />
                                     
-                        <p className="user-profile-p user-profile-edit-age-p">Email:</p>
-                        <p className="user-profile-bio-p">{errors?.email && errors.email}</p>
+                        <p className="user-profile-p user-profile-edit-age-p">Email: 
+                            {errors?.email && <> <span className="user-profile-bio-p">
+                                <i className="fa-solid fa-circle-exclamation"></i> {errors.email}
+                            </span> </>}
+                        </p>
                         <input type="text" placeholder="Work Email"
                             className="user-profile-bio-input login-input"
                             maxLength={30}
@@ -273,8 +290,11 @@ const UserProfile = () => {
                             onChange={(e) => setEmail(e.target.value)}
                         />
                                     
-                        <p className="user-profile-p user-profile-edit-age-p">Phone:</p>
-                        <p className="user-profile-bio-p">{errors?.phone_number && errors.phone_number}</p>
+                        <p className="user-profile-p user-profile-edit-age-p">Phone: 
+                           {errors?.phone_number && <> <span className="user-profile-bio-p">
+                                <i className="fa-solid fa-circle-exclamation"></i> {errors.phone_number}
+                            </span> </>}
+                        </p>
                         <input type="text" placeholder="Phone Number"
                             className="user-profile-bio-input login-input"
                             maxLength={14}
