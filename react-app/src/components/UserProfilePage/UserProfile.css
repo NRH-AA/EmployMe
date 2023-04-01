@@ -30,7 +30,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: -80px;
+    margin-top: -30px;
 }
 
 #user-profile-update-button {
@@ -96,8 +96,14 @@
 .user-profile-bio-p {
     color: red;
     margin: 0px;
+    margin-left: 5px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.fa-circle-exclamation {
+    font-size: 15px;
+    color: red;
 }
 
 .user-profile-bio-input {
@@ -276,6 +282,39 @@
 .profile-create-post-button {
     margin-top: 10px;
     margin-bottom: -25px;
+    border: none;
+    background: none;
+    margin-left: 130px;
+    display: inline-block;
+}
+
+.profile-create-post-button-tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: 270px;
+    right: 440px;
+    width: 120px;
+    height: 22px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    text-align: center;
+    padding-top: 5px;
+    font-weight: 700;
+    opacity: 0.7;
+}
+
+#create-post-div-button {
+    display: inline-block;
+}
+
+#create-post-div-button:hover .profile-create-post-button-tooltip {
+    visibility: visible;
+}
+
+.fa-pen-to-square {
+    font-size: 30px;
+    color: blue;
+    cursor: pointer;
 }
 
 .user-profile-button-medium {
@@ -560,6 +599,11 @@
     justify-content: space-around;
     margin-top: 50px;
 }
+
+
+
+
+
 
 ::file-selector-button {
     display: none;
