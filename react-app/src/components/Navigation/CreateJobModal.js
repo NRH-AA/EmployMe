@@ -24,7 +24,6 @@ const CreateJobModal = () => {
         if (title && (title.length < 4 || title.length > 50)) newErrors.title = 'Title (4-50) characters';
         if (description && (description.length < 10 || description.length > 300)) newErrors.description = 'Description (10-300) characters';
         if (occupation && (occupation.length < 4 || occupation.length > 20)) newErrors.occupation = 'Occupation (4-20) characters';
-        if (wageMin > wageMax) newErrors.wage = 'Minumum greater than maximum';
         if (openings < 1) newErrors.openings = 'Must have 1 opening';
         
         setErrors(newErrors);
