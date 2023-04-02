@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/NRH-AA/EmployMe">
-    <img src="./react-app/public/Logo.ico" alt="Logo" width="80" height="80">
+    <img src="./react-app/public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">EmployMe</h3>
@@ -128,19 +128,19 @@ find the best possible matches.'
 
 ## Usage
 
-<img src="./images/signup.png" alt="Logo" width="500" height="300">
+<img src="./images/signup.png" alt="Logo" width="600" height="600">
 
 Create your account with secure hashed password protection.
 
-<img src="./joblist.png" alt="Logo" width="500" height="300">
+<img src="./images/joblist.png" alt="Logo" width="500" height="300">
 
 The home page displays current job listings.
 
-<img src="./profile.png" alt="Logo" width="500" height="300">
+<img src="./images/profile.png" alt="Logo" width="500" height="300">
 
 You can set up your profile and create posts to create your best resume.
 
-<img src="./joblist.png" alt="Logo" width="500" height="300">
+<img src="./images/joblist.png" alt="Logo" width="500" height="300">
 
 You can create job listings so job seekers can contact you.
 
