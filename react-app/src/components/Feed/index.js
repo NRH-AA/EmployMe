@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
-import { getAllUsersThunk, setWindowPath } from "../../store/session";
+import { getAllUsersThunk, setWindowPath, getSearchResults } from "../../store/session";
 import InfoModal from "./InfoModal";
 import './Feed.css';
 
@@ -13,20 +13,31 @@ const Feed = () => {
     const sessionSearchedUsers = useSelector((state) => state.session.searchResults);
     const sessionPath = useSelector(state => state.session.path);
     const [feedType, setFeedType] = useState(null);
-    const [offset, setOffset] = useState(0);
+    //const [offset, setOffset] = useState(0);
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
     }, [dispatch, sessionPath])
     
+    
+    const getSearchJobs = async () => {
+        const searchData = {
+            type: 'Jobs',
+            text: '',
+            offset: 0
+        }
+        
+        await dispatch(getSearchResults(searchData))
+    }
+    
     useEffect(() => {
-        if (!sessionUsers?.length > 0 && !sessionSearchedUsers) dispatch(getAllUsersThunk());
-    }, [dispatch, sessionUsers])
+        if (!sessionSearchedUsers) getSearchJobs();
+    }, [dispatch, sessionSearchedUsers])
     
     if (!sessionUser) return null;
     
     let activeProfiles
-    if (sessionSearchedUsers && sessionSearchedUsers?.users?.length > 0 || sessionSearchedUsers?.jobs?.length > 0 || sessionSearchedUsers?.companies?.length > 0) {
+    if (sessionSearchedUsers && (sessionSearchedUsers?.users?.length > 0 || sessionSearchedUsers?.jobs?.length > 0 || sessionSearchedUsers?.companies?.length > 0)) {
         if (sessionSearchedUsers?.users?.length) {
             activeProfiles = sessionSearchedUsers?.users?.filter(user => user.active && user.id !== sessionUser?.id);
             if (feedType !== 'user') setFeedType('user');
@@ -35,7 +46,6 @@ const Feed = () => {
             if (feedType !== 'company') setFeedType('company');
         } else if (sessionSearchedUsers?.jobs?.length) {
             activeProfiles = sessionSearchedUsers?.jobs?.filter(job => job.active && job.user.id !== sessionUser?.id);
-            console.log('Entered Jobs')
             if (feedType !== 'job') setFeedType('job');
         }
     } else {
@@ -44,9 +54,6 @@ const Feed = () => {
             if (feedType !== 'user') setFeedType('user');
         }
     }
-    
-    if (!activeProfiles) dispatch(getAllUsersThunk());
-    
     
     const handleSearchExtend = () => {
         
@@ -57,19 +64,17 @@ const Feed = () => {
         return (
             <NavLink className="user-feed-info-div" to={`/profile/${data?.id}`}>
             <img className="feed-profile-picture" src={data?.profile_picture} alt={data?.first_name}/>
-            <div className="user-feed-info-data-div">
-                <div className="user-feed-info-data-div-inner1">
-                    <p className="feed-info-p">Name: <span>{data?.first_name} {data?.middle_name} {data?.last_name}</span></p>
-                    <p className="feed-info-p">Email: <span>{data?.work_email}</span></p>
-                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                
+  
+                <div className="user-feed-info-data-div">
+                    <div className="user-feed-info-data-div-inner">
+                        <p className="feed-info-p">Name: <span>{data?.first_name} {data?.middle_name} {data?.last_name}</span></p>
+                        <p className="feed-info-p">Email: <span>{data?.work_email}</span></p>
+                        <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
+                        <p className="feed-info-p">Rec: <span>0</span></p>
+                    </div>
+                
                 </div>
-                            
-                <div className="user-feed-info-data-div-inner2">
-                    <p className="feed-info-p">Posts: <span>{data?.posts?.length}</span></p>
-                    <p className="feed-info-p">Rec: <span>0</span></p>
-                    <p className="feed-info-p">Messages: <span>{data?.messages?.length}</span></p>
-                </div>
-            </div>
             </NavLink>
         );
     };
@@ -80,13 +85,10 @@ const Feed = () => {
             <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>
                             
             <div className="user-feed-info-data-div">
-                <div className="user-feed-info-data-div-inner1">
+                <div className="user-feed-info-data-div-inner">
                     <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
                     <p className="feed-info-p">Wage: <span>{`$${data?.wage?.min} - $${data?.wage?.max}`}</span></p>
                     <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
-                </div>
-                                
-                <div className="user-feed-info-data-div-inner2">
                     <p className="feed-info-p">Company: <span>{data?.user?.company_name}</span></p>
                     <p className="feed-info-p">Email: <span>{data?.user?.work_email}</span></p>
                 </div>
