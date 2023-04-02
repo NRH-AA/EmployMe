@@ -33,9 +33,8 @@ const JobListing = () => {
         const newErrors = {};
         if (title && (title.length > 50 || title.length < 4)) newErrors.title = 'Title (4-50) characters';
         if (description && (description.length < 10 || description.length > 300)) newErrors.description = 'Description (10-300) characters';
-        if (occupation && (occupation.length < 4 || occupation.length > 20)) newErrors.occupation = 'Occupation (4-20) characters'
-        if (wageMin > wageMax) newErrors.wage = 'Min greater than max'
-        if (filled > openings) newErrors.openings = 'Falled greater than openings'
+        if (occupation && (occupation.length < 4 || occupation.length > 20)) newErrors.occupation = 'Occupation (4-20) characters';
+        if (filled > openings) newErrors.openings = 'Falled greater than openings';
         
         setErrors(newErrors);
     }

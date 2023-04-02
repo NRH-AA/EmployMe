@@ -40,24 +40,20 @@
 }
 
 .user-feed-info-data-div {
-    width: 650px;
-    height: 100px;
-    background: linear-gradient(#ffffff, #666666);
+    width: 350px;
+    height: auto;
+    padding: 20px;
+    padding-left: 0px;
+    background: linear-gradient(#ffffff, #888888);
     border: 2px solid black;
     border-radius: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: left;
 }
 
-.user-feed-info-data-div-inner1 {
-    margin-left: 30px;
-    width: 450px;
-}
-
-.user-feed-info-data-div-inner2 {
-    margin-right: 40px;
-    width: 200px;
+.user-feed-info-data-div-inner {
+    margin-left: 5px;
 }
 
 .feed-info-p {
