@@ -1,7 +1,7 @@
 # Flask React Project
 
 <br />
-<div align="center">
+<div id="readme-top" align="center">
   <a href="https://github.com/NRH-AA/EmployMe">
     <img src="./react-app/public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
