@@ -132,11 +132,11 @@ find the best possible matches.'
 
 Create your account with secure hashed password protection.
 
-<img src="./images/feed.png" alt="Logo" width="600" height="600">
+<img src="./images/feed.png" alt="Logo" width="700" height="500">
 
 The home page displays current job listings.
 
-<img src="./images/profile.png" alt="Logo" width="600" height="600">
+<img src="./images/profile.png" alt="Logo" width="650" height="600">
 
 You can set up your profile and create posts to create your best resume.
 
