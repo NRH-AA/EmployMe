@@ -132,7 +132,7 @@ find the best possible matches.'
 
 Create your account with secure hashed password protection.
 
-<img src="./images/joblist.png" alt="Logo" width="500" height="300">
+<img src="./images/feed.png" alt="Logo" width="500" height="300">
 
 The home page displays current job listings.
 
