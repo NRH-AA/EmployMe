@@ -9,9 +9,11 @@ import Feed from "./components/Feed";
 import UserProfile from "./components/UserProfilePage";
 import JobListing from "./components/JobListings";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
