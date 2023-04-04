@@ -2,9 +2,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getSearchResults, getAllUsersThunk, setSearchParams } from '../../store/session';
+import useLocalStorage from 'use-local-storage';
 import ProfileButton from './ProfileButton';
-import OpenModalButton from "../OpenModalButton";
-import CreateJobModal from './CreateJobModal';
 import './Navigation.css';
 import Logo from './logo.png';
 
@@ -13,10 +12,13 @@ function Navigation({ isLoaded }){
 	const history = useHistory();
 	const sessionUser = useSelector(state => state.session.user);
 	const sessionPath = useSelector(state => state.session.path);
+	const sessionTheme = useSelector(state => state.session.theme);
 	const [canSearch, setCanSearch] = useState(true);
 	const [searchOption, setSearchOption] = useState('Jobs');
-	const [showSearchTypes, setShowSearchTypes] = useState(false);
 	const [search, setSearch] = useState('');
+	
+	const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+	const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
 	if (!sessionUser) return null;
 	
@@ -47,8 +49,13 @@ function Navigation({ isLoaded }){
 		return history.push('/');
 	}
 	
+	const switchTheme = () => {
+		const newTheme = theme === 'light' ? 'dark' : 'light';
+		setTheme(newTheme);
+	}
+	
 	return (
-		<div id="navigation-container">
+		<div id="navigation-container" data-theme={sessionTheme}>
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
 				

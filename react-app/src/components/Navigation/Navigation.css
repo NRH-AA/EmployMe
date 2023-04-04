@@ -59,10 +59,10 @@ body {
 }
 
 #navigation-logo {
-  width: 65px;
+  width: 50px;
   height: 40px;
-  margin-left: 5px;
-  border-radius: 5px;
+  margin-left: 10px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
@@ -74,24 +74,24 @@ body {
   height: 35px;
   width: 80px;
   border: none;
-  box-shadow: 0px 0px 1px 1px rgb(197, 197, 197);
+  background: linear-gradient(#00e91f, #008307);
   border-radius: 3px;
   margin-right: 10px;
   cursor: pointer;
 }
 
 #profile-dropdown-button:hover {
-  box-shadow: 0px 0px 1px 1px rgb(145, 145, 145);
+  background: linear-gradient(#00ff22, #009908);
 }
 
 #profile-dropdown-button:active {
-  box-shadow: 0px 0px 1px 1px rgb(235, 235, 235);
+  background: linear-gradient(#00d11c, #007206);
 }
 
 
 #profile-dropdown-button > i {
-    color: black;
-    font-size: 20px;
+    color: rgb(226, 226, 226);
+    font-size: 24px;
 }
 
 #profile-dropdown-button > span {

@@ -402,7 +402,8 @@ const initialState = {
 	searchResults: null,
 	searchParams: {type: null, text: null},
 	job: null,
-	path: null
+	path: null,
+	theme: 'light'
 };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
