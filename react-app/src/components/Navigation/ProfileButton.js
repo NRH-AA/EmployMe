@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UserJobListingsPage from "./UserJobListingsPage";
 import { logout } from "../../store/session";
+import CreateJobModal from "./CreateJobModal";
 import './Navigation.css';
 
 function ProfileButton({ user }) {
@@ -50,7 +51,7 @@ function ProfileButton({ user }) {
 }
   
   return (
-    <>
+    <div id="profile-dropdown-div">
       <button id="profile-dropdown-button" onClick={openMenu}>
         <i className="fa-solid fa-circle-user fa-2xl"></i>
       </button>
@@ -71,10 +72,18 @@ function ProfileButton({ user }) {
               >Company Page</button>
               
               <OpenModalButton
+                    className="user-dropdown-button"
+                    buttonText="Create Job Listing"
+                    modalComponent={<CreateJobModal />}
+              />
+              
+              <OpenModalButton
                   className="user-dropdown-button"
                   buttonText="Job Listings"
                   modalComponent={<UserJobListingsPage />}
               />
+              
+              
               
               <button className="user-dropdown-button"
                 onClick={handleLogout}
@@ -83,7 +92,7 @@ function ProfileButton({ user }) {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

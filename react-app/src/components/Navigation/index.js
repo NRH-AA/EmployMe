@@ -51,49 +51,24 @@ function Navigation({ isLoaded }){
 		<div id="navigation-container">
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
-				{(sessionPath && sessionPath === '/') && <>
-				<button id="search-type-select-box"
-					onClick={() => setShowSearchTypes(!showSearchTypes)}
-				><i className="fa fa-caret-down"></i><span>{searchOption}</span></button>
 				
-				{showSearchTypes &&
-					<div id="search-drop-down-div"
-						onMouseLeave={() => setShowSearchTypes(false)}
-					>
-						<p className="search-drop-down-p"
-							onClick={() => {setSearchOption('Jobs'); setShowSearchTypes(!showSearchTypes)}}
-						>Jobs</p>
-						<p className="search-drop-down-p"
-							onClick={() => {setSearchOption('Companies'); setShowSearchTypes(!showSearchTypes)}}
-						>Companies</p>
-						<p className="search-drop-down-p"
-							onClick={() => {setSearchOption('Users'); setShowSearchTypes(!showSearchTypes)}}
-						>Users</p>
-					</div>
-				}
+				{sessionPath == '/' && <div id="searchbar-input-div">
+					<input id="searchbar-input" type="text" 
+						placeholder='Search Bar'
+						value={search}
+						maxLength={100}
+						onKeyDown={(e) => keyDownSearch(e)}
+						onChange={(e) => setSearch(e.target.value)}
+						autoFocus
+					/>
+					<button id="search-button-submit"
+						onClick={() => handleSearch()}
+					><i className="fas fa-search"></i></button>
+				</div>}
 				
-				<button id="search-button-submit"
-					onClick={() => handleSearch()}
-				><i className="fas fa-search"></i></button>
-				
-				<input id="searchbar-input" type="text" 
-					placeholder='Search Bar'
-					value={search}
-					maxLength={100}
-					onKeyDown={(e) => keyDownSearch(e)}
-					onChange={(e) => setSearch(e.target.value)}
-					autoFocus
-				/>
-				
-				</>}
 			</div>
 			
 			<div>
-				<OpenModalButton
-                    className="create-job-listing-button"
-                    buttonText="Create Job Listing"
-                    modalComponent={<CreateJobModal />}
-                />
 				{isLoaded && <ProfileButton user={sessionUser} />}
 			</div>
 		</div>
