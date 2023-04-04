@@ -89,8 +89,6 @@ const Feed = () => {
                     <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
                     <p className="feed-info-p">Wage: <span>{`$${data?.wage?.min} - $${data?.wage?.max}`}</span></p>
                     <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
-                    <p className="feed-info-p">Company: <span>{data?.user?.company_name}</span></p>
-                    <p className="feed-info-p">Email: <span>{data?.user?.work_email}</span></p>
                 </div>
              </div>
             </NavLink>
