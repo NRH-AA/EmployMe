@@ -20,6 +20,12 @@ function Navigation({ isLoaded }){
 	const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 	const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
+	const switchTheme = () => {
+		const newTheme = theme === 'light' ? 'dark' : 'light';
+		setTheme(newTheme);
+	}
+	
+	
 	if (!sessionUser) return null;
 	
 	const handleSearch = async () => {
@@ -47,11 +53,6 @@ function Navigation({ isLoaded }){
 	const handleLogoPressed = async () => {
 		await dispatch(getAllUsersThunk());
 		return history.push('/');
-	}
-	
-	const switchTheme = () => {
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		setTheme(newTheme);
 	}
 	
 	return (
