@@ -4,9 +4,12 @@
     }
 }
 
+body {
+    background-color: rgb(241, 241, 241);
+}
+
 #feed-container {
     margin: auto;
-    margin-top: 10px;
     width: 100%;
     height: auto;
 }
@@ -14,6 +17,10 @@
 #feed-content-container {
     display: flex;
     justify-content: center;
+}
+
+#feed-content-div {
+    margin-top: 20px;
 }
 
 .user-feed-info-div {
@@ -54,6 +61,7 @@
 
 .user-feed-info-data-div-inner {
     margin-left: 5px;
+    margin-top: -10px;
 }
 
 .feed-info-p {
