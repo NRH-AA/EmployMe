@@ -398,9 +398,7 @@ export const createJobListing = (userId, jobData) => async (dispatch) => {
 
 const initialState = { 
 	user: null, 
-	users: null, 
-	searchResults: null,
-	searchParams: {type: null, text: null},
+	users: null,
 	job: null,
 	path: null,
 	theme: 'light'
@@ -421,13 +419,6 @@ export default function reducer(state = initialState, action) {
 		case SET_SINGLE_USER:
 			newState.users = action.payload;
 			newState.searchResults = null;
-			return newState;
-		case SET_SEARCH_RESULTS:
-			newState.searchResults = action.payload;
-			newState.users = null;
-			return newState;
-		case SET_SEARCH_PARAMS:
-			newState.searchParams = action.params;
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;

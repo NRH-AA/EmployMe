@@ -1,5 +1,6 @@
 import { useModal } from "../../context/Modal";
 import { NavLink } from "react-router-dom";
+import './InfoModal.css';
 
 const InfoModal = () => {
     const { closeModal } = useModal();
