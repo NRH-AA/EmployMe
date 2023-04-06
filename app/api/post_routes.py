@@ -5,6 +5,14 @@ from datetime import datetime
 
 post_routes = Blueprint('posts', __name__)
 
+@post_routes.route('/feed', methods=['POST'])
+def get_posts():
+    data = request.get_json()
+    offset = data['offset']
+    
+    posts = Post.query.limit(6).offset(offset)
+    return {'posts': [post.to_dict() for post in posts]}
+
 @post_routes.route('', methods=['POST'])
 @login_required
 def create_post():
