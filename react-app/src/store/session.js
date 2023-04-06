@@ -2,10 +2,10 @@
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
 const SET_SINGLE_USER = "session/SET_SINGLE_USER";
-const SET_SEARCH_RESULTS = "session/SET_SEARCH_RESULTS";
 const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
-const SET_SEARCH_PARAMS = "session/SET_SEARCH_PARAMS";
+const GET_POSTS = "session/GET_POSTS";
+const APPEND_POSTS = "session/APPEND_POSTS";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -22,11 +22,6 @@ const setSingleUserAction = (user) => ({
 	payload: user
 });
 
-const setSearchResults = (data) => ({
-	type: SET_SEARCH_RESULTS,
-	payload: data
-});
-
 const removeUser = () => ({
 	type: REMOVE_USER,
 });
@@ -36,9 +31,14 @@ export const setWindowPath = (path) => ({
 	path
 });
 
-export const setSearchParams = (params) => ({
-	type: SET_SEARCH_PARAMS,
-	params
+const setPosts = (posts) => ({
+	type: GET_POSTS,
+	payload: posts
+});
+
+const appendPosts = (posts) => ({
+	type: APPEND_POSTS,
+	payload: posts
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -200,6 +200,46 @@ export const getAllUsersThunk = () => async (dispatch) => {
 	return data;
 }
 
+export const getPostsThunk = (offset) => async (dispatch) => {
+	const response = await fetch(`/api/posts/feed`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			offset: offset || 0
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setPosts(data));
+	}
+	
+	return response
+}
+
+export const appendPostsThunk = (offset) => async (dispatch) => {
+	const response = await fetch(`/api/posts/feed`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			offset: offset || 0
+		})
+	});
+
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(appendPosts(data));
+	}
+	
+	return response
+}
+
 export const getSingleUser = (userId) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}`);
 	const data = await response.json();
@@ -256,27 +296,27 @@ export const deleteJobListing = (jobId, userId) => async (dispatch) => {
 	return response;
 };
 
-export const getSearchResults = (searchData) => async (dispatch) => {
-	const response = await fetch(`/api/users`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			searchType: searchData.type,
-			searchText: searchData.text,
-			offset: searchData.offset
-		})
-	});
+// export const getSearchResults = (searchData) => async (dispatch) => {
+// 	const response = await fetch(`/api/users`, {
+// 		method: "POST",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify({
+// 			searchType: searchData.type,
+// 			searchText: searchData.text,
+// 			offset: searchData.offset
+// 		})
+// 	});
 
-	const data = await response.json();
+// 	const data = await response.json();
 	
-	if (response.ok) {
-		dispatch(setSearchResults(data));
-	}
+// 	if (response.ok) {
+// 		dispatch(setSearchResults(data));
+// 	}
 	
-	return data
-};
+// 	return data
+// };
 
 export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	const res = await fetch(`/api/users/${userId}/profile`, {
@@ -398,9 +438,8 @@ export const createJobListing = (userId, jobData) => async (dispatch) => {
 
 const initialState = { 
 	user: null, 
-	users: null, 
-	searchResults: null,
-	searchParams: {type: null, text: null},
+	users: null,
+	posts: null,
 	job: null,
 	path: null,
 	theme: 'light'
@@ -422,15 +461,14 @@ export default function reducer(state = initialState, action) {
 			newState.users = action.payload;
 			newState.searchResults = null;
 			return newState;
-		case SET_SEARCH_RESULTS:
-			newState.searchResults = action.payload;
-			newState.users = null;
-			return newState;
-		case SET_SEARCH_PARAMS:
-			newState.searchParams = action.params;
-			return newState;
 		case SET_PATH:
 			newState.path = action.path;
+			return newState;
+		case GET_POSTS:
+			newState.posts = action.payload.posts;
+			return newState;
+		case APPEND_POSTS:
+			newState.posts = [...newState.posts, ...action.payload.posts];
 			return newState;
 		default:
 			return state;
