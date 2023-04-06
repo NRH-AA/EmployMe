@@ -82,15 +82,17 @@ const Feed = () => {
     const showSeachedJobs = (data) => {
         return (
             <NavLink className="user-feed-info-div" to={`/job/${data?.id}`}>
-            <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>
-                            
             <div className="user-feed-info-data-div">
-                <div className="user-feed-info-data-div-inner">
-                    <p className="feed-info-p">Occupation: <span>{data?.occupation}</span></p>
-                    <p className="feed-info-p">Wage: <span>{`$${data?.wage?.min} - $${data?.wage?.max}`}</span></p>
-                    <p className="feed-info-p">Openings: <span>{data?.openings + " / " + data?.filled}</span></p>
+                
+                <div className="user-feed-profile-picture-div">
+                    <img className="feed-profile-picture" src={data?.user?.profile_picture} alt={data?.user?.first_name}/>          
+                    <p className="feed-info-p">{data?.occupation}</p>
                 </div>
-             </div>
+                
+                <div className="user-feed-info-data-div-inner">
+                    <p className="feed-info-p">{data?.user?.first_name}</p>
+                </div>
+            </div>
             </NavLink>
         );
     };
@@ -99,26 +101,33 @@ const Feed = () => {
         <div id="feed-container">
             <div id="feed-content-container">
             
-            <div id="feed-content-div">
-                {(activeProfiles && !activeProfiles.length) &&
-                    <h2>No users or jobs found in search.</h2>
-                }
-                {activeProfiles && activeProfiles.map(data => 
-                <div key={data.id}>
-                    {(feedType === 'user') ? 
-                    <>
-                    {showSearchedUsers(data)}
-                    </>
-                    : (feedType === 'job') ?
-                    <>
-                    {showSeachedJobs(data)}
-                    </>
-                    :
-                    <>
-                    </>
+            <div id="feed-recommended-container">
+            <h3>Recommended Jobs</h3>
+                <div id="feed-recommended-div">
+                    {(activeProfiles && !activeProfiles.length) &&
+                        <h2>No users or jobs found in search.</h2>
                     }
+                    {activeProfiles && activeProfiles.map(data => 
+                    <div key={data.id}>
+                        {(feedType === 'user') ? 
+                        <>
+                        {showSearchedUsers(data)}
+                        </>
+                        : (feedType === 'job') ?
+                        <>
+                        {showSeachedJobs(data)}
+                        </>
+                        :
+                        <>
+                        </>
+                        }
+                    </div>
+                    )}
                 </div>
-                )}
+            </div>
+            
+            <div id="feed-content-div">
+                
             </div>
             </div>
             

@@ -55,6 +55,10 @@ function Navigation({ isLoaded }){
 		return history.push('/');
 	}
 	
+	const handleInvalidFeature = () => {
+		return alert('Feature coming soon!');
+	}
+	
 	return (
 		<div id="navigation-container" data-theme={sessionTheme}>
 			<div id="navigation-logo-search-div">
@@ -64,7 +68,7 @@ function Navigation({ isLoaded }){
 					<input id="searchbar-input" type="text" 
 						placeholder='Search Bar'
 						value={search}
-						maxLength={100}
+						maxLength={40}
 						onKeyDown={(e) => keyDownSearch(e)}
 						onChange={(e) => setSearch(e.target.value)}
 						autoFocus
@@ -73,6 +77,34 @@ function Navigation({ isLoaded }){
 						onClick={() => handleSearch()}
 					><i className="fas fa-search"></i></button>
 				</div>}
+				
+				<div id="navigation-button-bar-div">
+					<button className="navigation-button" type="button"
+						title="Home"
+						onClick={() => handleInvalidFeature()}
+					><i className="fa-solid fa-house"></i>
+					</button>
+					
+					<button className="navigation-button" type="button"
+						title="Jobs"
+						onClick={() => handleInvalidFeature()}
+					><i className="fa-solid fa-briefcase"></i></button>
+					
+					<button className="navigation-button" type="button"
+						title="Network"
+						onClick={() => handleInvalidFeature()}
+					><i className="fa-solid fa-users"></i></button>
+					
+					<button className="navigation-button" type="button"
+						title="Messages"
+						onClick={() => handleInvalidFeature()}
+					><i className='far fa-comment-dots'></i></button>
+					
+					<button className="navigation-button" type="button"
+						title="Notifications"
+						onClick={() => handleInvalidFeature()}
+					><i className="fa fa-bell"></i></button>
+				</div>
 				
 			</div>
 			
