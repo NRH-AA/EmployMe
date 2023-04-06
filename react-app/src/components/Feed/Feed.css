@@ -10,30 +10,136 @@ body {
 
 #feed-content-container {
     display: flex;
+    width: 1020px;
+    margin: auto;
     justify-content: space-around;
     margin-top: 20px;
 }
 
 #feed-user-profile-data {
+    display: sticky;
     height: 500px;
     width: 200px;
-    background-color: grey;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 2px 2px rgb(206, 206, 206);
+    border-radius: 10px;
     margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+#feed-user-profile-button {
+    position: absolute;
+    margin-left: 160px;
+    margin-top: 10px;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: rgb(0, 224, 0);
+    cursor: pointer;
+}
+
+#feed-user-profile-data > img {
+    width: 70px;
+    height: 70px;
+    margin-top: 20px;
+}
+
+#feed-user-profile-data > p {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+
 #feed-posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 50px;
+}
+
+#feed-posts-container > button {
+    width: 80px;
+    height: 25px;
+    margin: auto;
+    border: none;
+    border-radius: 3px;
+    background: linear-gradient(#00e91f, #009e08);
+    box-shadow: 0px 0px 2px 2px rgb(0, 163, 14);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+#feed-posts-container > button:hover {
+    background: linear-gradient(#00ff22, #009908);
+    box-shadow: 0px 0px 2px 2px rgb(0, 139, 12);
+}
+
+#feed-posts-container > button:active {
+    background: linear-gradient(#00d11c, #007206);
+    box-shadow: 0px 0px 2px 2px rgb(0, 122, 10);
+}
+
+
+.feed-post-container {
     width: 340px;
-    height: 900px;
-    background-color: grey;
+    height: auto;
+    background-color: white;
+    box-shadow: 0px 0px 2px 2px rgb(172, 172, 172);
+    border-radius: 10px;
+}
+
+.feed-post-top-div {
+    display: flex;
+    align-items: center;
+}
+
+.feed-post-top-div > img {
+    width: 75px;
+    height: 75px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.feed-post-top-div > h4 {
+    margin-top: 0px;
+    margin-left: 5px;
+}
+
+.feed-post-text-div {
+    width: 100%;
+    height: auto;
+    padding-bottom: 1px;
+    background-color: rgb(221, 221, 221);
+}
+
+.feed-post-text-div > p {
+    margin-left: 5px;
+    font-size: 14px;
 }
 
 #feed-news-container {
     width: 200px;
-    height: 500px;
+    height: 120px;
     margin-right: 80px;
-    background-color: grey;
+    background-color: white;
+    box-shadow: 0px 0px 2px 2px rgb(206, 206, 206);
+    border-radius: 10px;
 }
 
+#feed-news-div {
+    height: auto;
+    padding-left: 10px;
+}
+
+#feed-news-div > p {
+    width: 100%;
+    padding-bottom: 20px;
+}
 
 
 #feed-footer-div {
@@ -97,6 +203,8 @@ body {
     }
     
     #feed-content-container {
+        width: 100%;
+        margin: none;
         justify-content: center;
     }
 }

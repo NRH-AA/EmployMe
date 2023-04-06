@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSearchResults, getAllUsersThunk, setSearchParams } from '../../store/session';
+import { getSearchResults, getAllUsersThunk } from '../../store/session';
 import useLocalStorage from 'use-local-storage';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -28,25 +28,25 @@ function Navigation({ isLoaded }){
 	
 	if (!sessionUser) return null;
 	
-	const handleSearch = async () => {
-		if (!canSearch) return;
+	// const handleSearch = async () => {
+	// 	if (!canSearch) return;
 		
-		const searchParams = {
-			type: searchOption,
-			text: search,
-			offset: 0
-		}
+	// 	const searchParams = {
+	// 		type: searchOption,
+	// 		text: search,
+	// 		offset: 0
+	// 	}
 		
-		setCanSearch(false);
-		await dispatch(setSearchParams(searchParams));
-		await dispatch(getSearchResults(searchParams));
-		setCanSearch(true);
-	};
+	// 	setCanSearch(false);
+	// 	await dispatch(setSearchParams(searchParams));
+	// 	await dispatch(getSearchResults(searchParams));
+	// 	setCanSearch(true);
+	// };
 	
 	const keyDownSearch = (e) => {
 		if (e.key === 'Tab' || e.key === 'Enter') {
 			e.preventDefault();
-			handleSearch();
+			// handleSearch();
 		};
 	};
 	
@@ -74,7 +74,7 @@ function Navigation({ isLoaded }){
 						autoFocus
 					/>
 					<button id="search-button-submit"
-						onClick={() => handleSearch()}
+						// onClick={() => handleSearch()}
 					><i className="fas fa-search"></i></button>
 				</div>}
 				
