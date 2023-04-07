@@ -21,7 +21,7 @@ body {
     height: 500px;
     width: 200px;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0px 0px 2px 2px rgb(206, 206, 206);
+    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
     border-radius: 10px;
     margin-left: 80px;
     display: flex;
@@ -36,8 +36,12 @@ body {
     border: none;
     background: none;
     font-size: 18px;
-    color: rgb(0, 224, 0);
+    color: rgb(180, 180, 180);
     cursor: pointer;
+}
+
+#feed-user-profile-button:hover {
+    color: rgb(0, 216, 0);
 }
 
 #feed-user-profile-data > img {
@@ -89,7 +93,7 @@ body {
     width: 340px;
     height: auto;
     background-color: white;
-    box-shadow: 0px 0px 2px 2px rgb(172, 172, 172);
+    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
     border-radius: 10px;
 }
 
@@ -108,18 +112,20 @@ body {
 .feed-post-top-div > h4 {
     margin-top: 0px;
     margin-left: 5px;
+    color: rgb(70, 70, 70);
 }
 
 .feed-post-text-div {
     width: 100%;
     height: auto;
     padding-bottom: 1px;
-    background-color: rgb(221, 221, 221);
 }
 
 .feed-post-text-div > p {
     margin-left: 5px;
-    font-size: 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: rgb(83, 83, 83);
 }
 
 #feed-news-container {
@@ -127,7 +133,7 @@ body {
     height: 120px;
     margin-right: 80px;
     background-color: white;
-    box-shadow: 0px 0px 2px 2px rgb(206, 206, 206);
+    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
     border-radius: 10px;
 }
 
@@ -152,31 +158,23 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
-    opacity: 0.8;
+    opacity: 0.85;
     transition: height 200ms;
 }
 
 #feed-footer-div:hover {
     height: 40px;
+    opacity: 1.0;
 }
 
 .fa-github, .fa-linkedin, .fa-info-circle {
     font-size: 25px;
-    color: blue;
+    color: rgb(0, 211, 0);
     transition: font-size 200ms;
 }
 
 .fa-github:hover, .fa-linkedin:hover, .fa-info-circle:hover {
     font-size: 35px;
-}
-
-.footer-p {
-    color: blue;
-    text-decoration: none;
-}
-
-.footer-p:visited {
-    color: blue;
 }
 
 
