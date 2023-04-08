@@ -210,11 +210,9 @@ body {
   #searchbar-input-div {
       display: none;
   }
-}
-
-@media (max-width: 700px) {
+  
   #navigation-logo-search-div {
-    justify-content: space-around;
-    gap: 0px;
+    justify-content: space-between;
+    gap: 5px;
   }
 }
