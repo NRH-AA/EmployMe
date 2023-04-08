@@ -105,13 +105,24 @@ body {
 .feed-post-top-div > img {
     width: 75px;
     height: 75px;
+    margin-left: 5px;
     margin-top: 5px;
+}
+
+.feed-post-top-right-div {
+    display: flex;
+    flex-direction: column;
     margin-left: 5px;
 }
 
-.feed-post-top-div > h4 {
+.feed-post-top-right-div > p {
+    margin-top: 10px;
+    text-decoration: underline;
+}
+
+.feed-post-top-right-div > h4 {
     margin-top: 0px;
-    margin-left: 5px;
+    font-size: 13.5px;
     color: rgb(70, 70, 70);
 }
 
