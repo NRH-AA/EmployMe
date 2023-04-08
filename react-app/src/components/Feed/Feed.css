@@ -18,8 +18,9 @@ body {
 
 #feed-user-profile-data {
     display: sticky;
-    height: 500px;
-    width: 200px;
+    height: fit-content;
+    padding: 5px;
+    width: 22%;
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
     border-radius: 10px;
@@ -31,7 +32,7 @@ body {
 
 #feed-user-profile-button {
     position: absolute;
-    margin-left: 160px;
+    margin-left: 200px;
     margin-top: 10px;
     border: none;
     background: none;
@@ -59,9 +60,26 @@ body {
     width: 100%;
 }
 
-#feed-user-profile-skills-div {
-    
+#feed-user-profile-data > p + p {
+    font-size: 14px;
+    margin-top: -2px;
 }
+
+#feed-user-profile-skills-div {
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#feed-user-profile-skills-div > p {
+    margin: 0px;
+    font-weight: 700;
+    font-size: 12.5px;
+    color: rgb(102, 102, 102);
+}
+
 
 
 

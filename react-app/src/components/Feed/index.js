@@ -79,7 +79,7 @@ const Feed = () => {
                     
                     <div id="feed-user-profile-skills-div">
                         {userSkillArray.map((skill, i) =>
-                            <p key={i}>{skill}</p>
+                            <p key={i}>{skill + ' |'}</p>
                         )}
                     </div>
                     
@@ -120,10 +120,17 @@ const Feed = () => {
                         </div>} 
                     </div>
                     
-                    <button id="feed-news-button" type='button'
-                        title='See More News'
-                        onClick={() => updateNews()}
-                    >More News</button>
+                    {(!newsObj || !newsObj.author) ?
+                        <p>
+                            News cannot be populated on production servers. 
+                            This is a limit from the API.
+                        </p>
+                    :
+                        <button id="feed-news-button" type='button'
+                            title='See More News'
+                            onClick={() => updateNews()}
+                        >More News</button>
+                    }
                     
                 </div>
             
