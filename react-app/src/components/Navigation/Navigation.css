@@ -78,7 +78,7 @@ body {
 
 .fa-house, .fa-bell, .fa-briefcase, .fa-users, .fa-comment-dots {
   font-size: 24px;
-  color: rgb(119, 119, 119);
+  color: rgb(170, 170, 170);
   cursor: pointer;
   transition: font-size 100ms, margin-left 100ms, margin-right 100ms; 
 }
@@ -98,14 +98,14 @@ body {
   height: 35px;
   width: 80px;
   border: none;
-  background: linear-gradient(#00e91f, #008307);
+  background: linear-gradient(#00e91f, #00a008);
   border-radius: 3px;
   margin-right: 10px;
   cursor: pointer;
 }
 
 #profile-dropdown-button:hover {
-  background: linear-gradient(#00ff22, #009908);
+  background: linear-gradient(#00f320, #00ca0a);
 }
 
 #profile-dropdown-button:active {
@@ -128,9 +128,9 @@ body {
 #profile-dropdown-container {
   width: 220px;
   height: auto;
-  background: linear-gradient(#ececec, #888888);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 1px 1px rgb(196, 196, 196);
   border-radius: 10px;
-  border: 3px solid black;
   margin-right: 20px;
   margin-top: 10px;
   padding: 5px;
@@ -140,34 +140,37 @@ body {
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
+  gap: 3px;
 }
 
 .profile-dropdown-p {
   text-align: center;
   font-weight: 700;
-  font-size: 18px;
-  color: rgb(0, 26, 255);
+  font-size: 16px;
+  color: rgb(107, 107, 107);
   cursor: default;
 }
 
 .user-dropdown-button {
   font-weight: 700;
-  font-size: 16px;
-  background: linear-gradient(#d8d8d8, #636363);
-  border: 2px solid black;
+  font-size: 15px;
+  width: 160px;
+  margin: auto;
+  background-color: rgb(240, 240, 240);
+  box-shadow: 0px 0px 1px 2px rgb(151, 151, 151);
+  border: none;
+  border-radius: 10px;
   margin-bottom: 2px;
+  color: rgb(107, 107, 107);
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 500ms;
 }
 
 .user-dropdown-button:hover {
-  background: linear-gradient(#ffffff, #a7a7a7);
-  opacity: 1.0;
+  background-color: white;
 }
 
 .user-dropdown-button:active {
-  background: linear-gradient(#868686, #464646);
+  background-color: rgb(221, 221, 221);
 }
 
 #search-button-submit {
@@ -207,11 +210,9 @@ body {
   #searchbar-input-div {
       display: none;
   }
-}
-
-@media (max-width: 700px) {
+  
   #navigation-logo-search-div {
-    justify-content: space-around;
-    gap: 0px;
+    justify-content: space-between;
+    gap: 5px;
   }
 }

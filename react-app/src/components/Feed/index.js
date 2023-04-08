@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import OpenModalButton from "../OpenModalButton";
 import { setWindowPath, getPostsThunk, appendPostsThunk } from "../../store/session";
 import InfoModal from "./InfoModal";
@@ -13,7 +14,7 @@ const Feed = () => {
     const sessionPath = useSelector(state => state.session.path);
     const posts = useSelector(state => state.session.posts)
     const [offset, setOffset] = useState(0);
-    
+
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
     }, [dispatch, sessionPath]);
@@ -21,6 +22,20 @@ const Feed = () => {
     useEffect(() => {
         if (!posts?.length) dispatch(getPostsThunk());
     }, [dispatch, posts]);
+    
+    
+    const handleScroll = () => {
+        const scollable = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+
+        if (Math.ceil(scrolled) === Math.ceil(scollable)) {
+            const newOffset = offset + 6;
+            dispatch(appendPostsThunk(newOffset))
+            setOffset(newOffset);
+        };
+    };
+    
+    useBottomScrollListener(handleScroll);
     
     if (!sessionUser) return null;
     
@@ -50,10 +65,14 @@ const Feed = () => {
                     {posts?.length && posts?.map((post, i) => <div key={i} className="feed-post-container">
                         <div className="feed-post-top-div"> 
                             <img src={post.user.profile_picture} alt={post.user.first_name}/>
-                            <h4><b>{post.post_title}</b></h4>
+                            <div className="feed-post-top-right-div">
+                                <p><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
+                                <p>{post.user.occupation}</p>
+                            </div>
                         </div>
                         
                         <div className="feed-post-text-div">
+                            <h4><b>{post.post_title}</b></h4>
                             <p>{post.post_text}</p>
                         </div>
                     

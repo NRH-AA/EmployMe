@@ -11,8 +11,8 @@
 #info-modal-container {
     width: 450px;
     height: auto;
-    background: linear-gradient(#f8f8f8, #6e6e6e);
-    border: 3px solid black;
+    background-color: rgb(240, 240, 240);
+    border: 5px solid rgb(59, 59, 59);
     text-align: left;
     padding: 30px;
     display: flex;
@@ -25,16 +25,17 @@
     margin: 0px;
     text-decoration: underline;
     text-align: center;
-    color: blue;
+    color: rgb(88, 88, 88);
 }
 
 #info-modal-container > p {
     font-weight: 700;
+    color: rgb(88, 88, 88);
 }
 
 #info-modal-navlink {
     width: fit-content;
-    color: blue;
+    color: rgb(0, 0, 255);
     font-weight: 700;
 }
 
@@ -43,9 +44,9 @@
     height: 30px;
     margin: auto;
     margin-top: 60px;
-    border: 1px solid rgb(160, 160, 160);
-    background: linear-gradient(#fffefe, #5a5a5a);
-    box-shadow: 0px 0px 4px 2px rgb(73, 73, 73);
+    border: none;
+    background: none;
+    box-shadow: 0px 0px 2px 1px rgb(151, 151, 151);
     border-radius: 20px;
     font-weight: 700;
     font-size: 16px;
@@ -53,13 +54,9 @@
 }
 
 .info-modal-button-close:hover {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#ffffff, #636363);
-    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+    background-color: white;
 }
 
 .info-modal-button-close:active {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#adadad, #363636);
-    box-shadow: 0px -1px 4px 2px rgb(233, 233, 233);
+    background-color: rgb(226, 226, 226);
 }
