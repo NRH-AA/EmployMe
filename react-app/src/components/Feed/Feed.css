@@ -69,7 +69,6 @@ body {
 #feed-posts-container > button {
     width: 80px;
     height: 25px;
-    margin: auto;
     border: none;
     border-radius: 3px;
     background: linear-gradient(#00e91f, #009e08);
@@ -90,16 +89,16 @@ body {
 
 
 .feed-post-container {
-    width: 340px;
+    width: 360px;
     height: auto;
     background-color: white;
     box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
     border-radius: 10px;
+    color: rgb(59, 59, 59);
 }
 
 .feed-post-top-div {
     display: flex;
-    align-items: center;
 }
 
 .feed-post-top-div > img {
@@ -113,11 +112,11 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 5px;
+    margin-top: 15px;
 }
 
 .feed-post-top-right-div > p {
-    margin-top: 10px;
-    text-decoration: underline;
+    margin: 0px;
 }
 
 .feed-post-top-right-div > h4 {
@@ -129,11 +128,11 @@ body {
 .feed-post-text-div {
     width: 100%;
     height: auto;
-    padding-bottom: 1px;
+    margin-left: 5px;
+    width: 98%;
 }
 
 .feed-post-text-div > p {
-    margin-left: 5px;
     font-size: 12.5px;
     font-weight: 700;
     color: rgb(83, 83, 83);
@@ -201,13 +200,36 @@ body {
     }
     
     #feed-content-container {
-        justify-content: left;
         gap: 20px;
     }
 }
 
-@media (max-width: 615px) {
+@media (max-width: 660px) {
+    #feed-container {
+        width: 100%;
+    }
+    
+    #feed-content-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
     #feed-user-profile-data {
+        height: auto;
+        margin: auto;
+    }
+    
+    #feed-news-container {
+        display: none;
+    }
+    
+    #feed-posts-container > button {
+        margin: auto;
+    }
+    
+    
+    /* #feed-user-profile-data {
         display: none;
     }
     
@@ -215,5 +237,5 @@ body {
         width: 100%;
         margin: none;
         justify-content: center;
-    }
+    } */
 }

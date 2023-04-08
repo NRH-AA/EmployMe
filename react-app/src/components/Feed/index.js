@@ -67,11 +67,12 @@ const Feed = () => {
                             <img src={post.user.profile_picture} alt={post.user.first_name}/>
                             <div className="feed-post-top-right-div">
                                 <p><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
-                                <h4><b>{post.post_title}</b></h4>
+                                <p>{post.user.occupation}</p>
                             </div>
                         </div>
                         
                         <div className="feed-post-text-div">
+                            <h4><b>{post.post_title}</b></h4>
                             <p>{post.post_text}</p>
                         </div>
                     
