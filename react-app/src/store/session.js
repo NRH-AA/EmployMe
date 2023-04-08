@@ -1,3 +1,5 @@
+import NewsAPI from "../components/Feed/NewsAPI";
+
 // constants
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
@@ -6,6 +8,7 @@ const REMOVE_USER = "session/REMOVE_USER";
 const SET_PATH = "session/SET_PATH";
 const GET_POSTS = "session/GET_POSTS";
 const APPEND_POSTS = "session/APPEND_POSTS";
+const GET_NEWS = "session/GET_NEWS";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -39,6 +42,11 @@ const setPosts = (posts) => ({
 const appendPosts = (posts) => ({
 	type: APPEND_POSTS,
 	payload: posts
+});
+
+const setNews = (data) => ({
+	type: GET_NEWS,
+	data
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -436,12 +444,23 @@ export const createJobListing = (userId, jobData) => async (dispatch) => {
 	return data;
 };
 
+
+export const getNewsThunk = () => async (dispatch) => {
+	const res = await fetch(`https://newsapi.org/v2/everything?q=tesla&from=2023-03-08&sortBy=publishedAt&apiKey=${NewsAPI}`);
+    const data = await res.json();
+	dispatch(setNews(data.articles))
+	return data;
+}
+
+
+
 const initialState = { 
 	user: null, 
 	users: null,
 	posts: null,
 	job: null,
 	path: null,
+	news: null,
 	theme: 'light'
 };
 export default function reducer(state = initialState, action) {
@@ -469,6 +488,9 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case APPEND_POSTS:
 			newState.posts = [...newState.posts, ...action.payload.posts];
+			return newState;
+		case GET_NEWS:
+			newState.news = action.data;
 			return newState;
 		default:
 			return state;
