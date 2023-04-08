@@ -69,6 +69,7 @@ body {
 #feed-posts-container > button {
     width: 80px;
     height: 25px;
+    margin: auto;
     border: none;
     border-radius: 3px;
     background: linear-gradient(#00e91f, #009e08);
@@ -213,6 +214,8 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        margin: none;
     }
     
     #feed-user-profile-data {
@@ -223,11 +226,6 @@ body {
     #feed-news-container {
         display: none;
     }
-    
-    #feed-posts-container > button {
-        margin: auto;
-    }
-    
     
     /* #feed-user-profile-data {
         display: none;
