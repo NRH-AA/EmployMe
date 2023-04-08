@@ -50,12 +50,14 @@ const Feed = () => {
         return Math.floor(Math.random() * max);
     }
     
-    if (sessionNews && !newsObj.author) {
+    if (sessionNews && !newsObj?.author) {
         setNewsObj(sessionNews[0]);
     }
     
     const updateNews = () => {
-        setNewsObj(sessionNews[getRandomInt(sessionNews.length - 1)]);
+        if (sessionNews?.length) {
+            setNewsObj(sessionNews[getRandomInt(sessionNews.length - 1)]);
+        }
     }
     
     
@@ -114,7 +116,7 @@ const Feed = () => {
                             </div>
                             
                             <h4>{newsObj.description.split('.')[0]}</h4>
-                            <p>{newsObj.content}</p>
+                            <p>{newsObj.content.split('[')[0]}</p>
                         </div>} 
                     </div>
                     
