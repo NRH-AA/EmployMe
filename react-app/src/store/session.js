@@ -446,8 +446,9 @@ export const createJobListing = (userId, jobData) => async (dispatch) => {
 
 
 export const getNewsThunk = () => async (dispatch) => {
-	const res = await fetch(`https://newsapi.org/v2/everything?q=tesla&from=2023-03-08&sortBy=publishedAt&apiKey=${NewsAPI}`);
+	const res = await fetch(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=${NewsAPI}`);
     const data = await res.json();
+	console.log(data);
 	dispatch(setNews(data.articles))
 	return data;
 }
