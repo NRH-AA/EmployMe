@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import OpenModalButton from "../OpenModalButton";
-import { setWindowPath, getPostsThunk, appendPostsThunk } from "../../store/session";
+import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk } from "../../store/session";
 import InfoModal from "./InfoModal";
 import './Feed.css';
 
@@ -12,8 +12,10 @@ const Feed = () => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const sessionPath = useSelector(state => state.session.path);
+    const sessionNews = useSelector(state => state.session.news);
     const posts = useSelector(state => state.session.posts)
     const [offset, setOffset] = useState(0);
+    const [newsObj, setNewsObj] = useState({});
 
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
@@ -22,6 +24,10 @@ const Feed = () => {
     useEffect(() => {
         if (!posts?.length) dispatch(getPostsThunk());
     }, [dispatch, posts]);
+    
+    useEffect(() => {
+        if (!sessionNews) dispatch(getNewsThunk());
+    }, [dispatch, sessionNews])
     
     
     const handleScroll = () => {
@@ -38,6 +44,20 @@ const Feed = () => {
     useBottomScrollListener(handleScroll);
     
     if (!sessionUser) return null;
+    const userSkillArray = sessionUser.skills.split(';');
+    
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+    
+    if (sessionNews && !newsObj.author) {
+        setNewsObj(sessionNews[0]);
+    }
+    
+    const updateNews = () => {
+        setNewsObj(sessionNews[getRandomInt(sessionNews.length - 1)]);
+    }
+    
     
     return (
         <div id="feed-container">
@@ -55,8 +75,10 @@ const Feed = () => {
                     <p>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
                     <p>{sessionUser?.occupation}</p>
                     
-                    <div>
-                        <p></p>
+                    <div id="feed-user-profile-skills-div">
+                        {userSkillArray.map((skill, i) =>
+                            <p key={i}>{skill}</p>
+                        )}
                     </div>
                     
                 </div>
@@ -85,9 +107,21 @@ const Feed = () => {
                 
                 <div id="feed-news-container">
                     <div id="feed-news-div">
-                        <h2>News</h2>
-                        <p>No news today.</p>
+                        {newsObj?.author && <div className='news-article-div'>
+                            <div id='news-article-top-div'>
+                                <h3>{newsObj.author}</h3>
+                                <img src={newsObj.urlToImage} alt='Artiacle'/>
+                            </div>
+                            
+                            <h4>{newsObj.description.split('.')[0]}</h4>
+                            <p>{newsObj.content}</p>
+                        </div>} 
                     </div>
+                    
+                    <button id="feed-news-button" type='button'
+                        title='See More News'
+                        onClick={() => updateNews()}
+                    >More News</button>
                     
                 </div>
             
