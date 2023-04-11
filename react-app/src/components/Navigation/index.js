@@ -75,13 +75,14 @@ function Navigation({ isLoaded }){
 					/>
 					<button id="search-button-submit"
 						// onClick={() => handleSearch()}
+						onClick={() => handleInvalidFeature()}
 					><i className="fas fa-search"></i></button>
 				</div>}
 				
 				<div id="navigation-button-bar-div">
 					<button className="navigation-button" type="button"
 						title="Home"
-						onClick={() => handleInvalidFeature()}
+						onClick={() => history.push('/')}
 					><i className="fa-solid fa-house"></i>
 					</button>
 					

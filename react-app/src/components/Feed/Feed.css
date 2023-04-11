@@ -96,14 +96,14 @@ body {
     margin: auto;
     border: none;
     border-radius: 3px;
-    background: linear-gradient(#00e91f, #009e08);
+    background: linear-gradient(#00fc22, #00bd09);
     box-shadow: 0px 0px 2px 2px rgb(0, 163, 14);
     cursor: pointer;
     font-weight: 700;
 }
 
 #feed-posts-container > button:hover {
-    background: linear-gradient(#00ff22, #009908);
+    background: linear-gradient(#00ff22, #00ce0a);
     box-shadow: 0px 0px 2px 2px rgb(0, 139, 12);
 }
 
@@ -210,14 +210,14 @@ body {
     margin-bottom: 10px;
     border: none;
     border-radius: 3px;
-    background: linear-gradient(#00e91f, #009e08);
+    background: linear-gradient(#00fc22, #00bd09);
     box-shadow: 0px 0px 2px 2px rgb(0, 163, 14);
     cursor: pointer;
     font-weight: 700;
 }
 
 #feed-news-button:hover {
-    background: linear-gradient(#00ff22, #009908);
+    background: linear-gradient(#00ff22, #00ce0a);
     box-shadow: 0px 0px 2px 2px rgb(0, 139, 12);
 }
 
@@ -269,40 +269,45 @@ body {
         display: none;
     }
     
+    
+    
     #feed-content-container {
+        justify-content: left;
         gap: 20px;
+        
     }
 }
 
 @media (max-width: 660px) {
     #feed-container {
-        width: 100%;
+        width: 90%;
     }
     
     #feed-content-container {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
+        width: 90%;
         margin: none;
     }
     
     #feed-user-profile-data {
+        width: 350px;
         height: auto;
         margin: auto;
+    }
+    
+    #feed-user-profile-button {
+        margin-left: 270px;
     }
     
     #feed-news-container {
         display: none;
     }
-    
-    /* #feed-user-profile-data {
-        display: none;
-    }
-    
-    #feed-content-container {
+}
+
+@media (max-width: 430px) {
+    #feed-user-profile-data {
         width: 100%;
-        margin: none;
-        justify-content: center;
-    } */
+    }
 }
