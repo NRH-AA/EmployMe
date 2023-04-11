@@ -127,225 +127,38 @@ const UserProfile = () => {
     
     if (!user?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
-    const showProfileEditButtons = () => {
-        return (
-            <div id="user-profile-update-button">
-                <div id="user-profile-update-buttons-div">
-                    {user?.active && (user?.id === sessionUser?.id && !isUpdatingBio) ? 
-                    <button className="user-profile-button-small"
-                        onClick={() => setIsUpdatingBio(!isUpdatingBio)}
-                    >Update</button> 
-                    : (user?.active && user?.id === sessionUser?.id) &&
-                    
-                    <button className={isUpdatingBio ? "user-profile-button-small update-bio-create-post-margin" 
-                        : "user-profile-button-small"}
-                        onClick={(e) => {setIsUpdatingBio(!isUpdatingBio); handleSubmitBio(e)}}
-                    >Submit</button> 
-                    }
-                    
-                    {(user?.id === sessionUser?.id && !isUpdatingBio && user?.active) ?
-                    <OpenModalButton
-                        className="user-profile-button-small"
-                        buttonText="Delete"
-                        modalComponent={<DeleteProfileModal user={user} />}
-                    />
-                    : (user?.id === sessionUser?.id && !isUpdatingBio) &&
-                    <button className="user-profile-button-small user-profile-activate-button"
-                        onClick={() => handleActivateProfile()}
-                    >Activate</button>
-                    }
-                </div>
-                
-                <div id="user-profile-create-post-div">
-                {user?.id === sessionUser?.id &&
-                    <p className={(user?.active && isUpdatingBio) ? "user-profile-status-p update-bio-create-post-margin-p"
-                    : (user?.active && !isUpdatingBio) ? "user-profile-status-p"
-                    : "user-profile-status-p profile-inactive-status"}>
-                        Status:
-                        <span id={user?.active ? "user-profile-status-p-active" : "user-profile-status-p-inactive"}>
-                            {user?.active ? " Active" : " Inactive"}
-                        </span>
-                    </p>
-                }
-                
-                {(user?.active && user?.id === sessionUser?.id && !isUpdatingBio) && <div id="create-post-div-button">
-                <OpenModalButton
-                    className="profile-create-post-button"
-                    buttonText={<i className="fa-solid fa-pen-to-square"></i>}
-                    modalComponent={<CreatePostModal/>}
-                />
-                
-                <span className="profile-create-post-button-tooltip">Create Post</span>
-                </div>
-                }
-                </div>
-            </div>
-        );
-    };
-    
-    const showUserBio = () => {
-        return (
-            <div id="user-profile-bio-div">
-                
-                <OpenModalButton
-                    className="user-profile-picture-modal"
-                    buttonText={<img className={(user?.id === sessionUser?.id) ? "user-profile-picture" : "user-profile-picture user-profile-picture-disabled"} 
-                                    src={user?.profile_picture || ""} 
-                                    alt={user?.first_name}/>
-                                }
-                    modalComponent={user?.id === sessionUser?.id && <ProfilePictureModal user={user} />}
-                />
-                    {isUpdatingBio && <span id="profile-picture-edit-text">Click to Update</span>}
-                
-                
-                <div id="user-profile-bio">
-                    <div>
-                        {!isUpdatingBio ? <>
-                            <p className="user-profile-p">Name: <span className="user-profile-bio-span">{user?.first_name} {user?.middle_name} {user?.last_name}</span></p>
-                            <p className="user-profile-p">Age: <span className="user-profile-bio-span">{user?.age}</span></p>
-                            <p className="user-profile-p">Occupation: <span className="user-profile-bio-span">{user?.occupation}</span></p>
-                        </> : <>
-                            <p className="user-profile-p">Name: 
-                                {errors?.firstName && <> <span className="user-profile-bio-p">
-                                    <i className="fa-solid fa-circle-exclamation"></i> {errors?.firstName && errors.firstName}
-                                </span> </>}
-                            </p>
-                            <div id="user-profile-edit-name-div">
-                                <input type="text" placeholder="First Name"
-                                    className="user-profile-bio-input login-input"
-                                    maxLength={20}
-                                    value={firstName}
-                                    onChange={(e) => setFirstName(e.target.value)}
-                                />
-                                
-                                <input type="text" placeholder="Middle Name"
-                                    className="user-profile-bio-input login-input"
-                                    maxLength={20}
-                                    value={middleName}
-                                    onChange={(e) => setMiddleName(e.target.value)}
-                                 />
-                                 
-                                {errors?.lastName && <> <p className="user-profile-bio-p"><i className="fa-solid fa-circle-exclamation"></i> {errors.lastName}</p> </>}
-                                <input type="text" placeholder="Last Name"
-                                    className="user-profile-bio-input login-input"
-                                    maxLength={30}
-                                    value={lastName}
-                                     onChange={(e) => setLastName(e.target.value)}
-                                />
-                            </div>
-                                    
-                            <p className="user-profile-p user-profile-edit-age-p">Age: {errors?.age && <>
-                                <i className="fa-solid fa-circle-exclamation"></i> 
-                                <span className="user-profile-bio-p">{errors.age}</span> </>}
-                            </p>
-                            <input type="number" placeholder="Age"
-                                className="user-profile-bio-input login-input"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                            />
-                                    
-                            <p className="user-profile-p user-profile-edit-age-p">Occupation: 
-                                {errors?.occupation && <> 
-                                <span className="user-profile-bio-p">
-                                    <i className="fa-solid fa-circle-exclamation"></i> {errors.occupation}
-                                </span> </>}
-                            </p>
-                            <input type="text" placeholder="Occupation"
-                                className="user-profile-bio-input login-input"
-                                maxLength={20}
-                                value={occupation}
-                                onChange={(e) => setOccupation(e.target.value)}
-                            />
-                            
-                        </>}
-                    </div>
-                            
-                    <div>
-                    {!isUpdatingBio ? <>
-                        <p className="user-profile-p">Company: <span className="user-profile-bio-span">{user?.company_name}</span></p>
-                        <p className="user-profile-p">Email: <span className="user-profile-bio-span">{user?.work_email}</span></p>
-                        <p className="user-profile-p">Phone: <span className="user-profile-bio-span">{user?.phone_number}</span></p>
-                    </> : <>
-                        <p className="user-profile-p user-profile-edit-age-p">Company:
-                            {errors?.company && <> <span className="user-profile-bio-p">
-                                <i className="fa-solid fa-circle-exclamation"></i> {errors.company}
-                            </span> </>}
-                        </p>
-                        <input type="text" placeholder="Company Name"
-                            className="user-profile-bio-input login-input"
-                            maxLength={30}
-                            value={company}
-                            onChange={(e) => setCompany(e.target.value)}
-                        />
-                                    
-                        <p className="user-profile-p user-profile-edit-age-p">Email: 
-                            {errors?.email && <> <span className="user-profile-bio-p">
-                                <i className="fa-solid fa-circle-exclamation"></i> {errors.email}
-                            </span> </>}
-                        </p>
-                        <input type="text" placeholder="Work Email"
-                            className="user-profile-bio-input login-input"
-                            maxLength={30}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                                    
-                        <p className="user-profile-p user-profile-edit-age-p">Phone: 
-                           {errors?.phone_number && <> <span className="user-profile-bio-p">
-                                <i className="fa-solid fa-circle-exclamation"></i> {errors.phone_number}
-                            </span> </>}
-                        </p>
-                        <input type="text" placeholder="Phone Number"
-                            className="user-profile-bio-input login-input"
-                            maxLength={14}
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
-                    </>}
-                    </div>          
-                </div>
-                
-                {showProfileEditButtons()} 
-            </div>
-        );
-    };
-    
     return (
         <div id="user-profile-container">
-            <div id="user-profile-content-container">
-                <div className='user-profile-container'>
-                    
-                    {showUserBio()}
-                    
-                    <div id="user-profile-bottom-div">
-                        <div id="user-profile-qualifications">
-                            <div className="user-profile-qualifications-container">
-                                <div className="user-profile-qualification">
-                                    <p className="user-qualifications-p">SKILLS</p>
-                                    {(user?.active && user?.id === sessionUser?.id) && <OpenModalButton
-                                        className="user-profile-button-small"
-                                        buttonText="Update"
-                                        modalComponent={<SkillsModal user={user} />}
-                                    />}
-                                </div>
-                                
-                                <div id="user-profile-skills-div">
-                                    {userSkills?.length > 0 && userSkills?.map((el, i) => 
-                                        <p className="user-skills-p" key={i}>{el}</p>
-                                    )}
-                                </div>
-                            </div>
-                            
-                            {/* Add Education, ect here */}
-                        </div>
-                            
-                        <div id="user-profile-posts-div">
-                            {user?.posts?.map(post => <Post key={post.id} post={post} user={user}/>)}
-                        </div>
-                        
-                    </div>
+            <button id='user-profile-top-button'
+                
+            ><i className="fa-solid fa-ellipsis-vertical"></i></button>
+            
+            <div id='user-profile-top-div'>
+                
+                <img 
+                    src={user?.profile_picture}
+                    alt={user?.first_name}
+                />
+                
+                <h4>{user?.occupation}</h4>
+            
+                <div id='user-profile-skills-div'>
+                    {userSkills?.map((skill, i) => <p key={i}>{skill}</p>)}
                 </div>
             </div>
+            
+            <div id='user-profile-info-container'>
+                <h4>Personal Information</h4>
+                <div id='user-profile-info-div'>
+                    <p><b>NAME:</b> <span>{user?.first_name + ' ' + user?.last_name}</span></p>
+                    <p><b>EMAIL:</b> <span>{user?.work_email}</span></p>
+                    <p><b>COMPANY: </b> <span>{user?.company_name || 'None'}</span></p>
+                    <p><b>PHONE: </b> <span>{user?.phone_number}</span></p>
+                </div>
+                    
+            </div>
+                
+            
         </div>
     );
 };

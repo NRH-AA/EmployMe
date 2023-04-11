@@ -66,6 +66,7 @@ body {
 }
 
 #navigation-button-bar-div {
+  margin: auto;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -84,7 +85,7 @@ body {
 }
 
 .fa-house:hover, .fa-bell:hover, .fa-briefcase:hover, .fa-users:hover, .fa-comment-dots:hover {
-  color: rgb(0, 201, 0);
+  color: rgb(0, 255, 0);
   margin-left: -3px;
   margin-right: -4px;
   font-size: 30px;
@@ -214,5 +215,30 @@ body {
   #navigation-logo-search-div {
     justify-content: space-between;
     gap: 5px;
+  }
+}
+
+@media (max-width: 660px) {
+  #navigation-logo-search-div {
+    justify-content: left;
+    gap: 25%;
+  }
+}
+
+@media (max-width: 445px) {
+  #navigation-logo-search-div {
+    justify-content: left;
+    gap: 12%;
+  }
+}
+
+@media (max-width: 390px) {
+  #navigation-container {
+    width: 100%;
+  }
+  
+  #navigation-logo-search-div {
+    justify-content: left;
+    gap: 5%;
   }
 }
