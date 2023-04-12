@@ -30,23 +30,14 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+      <a href="#running-the-server-locally">Getting Started</a>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#examples-of-site-functionality">Examples</a></li>
+    <li><a href="#features-in-development">Features In Development</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -59,74 +50,69 @@ find the best possible matches.'
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
-
-
-* React
-* JavaScript
-* Python
-* HTML
-* CSS
-* Flask
-
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
-## Getting started
-
-
-1. Clone this repository (only this branch)
-
-2. Install dependencies
-
-      ```bash
-      pipenv install -r requirements.txt
-      ```
-
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
-
-4. Make sure the SQLite3 database connection URL is in the **.env** file
-
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
-
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+<img align="left" title='JavaScript' alt="JavaScript" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+<img align="left" title='Python' alt="Python" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" />
+<img align="left" title='HTML5' alt="HTML5" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original-wordmark.svg" />
+<img align="left" title='CSS3' alt="CSS3" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original-wordmark.svg" />
+<img align="left" title='React' alt="React" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg" />
+<img align="left" title='Redux' alt="Redux" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" />
+<img align="left" title='Flask' alt="Flask" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original-wordmark.svg" />
+<img align="left" title='SQLAlchemy' alt="SQLAlchemy" width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original.svg" />
+<img alt="SQLite" title='SQLite' width="45px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original-wordmark.svg" />
 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Running the server locally
+### 1. Clone the main branch of this repository.
 
 
-## Usage
+
+### 2. Install dependencies
+```bash
+pipenv install -r requirements.txt
+cd react-app
+npm i
+```
+
+
+### 3. Create a **.env** file based on the .env.example file with proper settings for your development environment.
+In order to use the file upload services you will have to create a S3 Bucket on AWS (Amazon Web Services)
+```
+SECRET_KEY=ARandomString
+DATABASE_URL=sqlite:///dev.db
+SCHEMA=flask_schema
+S3_BUCKET=BucketName
+S3_KEY=BucketKey
+S3_SECRET=BucketSecretKey
+```
+
+
+### 4. Create, migrate, and seed the database.
+```bash
+  "pipenv run flask db init && pipenv run flask db migrate && pipenv run flask db upgrade && pipenv run flask seed all"
+  
+  If you are in the pipenv shell
+  "flask db init && flask db migrate && flask db upgrade && flask seed all"
+```
+
+
+### 5. Run the server locally
+Open two terminals one in / and one in /react-app
+```bash
+/: "pipenv run flask run"  OR "flask run" (if you are in the shell)
+/react-app: "npm start"
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+
+
+## Examples of site functionality
 
 <img src="./images/signup.png" alt="Logo" width="600" height="600">
 
@@ -134,9 +120,9 @@ Create your account with secure hashed password protection.
 
 <img src="./images/feed.png" alt="Logo" width="700" height="500">
 
-The home page displays current job listings.
+The home page displays recent posts from EmployMe users. You can scroll to the bottom of the page to load more posts.
 
-<img src="./images/profile.png" alt="Logo" width="650" height="600">
+![image width="700" height="500"](https://user-images.githubusercontent.com/26754137/231588800-59f55f8e-ab3b-4d7f-93a4-d03c96d85c49.png)
 
 You can set up your profile and create posts to create your best resume.
 
@@ -150,8 +136,7 @@ You can create job listings so job seekers can contact you.
 
 
 
-## Roadmap
-
+## Features in development
 - [ ] Albums for images
 - [ ] Recommendations
 - [ ] Company Profile Page
@@ -162,8 +147,6 @@ You can create job listings so job seekers can contact you.
 See the [open issues](https://github.com/NRH-AA/EmployMe/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 
 ## Contributing
@@ -182,25 +165,11 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
 ## Contact
 <pre>
 Nathan Heinz - yta06291995@gmail.com
 </pre>
 Project Link: [https://github.com/NRH-AA/EmployMe](https://github.com/NRH-AA/EmployMe)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
