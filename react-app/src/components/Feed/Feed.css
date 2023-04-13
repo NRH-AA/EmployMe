@@ -50,6 +50,7 @@ body {
     width: 70px;
     height: 70px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 #feed-user-profile-data > p {
@@ -131,6 +132,7 @@ body {
     height: 75px;
     margin-left: 5px;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .feed-post-top-right-div {
@@ -140,14 +142,15 @@ body {
     margin-top: 15px;
 }
 
-.feed-post-top-right-div > p {
+.feed-post-name-p {
     margin: 0px;
+    color: black;
 }
 
-.feed-post-top-right-div > h4 {
-    margin-top: 0px;
-    font-size: 13.5px;
-    color: rgb(70, 70, 70);
+.feed-post-occupation-p {
+    margin: 0px;
+    font-weight: 700;
+    font-size: 12.5px;
 }
 
 .feed-post-text-div {
