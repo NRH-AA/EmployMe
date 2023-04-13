@@ -44,7 +44,7 @@ const Feed = () => {
     useBottomScrollListener(handleScroll);
     
     if (!sessionUser) return null;
-    const userSkillArray = sessionUser.skills.split(';');
+    const userSkillArray = sessionUser?.skills?.split(';');
     
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -83,7 +83,7 @@ const Feed = () => {
                     <p>{sessionUser?.occupation}</p>
                     
                     <div id="feed-user-profile-skills-div">
-                        {userSkillArray.map((skill, i) =>
+                        {userSkillArray && userSkillArray.map((skill, i) =>
                             <p key={i}>{skill + ' |'}</p>
                         )}
                     </div>
