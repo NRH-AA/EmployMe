@@ -1,5 +1,3 @@
-import NewsAPI from "../components/Feed/NewsAPI";
-
 // constants
 const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
@@ -445,11 +443,26 @@ export const createJobListing = (userId, jobData) => async (dispatch) => {
 };
 
 
+// const exportNewsDataToApi = (newsData) => async () => {
+// 	const response = await fetch(`/api/users/createNewsData`, {
+// 		method: "POST",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 		},
+// 		body: JSON.stringify({
+// 			newsData
+// 		})
+// 	});
+
+// 	const data = await response.json();
+// 	return data;
+// }
+
+
 export const getNewsThunk = () => async (dispatch) => {
-	const res = await fetch(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=${NewsAPI}`);
+	const res = await fetch(`/api/users/getNewsData`);
     const data = await res.json();
-	console.log(data);
-	dispatch(setNews(data.articles))
+	dispatch(setNews(data.news));
 	return data;
 }
 

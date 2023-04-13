@@ -157,3 +157,26 @@ def delete_profile(id):
     db.session.commit()
     ret = User.query.get(id)
     return ret.to_dict_all()
+
+import json
+import os
+
+@user_routes.route('/createNewsData', methods=['post'])
+@login_required
+def create_news_data():
+    data = request.get_json()
+    newsData = data['newsData']
+    
+    for news in newsData:
+        with open(f'{os.getcwd()}/app/api/newsData.json', "a") as outfile:
+            json.dump(news, outfile)
+        
+    return {'message': 'success'}, 200
+
+@user_routes.route('/getNewsData')
+@login_required
+def get_news_data():
+    
+    with open(f'{os.getcwd()}/app/api/newsData.json') as infile:
+        news_dictionary = json.load(infile)
+        return {'news': [news for news in news_dictionary]}, 200

@@ -114,15 +114,15 @@ To run the React App in development, checkout the [README](./react-app/README.md
 
 ## Examples of site functionality
 
-<img src="./images/signup.png" alt="Logo" width="600" height="600">
+![image width="700" height="500"](https://user-images.githubusercontent.com/26754137/231790217-0066167d-99dc-41c2-a255-ad2cd3c9ab5d.png)
 
 Create your account with secure hashed password protection.
 
-<img src="./images/feed.png" alt="Logo" width="700" height="500">
+![image width="700" height="500"](https://user-images.githubusercontent.com/26754137/231588800-59f55f8e-ab3b-4d7f-93a4-d03c96d85c49.png)
 
 The home page displays recent posts from EmployMe users. You can scroll to the bottom of the page to load more posts.
 
-![image width="700" height="500"](https://user-images.githubusercontent.com/26754137/231588800-59f55f8e-ab3b-4d7f-93a4-d03c96d85c49.png)
+![image width="700" height="500"](https://user-images.githubusercontent.com/26754137/231790887-88e3fffe-2d65-4148-b102-e0d23fed86d3.png)
 
 You can set up your profile and create posts to create your best resume.
 

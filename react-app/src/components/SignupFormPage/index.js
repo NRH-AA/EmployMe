@@ -37,7 +37,6 @@ function SignupFormPage() {
     if (password && (password.length < 6 || password.length > 30)) newErrors.password = 'password (2-30) characters';
     if (age && (age < 16 || age > 110)) newErrors.age = 'Age (16-110)';
     if (confirmPassword && confirmPassword !== password) newErrors.confirmPassword = 'Password fields must match';
-    console.log(newErrors);
     return newErrors;
   }
   
@@ -93,7 +92,7 @@ function SignupFormPage() {
 					<div id="signup-form-input-div">
             
             <div id="signup-name-div">
-              <label className="signup-label"> First Name * <br></br>
+              <label style={{color: errors?.firstName ? 'red' : 'green'}} className="signup-label"> First Name * <br></br>
               <input className="login-input" type="text" value={firstName} required
                 placeholder="First Name"
                 maxLength={20}
@@ -101,7 +100,7 @@ function SignupFormPage() {
                 />
               </label>
               
-              <label className="signup-label"> Last Name * <br></br>
+              <label style={{color: errors?.lastName ? 'red' : 'green'}} className="signup-label"> Last Name * <br></br>
               <input className="login-input" type="text" value={lastName} required
                 placeholder="Last Name"
                 maxLength={30}
@@ -111,7 +110,7 @@ function SignupFormPage() {
             </div>
 						
             <div id="signup-name-div">
-              <label className="signup-label"> Company Name <br></br>
+              <label style={{color: errors?.companyName ? 'red' : 'green'}} className="signup-label"> Company Name <br></br>
               <input className="login-input" type="text" value={companyName}
                 placeholder="Company Name"
                 maxLength={40}
@@ -119,7 +118,7 @@ function SignupFormPage() {
                 />
               </label>
               
-              <label className="signup-label"> Email * <br></br>
+              <label style={{color: errors?.email ? 'red' : 'green'}} className="signup-label"> Email * <br></br>
                 <input className="login-input" type="text" value={email} required
                   placeholder="Email"
                   maxLength={30}
@@ -129,7 +128,7 @@ function SignupFormPage() {
             </div>
 						
             <div id="signup-name-div">
-              <label className="signup-label"> Username * <br></br>
+              <label style={{color: errors?.username ? 'red' : 'green'}} className="signup-label"> Username * <br></br>
                 <input className="login-input" type="text" value={username} required
                   placeholder="Username"
                   maxLength={20}
@@ -137,7 +136,7 @@ function SignupFormPage() {
                 />
               </label>
               
-              <label className="signup-label"> Age * <br></br>
+              <label style={{color: errors?.age ? 'red' : 'green'}} className="signup-label"> Age * <br></br>
               <input className="login-input" type="number" value={age} required
                 onChange={(e) => setAge(e.target.value)}
                 />
@@ -145,7 +144,7 @@ function SignupFormPage() {
             </div>
               
             <div id="signup-name-div">
-              <label className="signup-label"> Password * <br></br>
+              <label style={{color: errors?.password ? 'red' : 'green'}} className="signup-label"> Password * <br></br>
                 <input className="login-input" type="password" value={password} required
                   placeholder="Password"
                   maxLength={30}
@@ -153,7 +152,7 @@ function SignupFormPage() {
                 />
               </label>
             
-              <label className="signup-label"> Confirm Password * <br></br>
+              <label style={{color: errors?.confirmPassword ? 'red' : 'green'}} className="signup-label"> Confirm Password * <br></br>
                 <input className="login-input" type="password" value={confirmPassword} required
                   placeholder="Confirm Password"
                   maxLength={30}

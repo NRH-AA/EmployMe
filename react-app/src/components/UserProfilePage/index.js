@@ -129,11 +129,13 @@ const UserProfile = () => {
     
     return (
         <div id="user-profile-container">
-            <button id='user-profile-top-button'
-                
-            ><i className="fa-solid fa-ellipsis-vertical"></i></button>
-            
             <div id='user-profile-top-div'>
+                
+                <div id='user-profile-button-div'>
+                    <button id='user-profile-top-button'
+                    
+                    ><i className="fa-solid fa-ellipsis-vertical"></i></button>
+                </div>
                 
                 <img 
                     src={user?.profile_picture}
@@ -141,21 +143,47 @@ const UserProfile = () => {
                 />
                 
                 <h4>{user?.occupation}</h4>
-            
-                <div id='user-profile-skills-div'>
-                    {userSkills?.map((skill, i) => <p key={i}>{skill}</p>)}
-                </div>
             </div>
             
-            <div id='user-profile-info-container'>
-                <h4>Personal Information</h4>
-                <div id='user-profile-info-div'>
-                    <p><b>NAME:</b> <span>{user?.first_name + ' ' + user?.last_name}</span></p>
-                    <p><b>EMAIL:</b> <span>{user?.work_email}</span></p>
-                    <p><b>COMPANY: </b> <span>{user?.company_name || 'None'}</span></p>
-                    <p><b>PHONE: </b> <span>{user?.phone_number}</span></p>
+            <div id='user-profile-info-main-container'>
+                <div id='user-profile-info-container'>
+                    <h4>Personal Information</h4>
+                    <div id='user-profile-info-div'>
+                        <div>
+                            <p>NAME:</p>
+                            <p>{user?.first_name + ' ' + user?.last_name}</p>
+                        </div>
+                            
+                        <div>
+                            <p>EMAIL:</p>
+                            <p>{user?.work_email}</p>
+                        </div>
+                            
+                        <div>
+                            <p>COMPANY:</p>
+                            <p>{user?.company_name || 'None'}</p>
+                        </div>
+                            
+                        <div>
+                            <p>PHONE:</p>
+                            <p>{user?.phone_number}</p>
+                        </div>
+                    </div>
                 </div>
-                    
+                
+                <div id='user-profile-skills-container'>
+                    <h4>Skills</h4>
+                    <div id='user-profile-skills-div'>
+                        {userSkills?.map((skill, i) => <p key={i}>{skill}</p>)}
+                    </div>
+                </div>
+    
+            </div>
+            
+            <div id="user-profile-posts-container">
+                
+                
+                
             </div>
                 
             

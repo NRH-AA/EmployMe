@@ -5,7 +5,7 @@
 #user-profile-container {
     margin: auto;
     margin-top: 30px;
-    width: 35%;
+    width: 50%;
     height: 900px;
 }
 
@@ -14,8 +14,8 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    color: rgb(59, 59, 59);
     background-color: rgb(245, 245, 245);
     box-shadow: 0px 0px 2px 2px rgb(223, 223, 223);
     padding-bottom: 20px;
@@ -24,13 +24,15 @@
 #user-profile-top-div > img {
     height: 150px;
     width: 150px;
-    margin-top: 30px;
+    margin-top: 10px;
+}
+
+#user-profile-button-div {
+    margin-left: 90%;
+    margin-top: 20px;
 }
 
 #user-profile-top-button {
-    position: absolute;
-    margin-left: 350px;
-    margin-top: 10px;
     border: none;
     background: none;
     font-size: 18px;
@@ -49,7 +51,7 @@
 
 #user-profile-skills-div {
     height: auto;
-    width: 50%;
+    text-align: center;
     margin-top: -10px;
     display: flex;
     justify-content: center;
@@ -61,10 +63,16 @@
     font-weight: 700;
     font-size: 12.5px;
     margin: 0px;
+    flex: 25%;
+}
+
+#user-profile-info-main-container {
+    display: flex;
+    gap: 10px;
 }
 
 #user-profile-info-container {
-    width: 100%;
+    width: 50%;
     height: auto;
     margin-top: 10px;
     background-color: rgb(245, 245, 245);
@@ -75,28 +83,42 @@
 
 #user-profile-info-container > h4 {
     text-align: center;
-    color: rgb(77, 77, 77);
 }
 
 #user-profile-info-div {
-    margin-left: 15px;
     padding-bottom: 20px;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-#user-profile-info-div > p {
+#user-profile-info-div > div > p {
     margin-top: 0px;
     margin-bottom: 5px;
-    color: rgb(77, 77, 77);
-}
-
-#user-profile-info-div > p > span {
     font-weight: 700;
     font-size: 14px;
-    color: rgb(34, 34, 34);
 }
 
+#user-profile-info-div > div > p + p {
+    color: rgb(85, 85, 85);
+    font-size: 16px;
+    font-weight: 700;
+}
 
+#user-profile-skills-container {
+    width: 50%;
+    height: auto;
+    margin-top: 10px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 0px 0px 2px 2px rgb(223, 223, 223);
+    display: flex;
+    flex-direction: column;
+}
 
+#user-profile-skills-container > h4 {
+    text-align: center;
+}
 
 
 
