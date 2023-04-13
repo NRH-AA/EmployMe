@@ -5,7 +5,7 @@
 #user-profile-container {
     margin: auto;
     margin-top: 30px;
-    width: 50%;
+    width: 30%;
     height: 900px;
 }
 
@@ -18,10 +18,16 @@
     align-items: center;
     background-color: rgb(245, 245, 245);
     box-shadow: 0px 0px 2px 2px rgb(223, 223, 223);
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
-#user-profile-top-div > img {
+.user-profile-img-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.user-profile-img {
     height: 150px;
     width: 150px;
     margin-top: 10px;
@@ -46,6 +52,39 @@
 
 #user-profile-top-div > h4 {
     margin-top: 0px;
+}
+
+#user-update-bio-occupation-input {
+    margin-top: 5px;
+    border: none;
+    box-shadow: 0px 0px 2px 2px rgb(145, 145, 145);
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 5px;
+    height: 22px;
+    outline: none;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#user-update-bio-company-input {
+    margin-top: 5px;
+    border: none;
+    box-shadow: 0px 0px 2px 2px rgb(145, 145, 145);
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 5px;
+    height: 22px;
+    outline: none;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.user-update-bio-error-p {
+    margin: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    color: red;
 }
 
 
@@ -121,7 +160,260 @@
 }
 
 
+#user-profile-create-post-container {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 0px 0px 2px 2px rgb(223, 223, 223);
+    display: flex;
+    flex-direction: column;
+}
+
+#user-profile-create-post-container > h4 {
+    text-align: center;
+}
+
+#user-profile-create-post-title {
+    width: 90%;
+    height: 24px;
+    margin: auto;
+    margin-bottom: 0px;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 2px 2px rgb(145, 145, 145);
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.create-post-errors-p {
+    margin-bottom: -5px;
+    margin-left: 25px;
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    color: red;
+}
+
+#user-profile-create-post-textarea {
+    width: 90%;
+    min-height: 100px;
+    height: auto;
+    margin: auto;
+    margin-top: 10px;
+    resize: none;
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 2px 2px rgb(145, 145, 145);
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+
+
+#create-post-image {
+    margin-top: 10px;
+    width: 90%;
+    min-height: 200px;
+    max-height: 600px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.create-post-image-div {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+#create-post-image-input {
+    width: 90%;
+    height: 250px;
+    margin: auto;
+    margin-top: 10px;
+    text-indent: 16px;
+    background-color: rgb(136, 136, 136);
+    border: 2px dashed rgb(39, 39, 39);
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#create-post-remove-image-button {
+    position: absolute;
+    margin-left: 420px;
+    margin-top: 25px;
+    background-color: red;
+    height: 35px;
+    width: 35px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+#create-post-remove-image-button2 {
+    position: absolute;
+    margin-left: 420px;
+    margin-top: 25px;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
+    height: 35px;
+    width: 35px;
+    border-radius: 30px;
+    opacity: 0.6;
+    font-weight: 700;
+    font-size: 18px;
+    color: red;
+    cursor: pointer;
+}
+
+#create-post-remove-image-button2:hover {
+    opacity: 1.0;
+}
+
+#create-post-remove-image-button:hover {
+    opacity: 1.0;
+}
+
+
+
+
+.user-profile-add-post-img-button {
+    width: 50px;
+    border: none;
+    background: none;
+    font-size: 26px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.user-profile-add-post-img-button:hover {
+    color: rgb(0, 214, 0);
+}
+
+#user-profile-create-post-button {
+    margin-left: 73%;
+    width: 120px;
+    background: linear-gradient(#00d30b, #008b0c);
+    box-shadow: 1px 2px 2px 2px rgb(109, 109, 109);
+    border-radius: 5px;
+    border: none;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: rgb(46, 46, 46);
+    cursor: pointer;
+}
+
+#user-profile-create-post-button:hover {
+    background: linear-gradient(#00ec0c, #00a80e);
+    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
+}
+
+#user-profile-create-post-button:active {
+    background: linear-gradient(#00d30b, #008b0c);
+    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
+}
+
+
+
+
+
+
+
 
 ::file-selector-button {
     display: none;
+}
+
+
+@media (max-width: 1700px) {
+    #user-profile-container {
+        width: 35%
+    }
+}
+
+@media (max-width: 1470px) {
+    #user-profile-container {
+        width: 40%
+    }
+}
+
+@media (max-width: 1280px) {
+    #user-profile-container {
+        width: 45%
+    }
+}
+
+@media (max-width: 1150px) {
+    #user-profile-container {
+        width: 50%
+    }
+}
+
+@media (max-width: 1035px) {
+    #user-profile-container {
+        width: 55%
+    }
+}
+
+@media (max-width: 935px) {
+    #user-profile-container {
+        width: 60%
+    }
+}
+
+@media (max-width: 860px) {
+    #user-profile-container {
+        width: 65%
+    }
+}
+
+@media (max-width: 800px) {
+    #user-profile-container {
+        width: 80%
+    }
+}
+
+@media (max-width: 660px) {
+    #user-profile-container {
+        width: 98%
+    }
+}
+
+@media (max-width: 510px) {
+    #create-post-remove-image-button {
+        margin-left: 350px;
+    }
+    
+    #create-post-remove-image-button2 {
+        margin-left: 350px;
+    }
+}
+
+@media (max-width: 450px) {
+    #create-post-remove-image-button {
+        margin-left: 300px;
+    }
+    
+    #create-post-remove-image-button2 {
+        margin-left: 300px;
+    }
+}
+
+@media (max-width: 375px) {
+    #create-post-remove-image-button {
+        margin-left: 280px;
+    }
+    
+    #create-post-remove-image-button2 {
+        margin-left: 280px;
+    }
 }
