@@ -5,10 +5,9 @@
 #signup-container {
     width: 450px;
     height: auto;
-    border: 1px solid rgb(0, 0, 0);
-    box-shadow: 0px 0px 2px 2px rgb(41, 41, 41);
-    background: linear-gradient(#dadada, #afafaf);
-    border-radius: 5px;
+    background-color: rgb(226, 226, 226);
+    box-shadow: 0px 0px 2px 2px rgb(168, 168, 168);
+    border-radius: 10px;
     margin: auto;
     margin-top: 10%;
     text-align: center;
@@ -22,12 +21,15 @@
     height: 50px;
     margin-bottom: -15px;
     text-decoration: underline;
+    color: rgb(0, 175, 0);
 }
 
 #signup-info {
     width: 350px;
     text-align: left;
-    font-size: 17px;
+    font-weight: 700;
+    font-size: 14px;
+    padding-bottom: 20px;
     border-bottom: 1px solid rgb(99, 99, 99);
 }
 
@@ -37,6 +39,7 @@
     font-size: 14px;
     font-weight: 700;
     margin-top: -5px;
+    min-height: 80px;
 }
 
 #signup-form-input-div {
@@ -51,9 +54,10 @@
 }
 
 .signup-label {
-    font-size: 14px;
+    font-size: 15px;
     text-align: left;
-    font-weight: 550;
+    font-weight: 700;
+    color: rgb(0, 161, 0);
 }
 
 .signup-button {
@@ -61,10 +65,9 @@
     height: 30px;
     width: 180px;
     margin-left: 25%;
-    border: 1px solid rgb(160, 160, 160);
-    background: linear-gradient(#fffefe, #707070);
-    box-shadow: 0px 0px 4px 2px rgb(71, 71, 71);
-    border-radius: 15px;
+    background: linear-gradient(#00d30b, #008b0c);
+    box-shadow: 1px 2px 2px 2px rgb(109, 109, 109);
+    border-radius: 5px;
     border: none;
     font-size: 16px;
     font-weight: 700;
@@ -72,20 +75,18 @@
 }
 
 .signup-button:hover {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#ffffff, #808080);
-    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+    background: linear-gradient(#00ec0c, #00a80e);
+    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
 }
 
 .signup-button:active {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#adadad, #363636);
-    box-shadow: 0px 0px 2px 2px rgb(247, 247, 247);
+    background: linear-gradient(#00d30b, #008b0c);
+    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
 }
 
 .signup-button:disabled {
-    background: linear-gradient(#adadad, #363636);
-    box-shadow: 0px 0px 2px 2px rgb(247, 247, 247);
+    background: linear-gradient(#00a308, #00740a);
+    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
     cursor: not-allowed;
 }
 
@@ -99,13 +100,11 @@
 }
 
 .signup-back-button:hover {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#ffffff, #808080);
-    box-shadow: 0px 0px 4px 2px rgb(31, 31, 31);
+    background: linear-gradient(#00ec0c, #00a80e);
+    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
 }
 
 .signup-back-button:active {
-    color: rgb(25, 0, 255);
-    background: linear-gradient(#adadad, #363636);
-    box-shadow: 0px 0px 2px 2px rgb(247, 247, 247);
+    background: linear-gradient(#00d30b, #008b0c);
+    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
 }

@@ -13,8 +13,6 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const sessionPath = useSelector(state => state.session.path);
 	const sessionTheme = useSelector(state => state.session.theme);
-	const [canSearch, setCanSearch] = useState(true);
-	const [searchOption, setSearchOption] = useState('Jobs');
 	const [search, setSearch] = useState('');
 	
 	const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -64,7 +62,7 @@ function Navigation({ isLoaded }){
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
 				
-				{sessionPath == '/' && <div id="searchbar-input-div">
+				{sessionPath === '/' && <div id="searchbar-input-div">
 					<input id="searchbar-input" type="text" 
 						placeholder='Search Bar'
 						value={search}
@@ -75,13 +73,14 @@ function Navigation({ isLoaded }){
 					/>
 					<button id="search-button-submit"
 						// onClick={() => handleSearch()}
+						onClick={() => handleInvalidFeature()}
 					><i className="fas fa-search"></i></button>
 				</div>}
 				
 				<div id="navigation-button-bar-div">
 					<button className="navigation-button" type="button"
 						title="Home"
-						onClick={() => handleInvalidFeature()}
+						onClick={() => history.push('/')}
 					><i className="fa-solid fa-house"></i>
 					</button>
 					

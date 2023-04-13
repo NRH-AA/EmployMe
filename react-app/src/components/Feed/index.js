@@ -36,7 +36,7 @@ const Feed = () => {
 
         if (Math.ceil(scrolled) === Math.ceil(scollable)) {
             const newOffset = offset + 6;
-            dispatch(appendPostsThunk(newOffset))
+            dispatch(appendPostsThunk(newOffset));
             setOffset(newOffset);
         };
     };

@@ -84,11 +84,11 @@ const Post = ({post, user}) => {
         
         for (let i = 0; i < pictures.length; i++) {
             const picture = pictures[i]
-            if (picture.url && (!post.images[i] || picture.url !== post?.images[i].url)) {
+            if (picture.url && (!post.images[i] || picture.url !== post?.images[i].url)) { // Picture has been edited
                 updateData.push({id: picture.id, url: picture.url})
             }
         }
-            
+
         if (updateData.length > 0) {
             await dispatch(updateImages(sessionUser.id, post.id, updateData))
         } else {
