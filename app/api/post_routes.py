@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User, Post, PostImage
+from sqlalchemy import desc, asc
 from datetime import datetime
 
 post_routes = Blueprint('posts', __name__)
@@ -10,7 +11,7 @@ def get_posts():
     data = request.get_json()
     offset = data['offset']
     
-    posts = Post.query.limit(6).offset(offset)
+    posts = Post.query.order_by(desc('createdAt')).limit(6).offset(offset)
     return {'posts': [post.to_dict() for post in posts]}
 
 @post_routes.route('', methods=['POST'])
@@ -48,24 +49,35 @@ def update_post(id):
     post_text = data['postText'] or False
     user_id = data['userId'] or False
     
+    errors = {}
+    
     if not user_id:
-        return {'errors': ['User was not specified']}, 400
+        errors.user = 'Failed to get user id'
+        return {'errors': errors}, 400
     
     post = Post.query.get(id)
     
     if not post:
-        return {'errors': ['Unable to find post']}, 400
+        errors.post = 'Failed to find post'
+        return {'errors': errors}, 400
     
     user = User.query.get(user_id)
     if not user:
-        return {'errors': ['Unable to find user']}, 400
+        errors.user = 'User does not exist'
+        return {'errors': errors}
     
-    if post_title:
-        post.post_title = post_title
+    if post_title and (len(post_title) < 4 or len(post_title)) > 40:
+        errors.title = 'Title (4-40) characters'
         
-    if post_text:
-        post.post_text = post_text
+    if post_text and (len(post_text) < 10 or len(post_text)) > 250:
+        errors.text = 'Text (10-250) characters'
         
+    if 'title' in errors or 'text' in errors:
+        return {'errors': errors}, 400
+
+
+    post.post_title = post_title
+    post.post_text = post_text
     post.updatedAt = datetime.now()
     user.updatedAt = datetime.now()
 
