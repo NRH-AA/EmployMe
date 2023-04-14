@@ -15,6 +15,14 @@ def seed_posts():
         
         db.session.add(newPost)
     
+    post1 = Post(
+        user_id = 1,
+        post_title = 'Demo Post Title',
+        post_text = 'Demo Post Text'
+    )
+    
+    db.session.add(post1)
+    
     db.session.commit()
     
 def undo_posts():

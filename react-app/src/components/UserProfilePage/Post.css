@@ -19,7 +19,7 @@
 
 .post-title-bar-div > h4 {
     color: black;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 .profile-post-text-container {
@@ -43,7 +43,7 @@
 .post-title-edit-input {
     width: 90%;
     height: 24px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     margin-top: 15px;
     outline: none;
     border: none;
@@ -51,6 +51,29 @@
     font-weight: 700;
     font-size: 18px;
     border-radius: 5px;
+}
+
+.post-images-container {
+    display: flex;
+}
+
+.post-image-preview {
+    width: 70%;
+    margin-left: 15px;
+    max-height: 250px;
+    margin-bottom: -5px;
+}
+
+.post-slide-image {
+    width: 80%;
+    max-height: 33%;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.post-image-slide-bar {
+    overflow-y: auto;
+    height: 250px;
 }
 
 .post-text-edit-input {
