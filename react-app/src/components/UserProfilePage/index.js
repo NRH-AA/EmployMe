@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { deleteUserProfileThunk, setWindowPath, getSingleUser } from "../../store/session";
+import { setWindowPath, getSingleUser, createPost } from "../../store/session";
 import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
@@ -24,6 +24,11 @@ const UserProfile = () => {
     const sessionUser = useSelector((state) => state.session.user);
     const sessionPath = useSelector(state => state.session.path);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
+    const [addPostPicture, setAddPostPicture] = useState(false);
+    const [picture, setPicture] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [errors, setErrors] = useState({})
     
     let user = null;
     
@@ -43,27 +48,14 @@ const UserProfile = () => {
         }
     }
     
-    const [firstName, setFirstName] = useState(user?.first_name || "");
-    const [middleName, setMiddleName] = useState(user?.middle_name || "");
-    const [lastName, setLastName] = useState(user?.last_name || "");
-    const [age, setAge] = useState(user?.age || 0);
     const [occupation, setOccupation] = useState(user?.occupation || "");
     const [company, setCompany] = useState(user?.company_name || "");
-    const [email, setEmail] = useState(user?.work_email || "");
-    const [phone, setPhone] = useState(user?.phone_number || "");
-    const [errors, setErrors] = useState({})
     
     const validateBio = () => {
         const newErrors = {};
-        if (!firstName || firstName.length < 2 || firstName.length > 20) newErrors.firstName = 'First name (2-20) characters';
-        if (middleName && middleName.length > 20) newErrors.middleName = 'Middle name (20) characters or less';
-        if (!lastName || lastName.length < 2 || lastName.length > 30) newErrors.lastName = 'Last name (2-30) characters';
-        if (!age || age < 16) newErrors.age = 'Age must be 16 or older'
-        if (occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
+        if (occupation && occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
         if (company && (company.length < 3 || company.length > 30)) newErrors.company = 'Company (3-30) characters';
-        if (email && (email.length < 5 || email.length > 30)) newErrors.email = 'Email (5-30) characters';
-        if (phone && (phone.length < 10 || phone.length > 14)) newErrors.phone_number = 'Phone (10-14) characters.';
-        
+
         return newErrors;
     };
     
@@ -73,7 +65,7 @@ const UserProfile = () => {
     
     useEffect(() => {
         setErrors(validateBio());
-    }, [firstName, middleName, lastName, age, occupation, company, email, phone])
+    }, [occupation, company])
     
     if (!user) {
         user = {};
@@ -81,44 +73,92 @@ const UserProfile = () => {
     };
     
     if (user?.id !== sessionUser?.id && !user?.active){
-        return (<>
-            <p>You shouldn't be here.</p>
-            <button onClick={() => history.push('/')}>Go Back</button>
-        </>);
+        return history.push('/');
     };
     
-    const handleSubmitBio = (e) => {
-        e.preventDefault();
-        
+    const handleSubmitBio = () => {
         const newErrors = validateBio();
         if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
         
-        if (user.first_name === firstName 
-            && user.middle_name === middleName
-            && user.last_name === lastName
-            && user.age === age
-            && user.occupation === occupation
-            && user.company_name === company
-            && user.work_email === email
-            && user.phone_number === phone
-            ) return;
+        if (user.occupation === occupation && user.company_name === company) return setIsUpdatingBio(false);
         
         const info = {
-            first_name: firstName,
-            middle_name: middleName,
-            last_name: lastName,
-            age,
             occupation,
-            company_name: company,
-            work_email: email,
-            phone_number: phone
+            company_name: company
         }
         
         dispatch(updateBioData(user.id, info));
+        setIsUpdatingBio(false);
     }
     
-    const handleActivateProfile = () => {
-        dispatch(deleteUserProfileThunk(user.id));
+    const validatePostInformation = () => {
+        const newErrors = {};
+        
+        if (!description) newErrors.description = 'Descripton is required';
+        else if (description.length < 10) newErrors.description = 'Description (10-250)';
+        
+        return newErrors;
+    }
+    
+    const handleCreatePostSubmit = () => {
+        const newErrors = validatePostInformation();
+        if (Object.values(newErrors).length > 0) return setErrors(newErrors);
+        
+        if (!description) return setErrors(['Title and text are required.']);
+        
+        const urls = [];
+        if (picture) urls.push(picture);
+        
+        const postData = {
+            userId: sessionUser.id,
+            title,
+            text: description,
+            urls
+        }
+        
+        dispatch(createPost(postData));
+        setTitle('');
+        setDescription('');
+        setPicture('');
+        setAddPostPicture(false);
+    }
+    
+    
+    const handleFetch = async (formData) => {
+        const res = await fetch('/api/users/upload', {
+            method: "POST",
+            body: formData,
+        });
+        
+        if (res.ok) {
+            const data = await res.json();
+            const imageUrl = data.url;
+    
+            if (!imageUrl) return setErrors(["Failed to upload image. Please try again."]);
+            return imageUrl;
+        }
+        return false;
+    }
+    
+    const handleImageUpload = async (file) => {
+        const formData = new FormData();
+        formData.append("image", file);
+    
+        const url = await handleFetch(formData);
+        if (!url) return setErrors(['Failed to get image url']);
+        
+        return setPicture(url);
+    };
+    
+    
+    const updateImageFile = (e) => {
+        const file = e.target.files[0];
+        handleImageUpload(file);
+    };
+    
+    
+    const removePicture = () => {
+        setPicture('');
     }
     
     const userSkills = user?.skills?.split(';') || null;
@@ -127,22 +167,67 @@ const UserProfile = () => {
     
     if (!user?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
+    const handleEditProfileButton = () => {
+        if (!isUpdatingBio) return setIsUpdatingBio(true);
+        else return handleSubmitBio()
+    }
+    
+    const submitEnterDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (errors.length > 0) return;
+            return handleSubmitBio()
+        }
+    }
+    
+    const submitTabDown = (e) => {
+        if (e.key === 'Enter' || e.key === 'Tab') {
+            e.preventDefault();
+            if (errors.length > 0) return;
+            return handleSubmitBio()
+        }
+    }
+    
     return (
         <div id="user-profile-container">
             <div id='user-profile-top-div'>
                 
                 <div id='user-profile-button-div'>
-                    <button id='user-profile-top-button'
-                    
-                    ><i className="fa-solid fa-ellipsis-vertical"></i></button>
+                    {(user?.id === sessionUser?.id) && 
+                        <button id='user-profile-top-button'
+                            title='Click to edit profile'
+                            onClick={() => handleEditProfileButton()}
+                        >{!isUpdatingBio ? <i className="fa-solid fa-ellipsis-vertical"></i> : <i className="fa fa-paper-plane"/>}
+                        </button>
+                    }
                 </div>
                 
-                <img 
-                    src={user?.profile_picture}
-                    alt={user?.first_name}
+                
+                <OpenModalButton
+                    className="user-profile-img-button"
+                    buttonText={<img className="user-profile-img"
+                        title='Click to edit profile picture'
+                        src={user?.profile_picture}
+                        alt={user?.first_name}
+                    />}
+                    modalComponent={<ProfilePictureModal user={user}/>}
                 />
                 
-                <h4>{user?.occupation}</h4>
+                {!isUpdatingBio ? <h4>{user?.occupation}</h4>
+                : <>
+                    {errors?.occupation && <p 
+                        className='user-update-bio-error-p'
+                    >{errors.occupation}</p>}
+                    
+                    <input id='user-update-bio-occupation-input'
+                        title='What do you do?'
+                        value={occupation}
+                        maxLength={20}
+                        onKeyDown={submitEnterDown}
+                        onChange={(e) => setOccupation(e.target.value)}
+                        autoFocus
+                    />
+                </>}
             </div>
             
             <div id='user-profile-info-main-container'>
@@ -161,7 +246,20 @@ const UserProfile = () => {
                             
                         <div>
                             <p>COMPANY:</p>
-                            <p>{user?.company_name || 'None'}</p>
+                            {!isUpdatingBio ? <>
+                                <p>{user?.company_name || 'None'}</p>
+                            </> : <>
+                                {errors?.company && <p 
+                                    className='user-update-bio-error-p'
+                                >{errors.company}</p>}
+                                
+                                <input id='user-update-bio-company-input'
+                                    title='What company do you work for?'
+                                    value={company}
+                                    onKeyDown={submitTabDown}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                />
+                            </>}
                         </div>
                             
                         <div>
@@ -180,12 +278,72 @@ const UserProfile = () => {
     
             </div>
             
-            <div id="user-profile-posts-container">
+            {(user?.id === sessionUser?.id) && <div id='user-profile-create-post-container'>
+                <h4>What's on your mind?</h4>
                 
+                <input id='user-profile-create-post-title'
+                    placeholder='Title (Not Required)'
+                    maxLength={40}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    autoFocus
+                />
                 
+                {(addPostPicture && picture) ? 
+                    <div className="create-post-image-div">
+                        <img id="create-post-image"
+                            src={picture} 
+                            alt="PostImage"
+                        />
+                        
+                        <button id="create-post-remove-image-button"
+                            onClick={() => removePicture()}
+                        >X</button>
+                    </div>
+                : (addPostPicture) && <div className="create-post-image-div">
+                    <input
+                    id="create-post-image-input"
+                        type="file"
+                        accept="image/*"
+                        onChange={updateImageFile}
+                    />
+                    
+                    <button id="create-post-remove-image-button2"
+                        onClick={() => {setPicture(''); setAddPostPicture(false)}}
+                    >X</button>
+                </div>
+                }
                 
-            </div>
+                {errors?.description && 
+                    <p className='create-post-errors-p'>{errors.description}</p>
+                }
+                <textarea id='user-profile-create-post-textarea' 
+                    placeholder="What would you like to say?"
+                    maxLength={250}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
                 
+                {!addPostPicture && 
+                    <button className='user-profile-add-post-img-button'
+                        title='Add an image'
+                        onClick={() => setAddPostPicture(!addPostPicture)}
+                    ><i className="fa-solid fa-camera"/></button>
+                }
+                    
+                <button id='user-profile-create-post-button'
+                    onClick={handleCreatePostSubmit}
+                >Create</button>
+                
+            </div>}
+            
+            {(user?.id === sessionUser?.id) && 
+                <div id="user-profile-posts-container">
+                    {user?.posts && user?.posts.map(post => 
+                        <Post post={post} user={user}/>
+                    )}
+                </div>
+            }
             
         </div>
     );

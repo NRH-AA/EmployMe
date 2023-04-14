@@ -2,7 +2,6 @@ import { useModal } from "../../context/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { createPost } from "../../store/session";
-import './CreatePost.css';
 
 const CreatePostModal = () => {
     const dispatch = useDispatch();

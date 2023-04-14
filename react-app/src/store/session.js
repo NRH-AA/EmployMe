@@ -107,11 +107,13 @@ export const signUp = (user) => async (dispatch) => {
 			lastName: user.lastName,
 			companyName: user.companyName || '',
 			email: user.email,
+			work_email: user.workEmail,
+			phone_number: user.phone,
 			age: user.age,
 			username: user.username,
 			password: user.password,
 			confirmPassword: user.confirmPassword
-		}),
+		})
 	});
 
 	const data = await response.json();
@@ -394,6 +396,7 @@ export const deletePost = (postId, userId) => async (dispatch) => {
 	
 	if (response.ok) {
 		dispatch(setUser(data));
+		dispatch(getPostsThunk())
 	}
 	
 	return data
@@ -498,7 +501,7 @@ export default function reducer(state = initialState, action) {
 			newState.path = action.path;
 			return newState;
 		case GET_POSTS:
-			newState.posts = action.payload.posts;
+			newState.posts = [...action.payload.posts];
 			return newState;
 		case APPEND_POSTS:
 			newState.posts = [...newState.posts, ...action.payload.posts];

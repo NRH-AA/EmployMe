@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User, JobListing
-from sqlalchemy import desc, asc, text
+from sqlalchemy import desc, asc
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 
@@ -76,25 +76,12 @@ def user(id):
 @login_required
 def update_user(id):
     data = request.get_json()
-    first_name = data['first_name']
-    middle_name = data['middle_name'] or ''
-    last_name = data['last_name']
-    age = data['age']
     occupation = data['occupation'] or ''
     company_name = data['company_name'] or ''
-    work_email = data['work_email'] or ''
-    phone_number = data['phone_number'] or ''
     
     user = User.query.get(id)
-    
-    user.first_name = first_name
-    user.middle_name = middle_name
-    user.last_name = last_name
-    user.age = age
     user.occupation = occupation
     user.company_name = company_name
-    user.work_email = work_email
-    user.phone_number = phone_number
     
     db.session.commit()
     ret = User.query.get(id)

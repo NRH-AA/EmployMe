@@ -22,8 +22,8 @@ const Feed = () => {
     }, [dispatch, sessionPath]);
     
     useEffect(() => {
-        if (!posts?.length) dispatch(getPostsThunk());
-    }, [dispatch, posts]);
+        dispatch(getPostsThunk());
+    }, [dispatch]);
     
     useEffect(() => {
         if (!sessionNews) dispatch(getNewsThunk());
@@ -44,7 +44,7 @@ const Feed = () => {
     useBottomScrollListener(handleScroll);
     
     if (!sessionUser) return null;
-    const userSkillArray = sessionUser.skills.split(';');
+    const userSkillArray = sessionUser?.skills?.split(';');
     
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -67,10 +67,15 @@ const Feed = () => {
             <div id="feed-content-container">
             
                 <div id="feed-user-profile-data">
-                    <img src={sessionUser?.profile_picture} alt={sessionUser?.first_name}/>
+                    <img
+                        title="Go to your profile"
+                        src={sessionUser?.profile_picture} 
+                        alt={sessionUser?.first_name}
+                        onClick={() => history.push(`/profile/${sessionUser?.id}`)}
+                    />
                     
                     <button id="feed-user-profile-button" type="button"
-                        title="Profile"
+                        title="Go to your profile"
                         onClick={() => history.push(`/profile/${sessionUser?.id}`)}
                     ><i className="fa-solid fa-ellipsis-vertical"></i></button>
                     
@@ -78,7 +83,7 @@ const Feed = () => {
                     <p>{sessionUser?.occupation}</p>
                     
                     <div id="feed-user-profile-skills-div">
-                        {userSkillArray.map((skill, i) =>
+                        {userSkillArray && userSkillArray.map((skill, i) =>
                             <p key={i}>{skill + ' |'}</p>
                         )}
                     </div>
@@ -88,10 +93,15 @@ const Feed = () => {
                 <div id="feed-posts-container">
                     {posts?.length && posts?.map((post, i) => <div key={i} className="feed-post-container">
                         <div className="feed-post-top-div"> 
-                            <img src={post.user.profile_picture} alt={post.user.first_name}/>
+                            <img
+                                title={`Check out ${post.user.first_name}'s profile`}
+                                src={post.user.profile_picture} 
+                                alt={post.user.first_name}
+                                onClick={() => history.push(`/profile/${post.user.id}`)}
+                            />
                             <div className="feed-post-top-right-div">
-                                <p><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
-                                <p>{post.user.occupation}</p>
+                                <p className='feed-post-name-p'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
+                                <p className='feed-post-occupation-p'>{post.user.occupation}</p>
                             </div>
                         </div>
                         
