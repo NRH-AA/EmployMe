@@ -22,8 +22,8 @@ const Feed = () => {
     }, [dispatch, sessionPath]);
     
     useEffect(() => {
-        if (!posts?.length) dispatch(getPostsThunk());
-    }, [dispatch, posts]);
+        dispatch(getPostsThunk());
+    }, [dispatch]);
     
     useEffect(() => {
         if (!sessionNews) dispatch(getNewsThunk());

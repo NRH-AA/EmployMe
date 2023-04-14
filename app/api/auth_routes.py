@@ -56,14 +56,17 @@ def logout():
 
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
-    first_name = request.get_json()['firstName']
-    last_name = request.get_json()['lastName']
-    company_name = request.get_json()['companyName']
-    email = request.get_json()['email']
-    age = int(request.get_json()['age'])
-    username = request.get_json()['username']
-    password = request.get_json()['password']
-    confirm_password = request.get_json()['confirmPassword']
+    data = request.get_json()
+    first_name = data['firstName']
+    last_name = data['lastName']
+    company_name = data['companyName']
+    email = data['email']
+    work_email = data['work_email']
+    phone_number = data['phone_number']
+    age = int(data['age'])
+    username = data['username']
+    password = data['password']
+    confirm_password = data['confirmPassword']
     
     errors = {}
 
@@ -78,6 +81,12 @@ def sign_up():
         
     if not email or len(email) < 4:
         errors['email'] = 'Email must be 4 characters or more'
+        
+    if not work_email or len(work_email) < 4 or len(work_email) > 35:
+        errors['workEmail'] = 'Work Email (4-35) characters'
+        
+    if not phone_number or len(phone_number) != 10:
+        errors['phone'] = 'Phone Number (10) characters'
         
     if not age or age < 16:
         errors['age'] = 'You must be 16 or older to join EmployMe'
@@ -106,6 +115,8 @@ def sign_up():
         company_name = company_name or '',
         username = username,
         email = email,
+        work_email = work_email,
+        phone_number =phone_number,
         age = age,
         password = password
     )

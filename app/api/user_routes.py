@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required
 from app.models import db, User, JobListing
-from sqlalchemy import desc, asc, text
+from sqlalchemy import desc, asc
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
 

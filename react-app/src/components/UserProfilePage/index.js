@@ -53,7 +53,7 @@ const UserProfile = () => {
     
     const validateBio = () => {
         const newErrors = {};
-        if (!occupation || occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
+        if (occupation && occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
         if (company && (company.length < 3 || company.length > 30)) newErrors.company = 'Company (3-30) characters';
 
         return newErrors;
@@ -172,16 +172,34 @@ const UserProfile = () => {
         else return handleSubmitBio()
     }
     
+    const submitEnterDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (errors.length > 0) return;
+            return handleSubmitBio()
+        }
+    }
+    
+    const submitTabDown = (e) => {
+        if (e.key === 'Enter' || e.key === 'Tab') {
+            e.preventDefault();
+            if (errors.length > 0) return;
+            return handleSubmitBio()
+        }
+    }
+    
     return (
         <div id="user-profile-container">
             <div id='user-profile-top-div'>
                 
                 <div id='user-profile-button-div'>
                     {(user?.id === sessionUser?.id) && 
-                    <button id='user-profile-top-button'
-                        title='Click to edit profile'
-                        onClick={() => handleEditProfileButton()}
-                    ><i className="fa-solid fa-ellipsis-vertical"></i></button>}
+                        <button id='user-profile-top-button'
+                            title='Click to edit profile'
+                            onClick={() => handleEditProfileButton()}
+                        >{!isUpdatingBio ? <i className="fa-solid fa-ellipsis-vertical"></i> : <i className="fa fa-paper-plane"/>}
+                        </button>
+                    }
                 </div>
                 
                 
@@ -205,7 +223,9 @@ const UserProfile = () => {
                         title='What do you do?'
                         value={occupation}
                         maxLength={20}
+                        onKeyDown={submitEnterDown}
                         onChange={(e) => setOccupation(e.target.value)}
+                        autoFocus
                     />
                 </>}
             </div>
@@ -236,6 +256,7 @@ const UserProfile = () => {
                                 <input id='user-update-bio-company-input'
                                     title='What company do you work for?'
                                     value={company}
+                                    onKeyDown={submitTabDown}
                                     onChange={(e) => setCompany(e.target.value)}
                                 />
                             </>}
@@ -316,12 +337,13 @@ const UserProfile = () => {
                 
             </div>}
             
-            <div id="user-profile-posts-container">
-                {user?.posts && user?.posts.map(post => 
-                    <Post post={post} user={user}/>
-                )}
-            </div>
-                
+            {(user?.id === sessionUser?.id) && 
+                <div id="user-profile-posts-container">
+                    {user?.posts && user?.posts.map(post => 
+                        <Post post={post} user={user}/>
+                    )}
+                </div>
+            }
             
         </div>
     );
