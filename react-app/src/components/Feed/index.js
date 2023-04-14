@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, Redirect } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import OpenModalButton from "../OpenModalButton";
 import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk } from "../../store/session";
@@ -18,12 +18,11 @@ const Feed = () => {
     const [newsObj, setNewsObj] = useState({});
 
     useEffect(() => {
-        if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) dispatch(setWindowPath(window.location.pathname));
+        if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) {
+            dispatch(setWindowPath(window.location.pathname));
+            dispatch(getPostsThunk());
+        };
     }, [dispatch, sessionPath]);
-    
-    useEffect(() => {
-        dispatch(getPostsThunk());
-    }, [dispatch]);
     
     useEffect(() => {
         if (!sessionNews) dispatch(getNewsThunk());
@@ -44,7 +43,8 @@ const Feed = () => {
     useBottomScrollListener(handleScroll);
     
     if (!sessionUser) return null;
-    const userSkillArray = sessionUser?.skills?.split(';');
+    
+    const userSkillArray = sessionUser?.skills?.split(';') || [];
     
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
@@ -71,12 +71,12 @@ const Feed = () => {
                         title="Go to your profile"
                         src={sessionUser?.profile_picture} 
                         alt={sessionUser?.first_name}
-                        onClick={() => history.push(`/profile/${sessionUser?.id}`)}
+                        onClick={(e) => history.push(`/profile/${sessionUser?.id}`)}
                     />
                     
                     <button id="feed-user-profile-button" type="button"
                         title="Go to your profile"
-                        onClick={() => history.push(`/profile/${sessionUser?.id}`)}
+                        onClick={(e) => history.push(`/profile/${sessionUser?.id}`)}
                     ><i className="fa-solid fa-ellipsis-vertical"></i></button>
                     
                     <p>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
@@ -97,7 +97,7 @@ const Feed = () => {
                                 title={`Check out ${post.user.first_name}'s profile`}
                                 src={post.user.profile_picture} 
                                 alt={post.user.first_name}
-                                onClick={() => history.push(`/profile/${post.user.id}`)}
+                                onClick={(e) => history.push(`/profile/${post.user.id}`)}
                             />
                             <div className="feed-post-top-right-div">
                                 <p className='feed-post-name-p'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
@@ -113,7 +113,7 @@ const Feed = () => {
                     </div>)}
                     
                     <button
-                        onClick={() => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
+                        onClick={(e) => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
                     >See more</button>
                 </div>
                 
@@ -138,7 +138,7 @@ const Feed = () => {
                     :
                         <button id="feed-news-button" type='button'
                             title='See More News'
-                            onClick={() => updateNews()}
+                            onClick={(e) => updateNews(e)}
                         >More News</button>
                     }
                     

@@ -9,12 +9,15 @@ import DeletePostModal from "./DeletePostModal";
 const Post = ({post, user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    
     const [isUpdating, setIsUpdating] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [pictures, setPictures] = useState(post.images || []);
-    const [title, setTitle] = useState(post.post_title || '');
-    const [text, setText] = useState(post.post_text || '');
+    const [pictures, setPictures] = useState(post?.images || []);
+    const [showImage, setShowImage] = useState(post?.images?.[0])
+    const [title, setTitle] = useState(post?.post_title || '');
+    const [text, setText] = useState(post?.post_text || '');
     const [errors, setErrors] = useState([]);
+    
     
     const validatePostEdit = () => {
         const newErrors = {};
@@ -33,7 +36,11 @@ const Post = ({post, user}) => {
         if (!user?.active && isUpdating) setIsUpdating(false);
     }, [user?.active, isUpdating])
     
-    if (!user) return null;
+    
+    
+    if (!user || !post) return null;
+    
+    
     
     const handleSubmitEdit = async () => {
         const newErrors = validatePostEdit();
@@ -55,10 +62,38 @@ const Post = ({post, user}) => {
         setIsUpdating(false);
     }
     
+    
+    
     const handleEditButtonPressed = () => {
         if (!isUpdating) return setIsUpdating(true);
         else return handleSubmitEdit();
     }
+    
+    const default_picture = 'https://assets.website-files.com/61e2d9500e1bc451a3ea1aa3/629a49e7ab53625cb2c4e791_Brand-pattern.jpg';
+    const showSlideBarImages = () => {
+        let count = pictures?.length;
+        
+        
+        const postImages = [];
+        for (let i = 0; i < count; i++) {
+            postImages.push(pictures[i]);
+        }
+        
+        for (let i = 0; i < (5 - count); i++) {
+            postImages.push({id: null, url: default_picture});
+        }
+        
+        if (!showImage) setShowImage(postImages[0]);
+        
+        return (postImages.map(img => 
+            <img className='post-slide-image'
+                src={img.url}
+                alt='Slide Bar'
+                onClick={() => setShowImage({url: img.url})}
+            />
+        ));
+    }
+    
     
     return (
         <div className="profile-post-div-container">
@@ -78,9 +113,24 @@ const Post = ({post, user}) => {
                 
                 {(user?.id === sessionUser?.id) && 
                     <button className='post-ellipsis-button'
-                        onClick={handleEditButtonPressed}
+                        onClick={(e) => handleEditButtonPressed(e)}
                     >{!isUpdating ? <i class="fas fa-ellipsis-h"/> : <i className="fa fa-paper-plane post-paper-plane"/>}
                     </button>
+                }
+            </div>
+            
+            <div className="post-images-container">
+                {(showImage && (showImage.url !== default_picture || isUpdating)) &&
+                    <img className='post-image-preview'
+                        src={showImage.url}
+                        alt='Post Preview'
+                    />
+                }
+                    
+                {isUpdating &&
+                    <div className='post-image-slide-bar'>
+                        {showSlideBarImages()}
+                    </div>
                 }
             </div>
 
@@ -98,13 +148,15 @@ const Post = ({post, user}) => {
                 }
             </div>
             
-            <div className='post-edit-buttons-div'>
-                <OpenModalButton 
-                    className='post-delete-button'
-                    buttonText={<i className="fa fa-trash"/>}
-                    modalComponent={<DeletePostModal user={sessionUser} post={post}/>}
-                />
-            </div>
+            {(user?.id === sessionUser?.id) &&
+                <div className='post-edit-buttons-div'>
+                    <OpenModalButton 
+                        className='post-delete-button'
+                        buttonText={<i className="fa fa-trash"/>}
+                        modalComponent={<DeletePostModal user={sessionUser} post={post}/>}
+                    />
+                </div>
+            }
             
         </div>
     );

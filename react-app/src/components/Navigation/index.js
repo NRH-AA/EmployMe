@@ -60,7 +60,7 @@ function Navigation({ isLoaded }){
 	return (
 		<div id="navigation-container" data-theme={sessionTheme}>
 			<div id="navigation-logo-search-div">
-				<img id="navigation-logo" src={Logo} alt="Home" onClick={() => handleLogoPressed()}/>
+				<img id="navigation-logo" src={Logo} alt="Home" onClick={(e) => handleLogoPressed(e)}/>
 				
 				{sessionPath === '/' && <div id="searchbar-input-div">
 					<input id="searchbar-input" type="text" 
@@ -73,35 +73,35 @@ function Navigation({ isLoaded }){
 					/>
 					<button id="search-button-submit"
 						// onClick={() => handleSearch()}
-						onClick={() => handleInvalidFeature()}
+						onClick={(e) => handleInvalidFeature(e)}
 					><i className="fas fa-search"></i></button>
 				</div>}
 				
 				<div id="navigation-button-bar-div">
 					<button className="navigation-button" type="button"
 						title="Home"
-						onClick={() => history.push('/')}
+						onClick={(e) => history.push('/')}
 					><i className="fa-solid fa-house"></i>
 					</button>
 					
 					<button className="navigation-button" type="button"
 						title="Jobs"
-						onClick={() => handleInvalidFeature()}
+						onClick={(e) => handleInvalidFeature(e)}
 					><i className="fa-solid fa-briefcase"></i></button>
 					
 					<button className="navigation-button" type="button"
 						title="Network"
-						onClick={() => handleInvalidFeature()}
+						onClick={(e) => handleInvalidFeature(e)}
 					><i className="fa-solid fa-users"></i></button>
 					
 					<button className="navigation-button" type="button"
 						title="Messages"
-						onClick={() => handleInvalidFeature()}
+						onClick={(e) => handleInvalidFeature(e)}
 					><i className='far fa-comment-dots'></i></button>
 					
 					<button className="navigation-button" type="button"
 						title="Notifications"
-						onClick={() => handleInvalidFeature()}
+						onClick={(e) => handleInvalidFeature(e)}
 					><i className="fa fa-bell"></i></button>
 				</div>
 				

@@ -10,7 +10,7 @@ def seed_post_images():
     posts = Post.query.all()
     
     for post in posts:
-        for i in range(3):
+        for i in range(5):
             image = PostImage(
                 post_id=post.id,
                 url=default_picture
