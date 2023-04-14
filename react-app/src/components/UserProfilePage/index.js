@@ -20,9 +20,11 @@ const UserProfile = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {userId} = useParams();
-    const sessionUsers = useSelector((state) => state.session.users);
+    
     const sessionUser = useSelector((state) => state.session.user);
+    const sessionSingleUser = useSelector(state => state.session.singleUser)
     const sessionPath = useSelector(state => state.session.path);
+    
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     const [addPostPicture, setAddPostPicture] = useState(false);
     const [picture, setPicture] = useState('');
@@ -30,27 +32,8 @@ const UserProfile = () => {
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({})
     
-    let user = null;
-    
-    useEffect(() => {
-        if (!sessionUsers || !sessionUsers[userId]) dispatch(getSingleUser(parseInt(userId)));
-    }, [dispatch, sessionUser, userId]);
-    
-    if (parseInt(userId) === sessionUser?.id) user = sessionUser;
-    
-    if (!user) {
-        if (sessionUsers?.length > 0) {
-            for (let el of sessionUsers) {
-                if (parseInt(userId) === el.id) user = el;
-            }
-        } else if (sessionUsers) {
-            user = sessionUsers;
-        }
-    }
-    
-    const [occupation, setOccupation] = useState(user?.occupation || "");
-    const [company, setCompany] = useState(user?.company_name || "");
-    
+    const [occupation, setOccupation] = useState(sessionSingleUser?.occupation || "");
+    const [company, setCompany] = useState(sessionSingleUser?.company_name || "");
     const validateBio = () => {
         const newErrors = {};
         if (occupation && occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
@@ -61,35 +44,41 @@ const UserProfile = () => {
     
     useEffect(() => {
         if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
-    }, [dispatch, sessionPath])
+    }, [dispatch, sessionPath]);
     
     useEffect(() => {
-        setErrors(validateBio());
-    }, [occupation, company])
+        if (!sessionSingleUser || sessionSingleUser.id !== parseInt(userId)) dispatch(getSingleUser(parseInt(userId)));
+    }, [dispatch, sessionSingleUser]);
     
-    if (!user) {
-        user = {};
-        user.id = -1;
-    };
+    useEffect(() => {
+        if (isUpdatingBio) setErrors(validateBio());
+    }, [occupation, company]);
     
-    if (user?.id !== sessionUser?.id && !user?.active){
-        return history.push('/');
+    
+    
+    if (!sessionSingleUser) return null;
+    
+    if (!sessionSingleUser || !sessionSingleUser.id || !sessionSingleUser?.active){
+        history.push('/');
+        return null;
     };
     
     const handleSubmitBio = () => {
         const newErrors = validateBio();
         if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
         
-        if (user.occupation === occupation && user.company_name === company) return setIsUpdatingBio(false);
+        if (sessionSingleUser.occupation === occupation && sessionSingleUser.company_name === company) return setIsUpdatingBio(false);
         
         const info = {
             occupation,
             company_name: company
         }
         
-        dispatch(updateBioData(user.id, info));
+        dispatch(updateBioData(sessionSingleUser.id, info));
         setIsUpdatingBio(false);
     }
+    
+    
     
     const validatePostInformation = () => {
         const newErrors = {};
@@ -99,6 +88,8 @@ const UserProfile = () => {
         
         return newErrors;
     }
+    
+    
     
     const handleCreatePostSubmit = () => {
         const newErrors = validatePostInformation();
@@ -124,6 +115,8 @@ const UserProfile = () => {
     }
     
     
+    
+    
     const handleFetch = async (formData) => {
         const res = await fetch('/api/users/upload', {
             method: "POST",
@@ -140,6 +133,8 @@ const UserProfile = () => {
         return false;
     }
     
+    
+    
     const handleImageUpload = async (file) => {
         const formData = new FormData();
         formData.append("image", file);
@@ -151,21 +146,21 @@ const UserProfile = () => {
     };
     
     
+    
     const updateImageFile = (e) => {
         const file = e.target.files[0];
         handleImageUpload(file);
     };
     
     
+    
     const removePicture = () => {
         setPicture('');
     }
     
-    const userSkills = user?.skills?.split(';') || null;
+    const userSkills = sessionSingleUser?.skills?.split(';') || null;
     
-    if (!user && !sessionUser) return null;
-    
-    if (!user?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
+    if (!sessionSingleUser?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
     const handleEditProfileButton = () => {
         if (!isUpdatingBio) return setIsUpdatingBio(true);
@@ -193,10 +188,10 @@ const UserProfile = () => {
             <div id='user-profile-top-div'>
                 
                 <div id='user-profile-button-div'>
-                    {(user?.id === sessionUser?.id) && 
+                    {(sessionSingleUser?.id === sessionUser?.id) && 
                         <button id='user-profile-top-button'
                             title='Click to edit profile'
-                            onClick={() => handleEditProfileButton()}
+                            onClick={(e) => handleEditProfileButton(e)}
                         >{!isUpdatingBio ? <i className="fa-solid fa-ellipsis-vertical"></i> : <i className="fa fa-paper-plane"/>}
                         </button>
                     }
@@ -207,13 +202,13 @@ const UserProfile = () => {
                     className="user-profile-img-button"
                     buttonText={<img className="user-profile-img"
                         title='Click to edit profile picture'
-                        src={user?.profile_picture}
-                        alt={user?.first_name}
+                        src={sessionSingleUser?.profile_picture}
+                        alt={sessionSingleUser?.first_name}
                     />}
-                    modalComponent={<ProfilePictureModal user={user}/>}
+                    modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
                 />
                 
-                {!isUpdatingBio ? <h4>{user?.occupation}</h4>
+                {!isUpdatingBio ? <h4>{sessionSingleUser?.occupation}</h4>
                 : <>
                     {errors?.occupation && <p 
                         className='user-update-bio-error-p'
@@ -223,7 +218,7 @@ const UserProfile = () => {
                         title='What do you do?'
                         value={occupation}
                         maxLength={20}
-                        onKeyDown={submitEnterDown}
+                        onKeyDown={(e) => submitEnterDown(e)}
                         onChange={(e) => setOccupation(e.target.value)}
                         autoFocus
                     />
@@ -236,18 +231,18 @@ const UserProfile = () => {
                     <div id='user-profile-info-div'>
                         <div>
                             <p>NAME:</p>
-                            <p>{user?.first_name + ' ' + user?.last_name}</p>
+                            <p>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</p>
                         </div>
                             
                         <div>
                             <p>EMAIL:</p>
-                            <p>{user?.work_email}</p>
+                            <p>{sessionSingleUser?.work_email}</p>
                         </div>
                             
                         <div>
                             <p>COMPANY:</p>
                             {!isUpdatingBio ? <>
-                                <p>{user?.company_name || 'None'}</p>
+                                <p>{sessionSingleUser?.company_name || 'None'}</p>
                             </> : <>
                                 {errors?.company && <p 
                                     className='user-update-bio-error-p'
@@ -256,7 +251,7 @@ const UserProfile = () => {
                                 <input id='user-update-bio-company-input'
                                     title='What company do you work for?'
                                     value={company}
-                                    onKeyDown={submitTabDown}
+                                    onKeyDown={(e) => submitTabDown(e)}
                                     onChange={(e) => setCompany(e.target.value)}
                                 />
                             </>}
@@ -264,7 +259,7 @@ const UserProfile = () => {
                             
                         <div>
                             <p>PHONE:</p>
-                            <p>{user?.phone_number}</p>
+                            <p>{sessionSingleUser?.phone_number}</p>
                         </div>
                     </div>
                 </div>
@@ -278,7 +273,7 @@ const UserProfile = () => {
     
             </div>
             
-            {(user?.id === sessionUser?.id) && <div id='user-profile-create-post-container'>
+            {(sessionSingleUser?.id === sessionUser?.id) && <div id='user-profile-create-post-container'>
                 <h4>What's on your mind?</h4>
                 
                 <input id='user-profile-create-post-title'
@@ -297,7 +292,7 @@ const UserProfile = () => {
                         />
                         
                         <button id="create-post-remove-image-button"
-                            onClick={() => removePicture()}
+                            onClick={(e) => removePicture(e)}
                         >X</button>
                     </div>
                 : (addPostPicture) && <div className="create-post-image-div">
@@ -305,11 +300,11 @@ const UserProfile = () => {
                     id="create-post-image-input"
                         type="file"
                         accept="image/*"
-                        onChange={updateImageFile}
+                        onChange={(e) => updateImageFile(e)}
                     />
                     
                     <button id="create-post-remove-image-button2"
-                        onClick={() => {setPicture(''); setAddPostPicture(false)}}
+                        onClick={(e) => {setPicture(''); setAddPostPicture(false)}}
                     >X</button>
                 </div>
                 }
@@ -327,23 +322,22 @@ const UserProfile = () => {
                 {!addPostPicture && 
                     <button className='user-profile-add-post-img-button'
                         title='Add an image'
-                        onClick={() => setAddPostPicture(!addPostPicture)}
+                        onClick={(e) => setAddPostPicture(!addPostPicture)}
                     ><i className="fa-solid fa-camera"/></button>
                 }
                     
                 <button id='user-profile-create-post-button'
-                    onClick={handleCreatePostSubmit}
+                    onClick={(e) => handleCreatePostSubmit(e)}
                 >Create</button>
                 
             </div>}
             
-            {(user?.id === sessionUser?.id) && 
-                <div id="user-profile-posts-container">
-                    {user?.posts && user?.posts.map(post => 
-                        <Post post={post} user={user}/>
-                    )}
-                </div>
-            }
+
+            <div id="user-profile-posts-container">
+                {sessionSingleUser?.posts && sessionSingleUser?.posts.map(post => 
+                    <Post post={post} user={sessionSingleUser}/>
+                )}
+            </div>
             
         </div>
     );

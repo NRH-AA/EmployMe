@@ -281,7 +281,7 @@ export const updateJobListing = (jobId, jobData) => async (dispatch) => {
 	});
 
 	const data = await response.json();
-	dispatch(setUser(data.user))
+	dispatch(setSingleUserAction(data));
 	return data.job;
 };
 
@@ -332,7 +332,7 @@ export const deleteUserProfileThunk = (userId) => async (dispatch) => {
 	});
 	
 	const data = await res.json();
-	dispatch(setUser(data))
+	dispatch(setSingleUserAction(data));
 	return data;
 }
 
@@ -352,7 +352,7 @@ export const updateImages = (userId, postId, images) => async (dispatch) => {
 	const data = await response.json();
 	
 	if (response.ok) {
-		dispatch(setUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
@@ -375,7 +375,7 @@ export const createPost = (postData) => async (dispatch) => {
 	const data = await response.json();
 	
 	if (response.ok) {
-		dispatch(setUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
@@ -395,8 +395,7 @@ export const deletePost = (postId, userId) => async (dispatch) => {
 	const data = await response.json();
 	
 	if (response.ok) {
-		dispatch(setUser(data));
-		dispatch(getPostsThunk())
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
@@ -418,7 +417,7 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 	const data = await response.json();
 	
 	if (response.ok) {
-		dispatch(setUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
@@ -474,6 +473,7 @@ export const getNewsThunk = () => async (dispatch) => {
 const initialState = { 
 	user: null, 
 	users: null,
+	singleUser: null,
 	posts: null,
 	job: null,
 	path: null,
@@ -490,12 +490,10 @@ export default function reducer(state = initialState, action) {
 			newState.user = null;
 			return newState;
 		case SET_ALL_USERS:
-			newState.searchResults = null;
 			newState.users = action.payload.users;
 			return newState;
 		case SET_SINGLE_USER:
-			newState.users = action.payload;
-			newState.searchResults = null;
+			newState.singleUser = {...action.payload};
 			return newState;
 		case SET_PATH:
 			newState.path = action.path;
