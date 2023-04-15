@@ -39,6 +39,7 @@ def upgrade():
     sa.Column('education', sa.Text(), nullable=True),
     sa.Column('skills', sa.Text(), nullable=True),
     sa.Column('active', sa.Boolean(), nullable=True),
+    sa.Column('theme', sa.String(length=255), default='light'),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
