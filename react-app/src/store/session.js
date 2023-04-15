@@ -54,6 +54,27 @@ export const changeTheme = (theme) => ({
 	theme
 });
 
+export const changeThemeThunk = (userId, theme) => async (dispatch) => {
+	const response = await fetch(`/api/users/${userId}/theme`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			theme
+		})
+	});
+	
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(changeTheme(theme));
+		dispatch(setUser(data));
+	}
+	
+	return data;
+};
+
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
 		headers: {
@@ -476,7 +497,10 @@ export const getNewsThunk = () => async (dispatch) => {
 	return data;
 }
 
-
+const RESET_STATE = 'session/RESET_STATE';
+export const resetState = ({
+	type: RESET_STATE
+});
 
 const initialState = { 
 	user: null, 
@@ -518,6 +542,9 @@ export default function reducer(state = initialState, action) {
 		case CHANGE_THEME:
 			newState.theme = action.theme;
 			return newState;
+		case RESET_STATE:
+			newState = initialState;
+			return newState
 		default:
 			return state;
 	}

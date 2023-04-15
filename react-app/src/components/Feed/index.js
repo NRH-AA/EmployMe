@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk, changeTheme } from "../../store/session";
+import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk, changeTheme, changeThemeThunk, resetState } from "../../store/session";
 import './Feed.css';
 
 const Feed = () => {
@@ -13,23 +13,29 @@ const Feed = () => {
     const sessionPath = useSelector(state => state.session.path);
     const sessionNews = useSelector(state => state.session.news);
     const sessionTheme = useSelector(state => state.session.theme);
-    const [theme, setTheme] = useState(sessionUser?.theme || sessionTheme);
+    const [theme, setTheme] = useState(sessionUser?.theme);
     const posts = useSelector(state => state.session.posts)
     
     const [offset, setOffset] = useState(0);
     const [newsObj, setNewsObj] = useState({});
-
+    
+    useEffect(() => {
+        if (sessionUser) {
+            dispatch(changeTheme(theme));
+            dispatch(getPostsThunk());
+            if (!sessionNews) dispatch(getNewsThunk());
+        } else {
+            dispatch(resetState);
+        }
+    }, [dispatch, theme, sessionUser, sessionNews]);
+    
+    
+    
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) {
             dispatch(setWindowPath(window.location.pathname));
-            dispatch(getPostsThunk());
         };
     }, [dispatch, sessionPath]);
-    
-    useEffect(() => {
-        if (!sessionNews) dispatch(getNewsThunk());
-    }, [dispatch, sessionNews])
-    
     
     const handleScroll = () => {
         const scollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -47,7 +53,7 @@ const Feed = () => {
     const themes = ['light', 'dark', 'blue'];
     const switchTheme = () => {
 		const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue' : 'light';
-        dispatch(changeTheme(newTheme));
+        dispatch(changeThemeThunk(sessionUser.id, newTheme));
 		setTheme(newTheme);
 	}
     
