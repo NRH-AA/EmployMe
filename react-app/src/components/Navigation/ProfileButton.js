@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UserJobListingsPage from "./UserJobListingsPage";
-import { logout } from "../../store/session";
+import { logout, changeTheme } from "../../store/session";
 import CreateJobModal from "./CreateJobModal";
 import './Navigation.css';
 
@@ -34,7 +34,7 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const handleLogout = async (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
     return history.push('/')

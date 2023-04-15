@@ -76,12 +76,26 @@ def user(id):
 @login_required
 def update_user(id):
     data = request.get_json()
-    occupation = data['occupation'] or ''
-    company_name = data['company_name'] or ''
+    occupation = data['occupation']
+    company_name = data['company_name']
     
     user = User.query.get(id)
     user.occupation = occupation
     user.company_name = company_name
+    
+    db.session.commit()
+    ret = User.query.get(id)
+    
+    return ret.to_dict_all()
+
+@user_routes.route('/<int:id>/theme', methods=['POST'])
+@login_required
+def update_user_theme(id):
+    data = request.get_json()
+    theme = data['theme']
+    
+    user = User.query.get(id)
+    user.theme = theme
     
     db.session.commit()
     ret = User.query.get(id)

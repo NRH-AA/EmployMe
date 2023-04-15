@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -52,7 +52,7 @@ function LoginFormPage() {
   const buttonDisabled = email.length < 1 || password.length < 1;
 
   return (
-    <>
+    <div>
       <div id="login-container">
         <h1 id="login-h1">EmployMe</h1>
         <p id="login-info">Welcome to <b>EmployMe</b>. A site developed to match
@@ -99,7 +99,7 @@ function LoginFormPage() {
         </form>
         
       </div>
-    </>
+    </div>
   );
 }
 
