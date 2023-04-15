@@ -16,7 +16,7 @@ class Post(db.Model):
     updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user = db.relationship("User", back_populates="posts")
-    images = db.relationship("PostImage")
+    images = db.relationship("PostImage", cascade='all, delete-orphan')
     
     def to_dict(self):
         return {

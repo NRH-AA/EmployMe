@@ -58,54 +58,19 @@
     font-size: 15px;
     text-align: left;
     font-weight: 700;
-    color: rgb(0, 161, 0);
 }
 
 .signup-button {
-    margin-top: 10px;
     height: 30px;
     width: 180px;
+    margin-top: 10px;
     margin-left: 25%;
-    background: linear-gradient(#00d30b, #008b0c);
-    box-shadow: 1px 2px 2px 2px rgb(109, 109, 109);
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.signup-button:hover {
-    background: linear-gradient(#00ec0c, #00a80e);
-    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
-}
-
-.signup-button:active {
-    background: linear-gradient(#00d30b, #008b0c);
-    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
-}
-
-.signup-button:disabled {
-    background: linear-gradient(#00a308, #00740a);
-    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
-    cursor: not-allowed;
 }
 
 .signup-back-button {
+    height: 22px;
+    width: 100px;
     margin-top: 190px;
     margin-left: 0px;
     margin-bottom: 10px;
-    height: 22px;
-    width: 100px;
-    cursor: pointer;
-}
-
-.signup-back-button:hover {
-    background: linear-gradient(#00ec0c, #00a80e);
-    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
-}
-
-.signup-back-button:active {
-    background: linear-gradient(#00d30b, #008b0c);
-    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
 }
