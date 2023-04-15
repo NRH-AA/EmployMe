@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     education = db.Column(db.Text)
     skills = db.Column(db.Text)
     active = db.Column(db.Boolean, default=True)
+    theme = db.Column(db.String(255), default='light')
     createdAt = db.Column(db.DateTime, default=datetime.now())
     updatedAt = db.Column(db.DateTime, default=datetime.now())
 
@@ -65,6 +66,7 @@ class User(db.Model, UserMixin):
             'work_email': self.work_email,
             'skills': self.skills,
             'active': self.active,
+            'theme': self.theme,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }
@@ -87,6 +89,7 @@ class User(db.Model, UserMixin):
             'work_email': self.work_email,
             'skills': self.skills,
             'active': self.active,
+            'theme': self.theme,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
             'job_listings': [job.to_dict() for job in self.job_listings],
