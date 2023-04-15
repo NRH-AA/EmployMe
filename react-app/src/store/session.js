@@ -410,7 +410,8 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 		body: JSON.stringify({
 			userId: userId,
 			postTitle: postData.postTitle || false,
-			postText: postData.postText || false
+			postText: postData.postText || false,
+			images: postData.images
 		})
 	});
 
