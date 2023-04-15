@@ -1,19 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { NavLink, useHistory, Redirect } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import OpenModalButton from "../OpenModalButton";
-import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk } from "../../store/session";
-import InfoModal from "./InfoModal";
+import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk, changeTheme } from "../../store/session";
 import './Feed.css';
 
 const Feed = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    
     const sessionUser = useSelector(state => state.session.user);
     const sessionPath = useSelector(state => state.session.path);
     const sessionNews = useSelector(state => state.session.news);
+    const sessionTheme = useSelector(state => state.session.theme);
+    const [theme, setTheme] = useState(sessionUser?.theme || sessionTheme);
     const posts = useSelector(state => state.session.posts)
+    
     const [offset, setOffset] = useState(0);
     const [newsObj, setNewsObj] = useState({});
 
@@ -42,6 +44,13 @@ const Feed = () => {
     
     useBottomScrollListener(handleScroll);
     
+    const themes = ['light', 'dark', 'blue'];
+    const switchTheme = () => {
+		const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue' : 'light';
+        dispatch(changeTheme(newTheme));
+		setTheme(newTheme);
+	}
+    
     if (!sessionUser) return null;
     
     const userSkillArray = sessionUser?.skills?.split(';') || [];
@@ -60,13 +69,12 @@ const Feed = () => {
         }
     }
     
-    
     return (
-        <div id="feed-container">
+        <div id="feed-container" data-theme={theme}>
             
             <div id="feed-content-container">
             
-                <div id="feed-user-profile-data">
+                <div id="feed-user-profile-data" data-theme={theme}>
                     <img
                         title="Go to your profile"
                         src={sessionUser?.profile_picture} 
@@ -74,25 +82,21 @@ const Feed = () => {
                         onClick={(e) => history.push(`/profile/${sessionUser?.id}`)}
                     />
                     
-                    <button id="feed-user-profile-button" type="button"
-                        title="Go to your profile"
-                        onClick={(e) => history.push(`/profile/${sessionUser?.id}`)}
-                    ><i className="fa-solid fa-ellipsis-vertical"></i></button>
-                    
-                    <p>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
-                    <p>{sessionUser?.occupation}</p>
+                    <p className='text-primary'>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
+                    <p className='text-secondary'>{sessionUser?.occupation}</p>
                     
                     <div id="feed-user-profile-skills-div">
                         {userSkillArray && userSkillArray.map((skill, i) =>
-                            <p key={i}>{skill + ' |'}</p>
+                            <button key={i} className="feed-skill-p button-main">{skill}</button>
                         )}
                     </div>
                     
                 </div>
                 
                 <div id="feed-posts-container">
-                    {posts?.length && posts?.map((post, i) => <div key={i} className="feed-post-container">
-                        <div className="feed-post-top-div"> 
+                    {posts?.length && posts?.map((post, i) => 
+                    <div key={i} className="feed-post-container text-primary" data-theme={theme}>
+                        <div className="feed-post-top-div">
                             <img
                                 title={`Check out ${post.user.first_name}'s profile`}
                                 src={post.user.profile_picture} 
@@ -100,33 +104,34 @@ const Feed = () => {
                                 onClick={(e) => history.push(`/profile/${post.user.id}`)}
                             />
                             <div className="feed-post-top-right-div">
-                                <p className='feed-post-name-p'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
-                                <p className='feed-post-occupation-p'>{post.user.occupation}</p>
+                                <p className='feed-post-top-right-p text-primary'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
+                                <p className='feed-post-top-right-p text-secondary'>{post.user.occupation}</p>
                             </div>
                         </div>
                         
-                        <div className="feed-post-text-div">
-                            <h4><b>{post.post_title}</b></h4>
-                            <p>{post.post_text}</p>
+                        <div className="feed-post-text-div" data-theme={theme}>
+                            <h4 className='text-primary'>{post.post_title}</h4>
+                            <p className='text-secondary'>{post.post_text}</p>
                         </div>
                     
                     </div>)}
                     
-                    <button
+                    <button className='button-main' data-theme={theme}
                         onClick={(e) => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
                     >See more</button>
                 </div>
                 
-                <div id="feed-news-container">
+                <div id="feed-news-container" data-theme={theme}>
                     <div id="feed-news-div">
-                        {newsObj?.author && <div className='news-article-div'>
+                        {newsObj?.author && 
+                        <div className='news-article-div'>
                             <div id='news-article-top-div'>
-                                <h3>{newsObj.author}</h3>
+                                <h3 className='text-primary'>{newsObj.author}</h3>
                                 <img src={newsObj.urlToImage} alt='Artiacle'/>
                             </div>
                             
-                            <h4>{newsObj.description.split('.')[0]}</h4>
-                            <p>{newsObj.content.split('[')[0]}</p>
+                            <h4 className='text-primary'>{newsObj.description.split('.')[0]}</h4>
+                            <p className='text-secondary'>{newsObj.content.split('[')[0]}</p>
                         </div>} 
                     </div>
                     
@@ -136,7 +141,8 @@ const Feed = () => {
                             This is a limit from the API.
                         </p>
                     :
-                        <button id="feed-news-button" type='button'
+                        <button id="feed-news-button" className='button-main' data-theme={theme}
+                            type='button'
                             title='See More News'
                             onClick={(e) => updateNews(e)}
                         >More News</button>
@@ -147,22 +153,24 @@ const Feed = () => {
             </div>
             
             
-            <div id="feed-footer-div">
-                <OpenModalButton
-                    className="info-modal-button"
-                    buttonText={<i className="fa fa-info-circle"></i>}
-                    modalComponent={<InfoModal />}
-                />
+            <div id="feed-footer-div" data-theme={theme}>
+                <NavLink className="footer-p"
+                    to='/about'
+                ><i className="fa fa-info-circle"></i></NavLink>
                     
-                <NavLink className="footer-p" 
+                <NavLink className="footer-p"
                     to={{pathname: "https://github.com/NRH-AA"}}
                     target="_blank"
                 ><i className="fa-brands fa-github"></i></NavLink>
                     
-                <NavLink className="footer-p" 
+                <NavLink className="footer-p"
                     to={{pathname: "https://www.linkedin.com/in/nathan-heinz-5b3718231/"}}
                     target="_blank"
                 ><i className="fa-brands fa-linkedin"></i></NavLink>
+                
+                <button className='button-main'
+                    onClick={() => switchTheme()}
+                >Change Theme</button>
             </div>
         </div>
     );

@@ -47,7 +47,7 @@
 }
 
 #user-profile-top-button:hover {
-    color: rgb(0, 216, 0);
+    color: var(--button-background-color);
 }
 
 #user-profile-top-div > h4 {
@@ -292,18 +292,13 @@
     background: none;
     font-size: 26px;
     margin-left: 10px;
+    color: var(--button-background-color);
     cursor: pointer;
-}
-
-.user-profile-add-post-img-button:hover {
-    color: rgb(0, 214, 0);
 }
 
 #user-profile-create-post-button {
     margin-left: 73%;
     width: 120px;
-    background: linear-gradient(#00d30b, #008b0c);
-    box-shadow: 1px 2px 2px 2px rgb(109, 109, 109);
     border-radius: 5px;
     border: none;
     font-size: 15.5px;
@@ -311,17 +306,6 @@
     color: rgb(46, 46, 46);
     cursor: pointer;
 }
-
-#user-profile-create-post-button:hover {
-    background: linear-gradient(#00ec0c, #00a80e);
-    box-shadow: 1px 2px 2px 2px rgb(83, 83, 83);
-}
-
-#user-profile-create-post-button:active {
-    background: linear-gradient(#00d30b, #008b0c);
-    box-shadow: 1px 1px 2px 2px rgb(204, 204, 204);
-}
-
 
 
 

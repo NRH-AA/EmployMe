@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { updatePost } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import './Post.css';
@@ -187,7 +188,7 @@ const Post = ({post, user}) => {
                                     alt='Slide Bar'
                                     onClick={() => handleSlideImagePressed(img, i)}
                                 />
-                            : (img?.url && (isUpdating)) ?
+                            : (img?.url && isUpdating) ?
                                 <img key={i} className='post-slide-image'
                                     src={img.url}
                                     alt='Slide Bar'

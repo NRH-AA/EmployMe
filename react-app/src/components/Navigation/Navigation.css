@@ -1,7 +1,3 @@
-body {
-  margin: 0px;
-}
-
 .profile-dropdown {
   position: absolute;
   top: 50px;
@@ -48,7 +44,7 @@ body {
 #navigation-container {
   width: 100%;
   height: 50px;
-  background-color: white;
+  background-color: var(--div-background-color);
   margin: auto;
   position: sticky;
   top: 0px;
@@ -79,13 +75,12 @@ body {
 
 .fa-house, .fa-bell, .fa-briefcase, .fa-users, .fa-comment-dots {
   font-size: 24px;
-  color: rgb(170, 170, 170);
+  color: var(--button-background-color);
   cursor: pointer;
   transition: font-size 100ms, margin-left 100ms, margin-right 100ms; 
 }
 
 .fa-house:hover, .fa-bell:hover, .fa-briefcase:hover, .fa-users:hover, .fa-comment-dots:hover {
-  color: rgb(0, 255, 0);
   margin-left: -3px;
   margin-right: -4px;
   font-size: 30px;
@@ -99,23 +94,14 @@ body {
   height: 35px;
   width: 80px;
   border: none;
-  background: linear-gradient(#00e91f, #00a008);
+  background-color: var(--button-background-color);
   border-radius: 3px;
   margin-right: 10px;
   cursor: pointer;
 }
 
-#profile-dropdown-button:hover {
-  background: linear-gradient(#00f320, #00ca0a);
-}
-
-#profile-dropdown-button:active {
-  background: linear-gradient(#00d11c, #007206);
-}
-
-
 #profile-dropdown-button > i {
-    color: rgb(226, 226, 226);
+    color: var(--profile-button-i-color);
     font-size: 24px;
 }
 
@@ -129,8 +115,8 @@ body {
 #profile-dropdown-container {
   width: 220px;
   height: auto;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 1px 1px rgb(196, 196, 196);
+  background-color: var(--div-background-color);
+  box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
   border-radius: 10px;
   margin-right: 20px;
   margin-top: 10px;
@@ -146,24 +132,14 @@ body {
 
 .profile-dropdown-p {
   text-align: center;
-  font-weight: 700;
-  font-size: 16px;
-  color: rgb(107, 107, 107);
   cursor: default;
 }
 
 .user-dropdown-button {
-  font-weight: 700;
-  font-size: 15px;
   width: 160px;
   margin: auto;
-  background-color: rgb(240, 240, 240);
-  box-shadow: 0px 0px 1px 2px rgb(151, 151, 151);
-  border: none;
   border-radius: 10px;
   margin-bottom: 2px;
-  color: rgb(107, 107, 107);
-  cursor: pointer;
 }
 
 .user-dropdown-button:hover {
