@@ -7,6 +7,8 @@ import './LoginForm.css';
 function LoginFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const sessionTheme = useSelector(state => state.session.theme);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -78,15 +80,18 @@ function LoginFormPage() {
                 />
             </label>
           
-          <button className="login-button" type="submit"
+          <button className="login-button button-main" data-theme={sessionTheme}
+            type="submit"
             disabled={buttonDisabled}
           >Log In</button>
           
-          <button className="login-button" type="button"
+          <button className="login-button button-main" data-theme={sessionTheme}
+            type="button"
             onClick={(e) => handleDemoLogin(e)}
           >Demo</button>
           
-          <button id="login-signup-button" type="button"
+          <button id="login-signup-button" className='link-main' data-theme={sessionTheme}
+            type="button"
             onClick={() => history.push('/signup')}
           >Create an account</button>
           

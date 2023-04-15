@@ -10,6 +10,7 @@ import './Navigation.css';
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const sessionTheme = useSelector(state => state.session.theme);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
   const history = useHistory();
@@ -52,40 +53,43 @@ function ProfileButton({ user }) {
   
   return (
     <div id="profile-dropdown-div">
-      <button id="profile-dropdown-button" onClick={openMenu}>
+      
+      <button id="profile-dropdown-button" data-theme={sessionTheme}
+        onClick={openMenu} >
         <i className="fa-solid fa-circle-user fa-2xl"></i>
       </button>
-      <div className={ulClassName} ref={ulRef}>
+      
+      <div className={ulClassName} ref={ulRef} data-theme={sessionTheme}>
         {user && (
           <div id="profile-dropdown-container"
             onMouseLeave={() => {setShowMenu(false)}}
           >
-            <p className="profile-dropdown-p">Welcome, {user?.first_name} {user?.last_name}</p>
+            <p className="profile-dropdown-p text-primary">Welcome, {user?.first_name} {user?.last_name}</p>
             
             <div id="profile-dropdown-button-div">
-              <button className="user-dropdown-button"
+              <button className="user-dropdown-button button-main"
                 onClick={() => handleProfileButton()}
               >Profile Page</button>
               
-              <button className="user-dropdown-button"
+              <button className="user-dropdown-button button-main"
                 onClick={() => showInvalidFeature()}
               >Company Page</button>
               
               <OpenModalButton
-                    className="user-dropdown-button"
+                    className="user-dropdown-button button-main"
                     buttonText="Create Job Listing"
                     modalComponent={<CreateJobModal />}
               />
               
               <OpenModalButton
-                  className="user-dropdown-button"
+                  className="user-dropdown-button button-main"
                   buttonText="Job Listings"
                   modalComponent={<UserJobListingsPage />}
               />
               
               
               
-              <button className="user-dropdown-button"
+              <button className="user-dropdown-button button-main"
                 onClick={handleLogout}
               >Log Out</button>
             </div>

@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import Feed from "./components/Feed";
 import UserProfile from "./components/UserProfilePage";
 import JobListing from "./components/JobListings";
+import InfoModal from "./components/Feed/InfoModal";
+import './index.css';
 
 
 function App() {
@@ -17,6 +19,9 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
+  
+  
+  
 
   return (
     <>
@@ -29,6 +34,10 @@ function App() {
           
           <Route path='/profile/:userId'>
             <UserProfile />
+          </Route>
+          
+          <Route path='/about'>
+            <InfoModal />
           </Route>
           
           <Route path="/signup">

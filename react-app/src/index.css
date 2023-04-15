@@ -1,14 +1,129 @@
 /* TODO Add site wide styles */
 :root {
-    --background: white;
-    --text-primary: black;
-    --text-secondary: royalblue;
-    --accent: purple;
+    --body-background-color: rgb(241, 241, 241);
+    
+    --button-text-color: black;
+    --button-background-color: rgb(0, 240, 0);
+    --button-box-shadow-color: rgb(206, 206, 206);
+    --button-background-color-hover: rgb(0, 253, 0);
+    --button-box-shadow-color-hover: rgb(194, 194, 194);
+    --button-background-color-active: rgb(0, 224, 0);
+    --button-box-shadow-color-active: rgb(219, 219, 219);
+    --button-background-color-disabled: rgb(0, 170, 0);
+    --button-box-shadow-color-disabled: rgb(219, 219, 219);
+    
+    --div-background-color: white;
+    --div-box-shadow-color: rgb(175, 175, 175);
+    
+    --text-color-primary: black;
+    --text-color-secondary: rgb(80, 80, 80);
+    --profile-button-i-color: rgb(121, 121, 121);
+    
+    --link-text-color: grey;
 }
 
 [data-theme='dark'] {
-    --background: black;
-    --text-primary: white;
-    --text-secondary: grey;
-    --accent: darkred;
+    --body-background-color: rgb(56, 56, 56);
+    
+    --button-text-color: white;
+    --button-background-color: rgb(0, 4, 226);
+    --button-box-shadow-color: black;
+    --button-background-color-hover: rgb(0, 4, 253);
+    --button-box-shadow-color-hover: black;
+    --button-background-color-active: rgb(0, 4, 221);
+    --button-box-shadow-color-active: black;
+    --button-background-color-disabled: rgb(0, 3, 185);
+    --button-box-shadow-color-disabled: black;
+    
+    --div-background-color: rgb(2, 2, 2);
+    --div-box-shadow-color: rgb(41, 41, 41);
+    --profile-button-i-color: black;
+    
+    --text-color-primary: white;
+    --text-color-secondary: rgb(190, 190, 190);
+    
+    --link-text-color: rgb(0, 4, 226);
+}
+
+[data-theme='blue'] {
+    --body-background-color: rgb(0, 1, 54);
+    
+    --button-text-color: rgb(0, 0, 3);
+    --button-background-color: rgb(0, 4, 255);
+    --button-box-shadow-color: rgb(3, 0, 173);
+    
+    --button-background-color-hover: rgb(0, 4, 253);
+    --button-box-shadow-color-hover: rgb(1, 0, 75);
+    
+    --button-background-color-active: rgb(0, 3, 202);
+    --button-box-shadow-color-active: rgb(0, 1, 85);
+    
+    --button-background-color-disabled: rgb(0, 2, 139);
+    --button-box-shadow-color-disabled: rgb(4, 0, 63);
+    
+    --div-background-color: rgb(8, 0, 124);
+    --div-box-shadow-color: rgb(15, 0, 218);
+    --profile-button-i-color: rgb(2, 0, 109);
+    
+    --text-color-primary: rgb(0, 26, 255);
+    --text-color-secondary: rgb(17, 0, 255);
+    
+    --link-text-color: rgb(0, 4, 226);
+}
+
+
+
+
+
+
+body {
+    margin: 0px;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+
+
+
+
+.button-main {
+    background-color: var(--button-background-color);
+    box-shadow: 0px 0px 1px 1px var(--button-box-shadow-color);
+    color: var(--button-text-color);
+    border-radius: 5px;
+    border: none;
+}
+
+.button-main:hover {
+    background-color: var(--button-background-color-hover);
+    box-shadow: 0px 0px 1px 1px var(--button-box-shadow-color-hover);
+}
+
+.button-main:active {
+    background-color: var(--button-background-color-active);
+    box-shadow: 0px 0px 1px 1px var(--button-box-shadow-color-active);
+}
+
+.button-main:disabled {
+    background-color: var(--button-background-color-disabled);
+    box-shadow: 0px 0px 1px 1px var(--button-box-shadow-color-disabled);
+    cursor: not-allowed;
+}
+
+.link-main {
+    color: var(--link-text-color);
+    cursor: pointer;
+}
+
+.text-primary {
+    color: var(--text-color-primary);
+}
+
+.text-secondary {
+    font-size: 12.5px;
+    color: var(--text-color-secondary);
 }

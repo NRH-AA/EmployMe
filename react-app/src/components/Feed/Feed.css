@@ -1,11 +1,10 @@
-body {
-    background-color: rgb(241, 241, 241);
-}
-
 #feed-container {
     margin: auto;
+    padding-top: 20px;
     width: 100%;
     height: auto;
+    min-height: 100vh;
+    background-color: var(--body-background-color);
 }
 
 #feed-content-container {
@@ -21,30 +20,15 @@ body {
     height: fit-content;
     padding: 5px;
     width: 22%;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
+    color: var(--text-color-primary);
     border-radius: 10px;
     margin-left: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-#feed-user-profile-button {
-    position: absolute;
-    margin-left: 200px;
-    margin-top: 10px;
-    border: none;
-    background: none;
-    font-size: 18px;
-    color: rgb(180, 180, 180);
-    cursor: pointer;
-}
-
-#feed-user-profile-button:hover {
-    color: rgb(0, 216, 0);
-}
-
 
 #feed-user-profile-data > img {
     width: 70px;
@@ -54,7 +38,6 @@ body {
 }
 
 #feed-user-profile-data > p {
-    font-weight: 700;
     text-align: center;
     margin-bottom: 0px;
     margin-top: 5px;
@@ -62,7 +45,6 @@ body {
 }
 
 #feed-user-profile-data > p + p {
-    font-size: 14px;
     margin-top: -2px;
 }
 
@@ -70,15 +52,12 @@ body {
     width: 95%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 10px;
 }
 
-#feed-user-profile-skills-div > p {
-    margin: 0px;
-    font-weight: 700;
-    font-size: 12.5px;
-    color: rgb(102, 102, 102);
+.feed-skill-p {
+    flex: 30%;
 }
 
 
@@ -92,35 +71,21 @@ body {
 }
 
 #feed-posts-container > button {
-    width: 80px;
+    width: 120px;
     height: 25px;
     margin: auto;
     border: none;
     border-radius: 3px;
-    background: linear-gradient(#00fc22, #00bd09);
-    box-shadow: 0px 0px 2px 2px rgb(0, 163, 14);
     cursor: pointer;
     font-weight: 700;
 }
 
-#feed-posts-container > button:hover {
-    background: linear-gradient(#00ff22, #00ce0a);
-    box-shadow: 0px 0px 2px 2px rgb(0, 139, 12);
-}
-
-#feed-posts-container > button:active {
-    background: linear-gradient(#00d11c, #007206);
-    box-shadow: 0px 0px 2px 2px rgb(0, 122, 10);
-}
-
-
 .feed-post-container {
     width: 360px;
     height: auto;
-    background-color: white;
-    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
     border-radius: 10px;
-    color: rgb(59, 59, 59);
 }
 
 .feed-post-top-div {
@@ -142,15 +107,8 @@ body {
     margin-top: 15px;
 }
 
-.feed-post-name-p {
+.feed-post-top-right-p {
     margin: 0px;
-    color: black;
-}
-
-.feed-post-occupation-p {
-    margin: 0px;
-    font-weight: 700;
-    font-size: 12.5px;
 }
 
 .feed-post-text-div {
@@ -160,18 +118,12 @@ body {
     width: 98%;
 }
 
-.feed-post-text-div > p {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: rgb(83, 83, 83);
-}
-
 #feed-news-container {
     width: 25%;
     height: fit-content;
     margin-right: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 1px 1px rgb(158, 158, 158);
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
     border-radius: 10px;
 }
 
@@ -208,33 +160,22 @@ body {
 }
 
 #feed-news-button {
-    margin: auto;
-    margin-left: 10px;
+    float: right;
+    margin-right: 10px;
     margin-bottom: 10px;
     border: none;
-    border-radius: 3px;
-    background: linear-gradient(#00fc22, #00bd09);
-    box-shadow: 0px 0px 2px 2px rgb(0, 163, 14);
+    height: 25px;
+    width: 120px;
+    border-radius: 5px;
     cursor: pointer;
     font-weight: 700;
 }
-
-#feed-news-button:hover {
-    background: linear-gradient(#00ff22, #00ce0a);
-    box-shadow: 0px 0px 2px 2px rgb(0, 139, 12);
-}
-
-#feed-news-button:active {
-    background: linear-gradient(#00d11c, #007206);
-    box-shadow: 0px 0px 2px 2px rgb(0, 122, 10);
-}
-
 
 
 #feed-footer-div {
     height: 35px;
     width: 100%;
-    background-color: white;
+    background-color: var(--div-background-color);
     position: fixed;
     bottom: 0;
     display: flex;
@@ -252,7 +193,7 @@ body {
 
 .fa-github, .fa-linkedin, .fa-info-circle {
     font-size: 25px;
-    color: rgb(0, 211, 0);
+    color: var(--button-background-color);
     transition: font-size 200ms;
 }
 

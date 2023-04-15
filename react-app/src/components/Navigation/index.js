@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getSearchResults, getAllUsersThunk } from '../../store/session';
-import useLocalStorage from 'use-local-storage';
+import { getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import Logo from './logo.png';
@@ -15,31 +14,9 @@ function Navigation({ isLoaded }){
 	const sessionTheme = useSelector(state => state.session.theme);
 	const [search, setSearch] = useState('');
 	
-	const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-	const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
-
-	const switchTheme = () => {
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		setTheme(newTheme);
-	}
-	
 	
 	if (!sessionUser) return null;
-	
-	// const handleSearch = async () => {
-	// 	if (!canSearch) return;
-		
-	// 	const searchParams = {
-	// 		type: searchOption,
-	// 		text: search,
-	// 		offset: 0
-	// 	}
-		
-	// 	setCanSearch(false);
-	// 	await dispatch(setSearchParams(searchParams));
-	// 	await dispatch(getSearchResults(searchParams));
-	// 	setCanSearch(true);
-	// };
+
 	
 	const keyDownSearch = (e) => {
 		if (e.key === 'Tab' || e.key === 'Enter') {
@@ -62,7 +39,8 @@ function Navigation({ isLoaded }){
 			<div id="navigation-logo-search-div">
 				<img id="navigation-logo" src={Logo} alt="Home" onClick={(e) => handleLogoPressed(e)}/>
 				
-				{sessionPath === '/' && <div id="searchbar-input-div">
+				{sessionPath === '/' && 
+				<div id="searchbar-input-div" data-theme={sessionTheme}>
 					<input id="searchbar-input" type="text" 
 						placeholder='Search Bar'
 						value={search}

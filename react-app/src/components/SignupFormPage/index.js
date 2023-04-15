@@ -8,6 +8,8 @@ import './SignupForm.css';
 function SignupFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const sessionTheme = useSelector(state => state.session.theme);
+  
   const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [companyName, setCompanyName] = useState("");
@@ -194,10 +196,12 @@ function SignupFormPage() {
                 </label>
             </div>
 						
-              <button className="signup-button" type="submit"
+              <button className="signup-button button-main" data-theme={sessionTheme}
+                type="submit"
                 disabled={diableSignupButton()}
               >Sign Up</button>
-              <button className="signup-button signup-back-button" type="button"
+              <button className="signup-back-button button-main" data-theme={sessionTheme}
+                type="button"
                 onClick={() => history.push('/')}
               >Back</button>
 					</div>

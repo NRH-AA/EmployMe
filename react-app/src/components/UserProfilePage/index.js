@@ -22,7 +22,8 @@ const UserProfile = () => {
     const {userId} = useParams();
     
     const sessionUser = useSelector((state) => state.session.user);
-    const sessionSingleUser = useSelector(state => state.session.singleUser)
+    const sessionSingleUser = useSelector(state => state.session.singleUser);
+    const sessionTheme = useSelector(state => state.session.theme);
     const sessionPath = useSelector(state => state.session.path);
     
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
@@ -326,7 +327,7 @@ const UserProfile = () => {
                     ><i className="fa-solid fa-camera"/></button>
                 }
                     
-                <button id='user-profile-create-post-button'
+                <button id='user-profile-create-post-button' className='button-main' data-theme={sessionTheme}
                     onClick={(e) => handleCreatePostSubmit(e)}
                 >Create</button>
                 

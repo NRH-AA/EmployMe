@@ -7,6 +7,7 @@ const SET_PATH = "session/SET_PATH";
 const GET_POSTS = "session/GET_POSTS";
 const APPEND_POSTS = "session/APPEND_POSTS";
 const GET_NEWS = "session/GET_NEWS";
+const CHANGE_THEME = "session/CHANGE_THEME";
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -45,6 +46,12 @@ const appendPosts = (posts) => ({
 const setNews = (data) => ({
 	type: GET_NEWS,
 	data
+});
+
+
+export const changeTheme = (theme) => ({
+	type: CHANGE_THEME,
+	theme
 });
 
 export const authenticate = () => async (dispatch) => {
@@ -507,6 +514,9 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case GET_NEWS:
 			newState.news = action.data;
+			return newState;
+		case CHANGE_THEME:
+			newState.theme = action.theme;
 			return newState;
 		default:
 			return state;
