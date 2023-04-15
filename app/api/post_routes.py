@@ -48,6 +48,7 @@ def update_post(id):
     post_title = data['postTitle'] or False
     post_text = data['postText'] or False
     user_id = data['userId'] or False
+    images = data['images'] or []
     
     errors = {}
     
@@ -72,9 +73,23 @@ def update_post(id):
     if post_text and (len(post_text) < 10 or len(post_text)) > 250:
         errors.text = 'Text (10-250) characters'
         
+    if len(images) > 0:
+        for img in images:
+            if not img.get('id'):
+                new_image = PostImage(
+                    post_id=post.id,
+                    url=img['url']
+                )
+                
+                db.session.add(new_image)
+            else:
+                image = PostImage.query.get(img['id'])
+                image.url=img['url']
+
+                
+        
     if 'title' in errors or 'text' in errors:
         return {'errors': errors}, 400
-
 
     post.post_title = post_title
     post.post_text = post_text
