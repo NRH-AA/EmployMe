@@ -1,10 +1,12 @@
 import { useModal } from "../../context/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../../store/session";
+import './DeletePost.css';
 
 const DeletePostModal = ({user, post}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const sessionTheme = useSelector(state => state.session.theme);
     
     const handleDelete = async () => {
         await dispatch(deletePost(post.id, user.id));
@@ -12,14 +14,14 @@ const DeletePostModal = ({user, post}) => {
     };
     
     return (
-        <div id="delete-profile-container">
-            <h2 style={{margin: "0px"}}>Are you sure you want to delete this post?</h2>
+        <div id="delete-post-container" data-theme={sessionTheme}>
+            <h2 className='text-primary delete-post-h2'>Are you sure you want to delete this post?</h2>
            
             <div id="delete-profile-buttons-div"> 
-                <button className="user-profile-button-small"
+                <button className="button-main delete-post-button"
                     onClick={() => closeModal()}
                 >No (Keep)</button>
-                <button className="user-profile-button-small"
+                <button className="button-main delete-post-button"
                     onClick={() => handleDelete()}
                 >Yes (Delete)</button>
             </div>

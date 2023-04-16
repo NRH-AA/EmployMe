@@ -175,6 +175,7 @@ export const updateBioData = (userId, info) => async (dispatch) => {
 	
 	if (response.ok) {
 		dispatch(setUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
