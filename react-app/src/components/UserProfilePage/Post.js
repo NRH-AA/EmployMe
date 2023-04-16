@@ -10,6 +10,7 @@ import DeletePostModal from "./DeletePostModal";
 const Post = ({post, user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const sessionTheme = useSelector(state => state.session.theme);
     
     const default_picture = 'https://assets.website-files.com/61e2d9500e1bc451a3ea1aa3/629a49e7ab53625cb2c4e791_Brand-pattern.jpg';
     const postImages = [...post?.images];
@@ -138,8 +139,8 @@ const Post = ({post, user}) => {
     
     const showPostTitle = () => {
         return (
-            <div className="post-title-bar-div">
-                {!isUpdating ? <h4>{post?.post_title}</h4>
+            <div className="post-title-bar-div" data-theme={sessionTheme}>
+                {!isUpdating ? <h4 className='text-primary'>{post?.post_title}</h4>
                 :
                     <input className='post-title-edit-input'
                         placeholder="Title"
@@ -151,6 +152,7 @@ const Post = ({post, user}) => {
                 
                 {(user?.id === sessionUser?.id) && 
                     <button className='post-ellipsis-button'
+                        title='Edit Post'
                         onClick={(e) => handleEditButtonPressed(e)}
                     >{!isUpdating ? <i class="fas fa-ellipsis-h"/> : <i className="fa fa-paper-plane post-paper-plane"/>}
                     </button>
@@ -181,7 +183,8 @@ const Post = ({post, user}) => {
                     />
                 }
                 
-                {(hasPostImages || isUpdating) && <div className='post-image-slide-bar'>
+                {(hasPostImages || isUpdating) && 
+                <div className='post-image-slide-bar'>
                         {pictures?.map((img, i) => { return (img?.url && (!isUpdating && img.url !== default_picture)) ?
                                 <img key={i} className='post-slide-image'
                                     src={img.url}
@@ -214,7 +217,7 @@ const Post = ({post, user}) => {
         return (
             <div className="profile-post-text-container">
                 {errors?.text && <p className='post-text-error-p'>{errors.text}</p>}
-                {!isUpdating ? <p>{post?.post_text}</p>
+                {!isUpdating ? <p className='text-secondary'>{post?.post_text}</p>
                 :
                     <textarea className='post-text-edit-input'
                         placeholder="What would you like to say?"
@@ -242,6 +245,7 @@ const Post = ({post, user}) => {
             {(user?.id === sessionUser?.id) &&
                 <div className='post-edit-buttons-div'>
                     <OpenModalButton 
+                        title="Delete Post"
                         className='post-delete-button'
                         buttonText={<i className="fa fa-trash"/>}
                         modalComponent={<DeletePostModal user={sessionUser} post={post}/>}
