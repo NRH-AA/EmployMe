@@ -111,6 +111,34 @@
     margin: 0px;
 }
 
+
+.feed-post-image-container {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.feed-post-image-preview {
+    width: 70%;
+    height: 150px;
+    margin-left: 5px;
+}
+
+.feed-post-image-sidebar {
+    height: auto;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 25%;
+}
+
+.feed-post-sidebar-image {
+    width: 90%;
+}
+
+
+
 .feed-post-text-div {
     width: 100%;
     height: auto;

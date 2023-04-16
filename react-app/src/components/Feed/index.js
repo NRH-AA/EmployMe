@@ -14,10 +14,23 @@ const Feed = () => {
     const sessionNews = useSelector(state => state.session.news);
     const sessionTheme = useSelector(state => state.session.theme);
     const [theme, setTheme] = useState(sessionUser?.theme);
-    const posts = useSelector(state => state.session.posts)
+    const posts = useSelector(state => state.session.posts);
+    const [previewImages, setPreviewImages] = useState({});
     
     const [offset, setOffset] = useState(0);
     const [newsObj, setNewsObj] = useState({});
+    
+    
+    
+    if (!Object.values(previewImages).length > 0 && posts?.length > 0) {
+        const previewImagesArray = {};
+        for (const post of posts) {
+            previewImagesArray[post.id] = post?.images?.[0]?.url;
+        }
+        setPreviewImages(previewImagesArray);
+    }
+        
+    
     
     useEffect(() => {
         if (sessionUser) {
@@ -28,8 +41,6 @@ const Feed = () => {
             dispatch(resetState);
         }
     }, [dispatch, theme, sessionUser, sessionNews]);
-    
-    
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) {
@@ -75,6 +86,19 @@ const Feed = () => {
         }
     }
     
+    const setPreviewImage = (postId, postIndex, imageIndex) => {
+        const newPreviews = {...previewImages};
+        let url = '';
+        for (const post of posts) {
+            if (post.id === postId) url = post.images[imageIndex].url;
+        }
+        
+        if (!url) return;
+        
+        newPreviews[postId] = url;
+        setPreviewImages(newPreviews);
+    }
+    
     return (
         <div id="feed-container" data-theme={theme}>
             
@@ -117,6 +141,30 @@ const Feed = () => {
                         
                         <div className="feed-post-text-div" data-theme={theme}>
                             <h4 className='text-primary'>{post.post_title}</h4>
+                            
+                            <div className='feed-post-image-container'>
+                            {previewImages[post.id] && 
+                                <img className='feed-post-image-preview'
+                                    title="Click to see full size"
+                                    src={previewImages[post.id]}
+                                    alt="Post Preview"
+                                />
+                            }
+                            
+                            {post.images && 
+                                <div className='feed-post-image-sidebar'>
+                                    {post.images.map((image, j) => 
+                                        <img key={j} className='feed-post-sidebar-image'
+                                            title="Click to set as preview image" 
+                                            src={image.url}
+                                            alt={`Post Side ${i}`}
+                                            onClick={() => setPreviewImage(post.id, i, j)}
+                                        />
+                                    )}
+                                </div>
+                            }
+                            </div>
+                            
                             <p className='text-secondary'>{post.post_text}</p>
                         </div>
                     
