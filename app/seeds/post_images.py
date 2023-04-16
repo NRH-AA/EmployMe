@@ -17,7 +17,8 @@ def seed_post_images():
             )
             
             db.session.add(image)
-
+            post.images.append(image)
+            
     db.session.commit()
     
 def undo_post_images():

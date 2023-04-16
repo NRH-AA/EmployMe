@@ -22,15 +22,15 @@ const Feed = () => {
     
     
     
-    if (!Object.values(previewImages).length > 0 && posts?.length > 0) {
-        const previewImagesArray = {};
-        for (const post of posts) {
-            previewImagesArray[post.id] = post?.images?.[0]?.url;
+    useEffect(() => {
+        if (posts?.length > 0) {
+            const previewImagesArray = {};
+            for (const post of posts) {
+                previewImagesArray[post.id] = post?.images?.[0]?.url;
+            }
+            setPreviewImages(previewImagesArray);
         }
-        setPreviewImages(previewImagesArray);
-    }
-        
-    
+    }, [posts]);
     
     useEffect(() => {
         if (sessionUser) {
@@ -144,11 +144,15 @@ const Feed = () => {
                             
                             <div className='feed-post-image-container'>
                             {previewImages[post.id] && 
-                                <img className='feed-post-image-preview'
-                                    title="Click to see full size"
-                                    src={previewImages[post.id]}
-                                    alt="Post Preview"
-                                />
+                                <NavLink to={{pathname: previewImages[post.id]}} 
+                                    className='feed-post-image-preview-navlink'
+                                    target='_blank'>
+                                    <img className='feed-post-image-preview'
+                                        title="Click to see full size"
+                                        src={previewImages[post.id]}
+                                        alt="Post Preview"
+                                    />
+                                </NavLink>
                             }
                             
                             {post.images && 
