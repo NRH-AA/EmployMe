@@ -26,6 +26,7 @@ def seed():
         undo_users()
     seed_users()
     seed_posts()
+    seed_post_images()
     seed_job_listings()
     # Add other seed functions here
 
