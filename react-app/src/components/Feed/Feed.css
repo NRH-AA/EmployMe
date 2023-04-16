@@ -125,7 +125,8 @@
 }
 
 .feed-post-image-preview {
-    width: 115%;
+    min-width: 115%;
+    max-width: 115%;
     height: 150px;
     margin-left: 5px;
     cursor: pointer;
