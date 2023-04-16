@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { setWindowPath, getSingleUser, createPost } from "../../store/session";
+import { setWindowPath, getSingleUser, createPost, changeTheme } from "../../store/session";
 import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
@@ -26,6 +26,7 @@ const UserProfile = () => {
     const sessionTheme = useSelector(state => state.session.theme);
     const sessionPath = useSelector(state => state.session.path);
     
+    const [theme, setTheme] = useState(sessionUser?.theme);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     const [addPostPicture, setAddPostPicture] = useState(false);
     const [picture, setPicture] = useState('');
@@ -43,14 +44,22 @@ const UserProfile = () => {
         return newErrors;
     };
     
+    // Update current path
     useEffect(() => {
         if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
     }, [dispatch, sessionPath]);
     
+    // Update theme to match user specific theme
+    useEffect(() => {
+        if (theme !== sessionTheme) dispatch(changeTheme(theme));
+    }, [theme])
+    
+    // We dont have this users data. Lets go set it
     useEffect(() => {
         if (!sessionSingleUser || sessionSingleUser.id !== parseInt(userId)) dispatch(getSingleUser(parseInt(userId)));
     }, [dispatch, sessionSingleUser]);
     
+    // Error validations for BIO information
     useEffect(() => {
         if (isUpdatingBio) setErrors(validateBio());
     }, [occupation, company]);
@@ -185,6 +194,7 @@ const UserProfile = () => {
     }
     
     return (
+        <div id='user-profile-main-container' data-theme={sessionTheme}>
         <div id="user-profile-container">
             <div id='user-profile-top-div'>
                 
@@ -209,7 +219,7 @@ const UserProfile = () => {
                     modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
                 />
                 
-                {!isUpdatingBio ? <h4>{sessionSingleUser?.occupation}</h4>
+                {!isUpdatingBio ? <h4 className='text-primary'>{sessionSingleUser?.occupation}</h4>
                 : <>
                     {errors?.occupation && <p 
                         className='user-update-bio-error-p'
@@ -228,22 +238,22 @@ const UserProfile = () => {
             
             <div id='user-profile-info-main-container'>
                 <div id='user-profile-info-container'>
-                    <h4>Personal Information</h4>
+                    <h4 className='text-primary'>Personal Information</h4>
                     <div id='user-profile-info-div'>
                         <div>
-                            <p>NAME:</p>
-                            <p>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</p>
+                            <p className='text-primary'>NAME:</p>
+                            <p className='text-secondary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</p>
                         </div>
                             
                         <div>
-                            <p>EMAIL:</p>
-                            <p>{sessionSingleUser?.work_email}</p>
+                            <p className='text-primary'>EMAIL:</p>
+                            <p className='text-secondary'>{sessionSingleUser?.work_email}</p>
                         </div>
                             
                         <div>
-                            <p>COMPANY:</p>
+                            <p className='text-primary'>COMPANY:</p>
                             {!isUpdatingBio ? <>
-                                <p>{sessionSingleUser?.company_name || 'None'}</p>
+                                <p className='text-secondary'>{sessionSingleUser?.company_name || 'None'}</p>
                             </> : <>
                                 {errors?.company && <p 
                                     className='user-update-bio-error-p'
@@ -259,23 +269,24 @@ const UserProfile = () => {
                         </div>
                             
                         <div>
-                            <p>PHONE:</p>
-                            <p>{sessionSingleUser?.phone_number}</p>
+                            <p className='text-primary'>PHONE:</p>
+                            <p className='text-secondary'>{sessionSingleUser?.phone_number}</p>
                         </div>
                     </div>
                 </div>
                 
                 <div id='user-profile-skills-container'>
-                    <h4>Skills</h4>
+                    <h4 className='text-primary'>Skills</h4>
                     <div id='user-profile-skills-div'>
-                        {userSkills?.map((skill, i) => <p key={i}>{skill}</p>)}
+                        {userSkills?.map((skill, i) => <p key={i} className='text-secondary'>{skill}</p>)}
                     </div>
                 </div>
     
             </div>
             
-            {(sessionSingleUser?.id === sessionUser?.id) && <div id='user-profile-create-post-container'>
-                <h4>What's on your mind?</h4>
+            {(sessionSingleUser?.id === sessionUser?.id) && 
+            <div id='user-profile-create-post-container'>
+                <h4 className='text-primary'>What's on your mind?</h4>
                 
                 <input id='user-profile-create-post-title'
                     placeholder='Title (Not Required)'
@@ -341,6 +352,7 @@ const UserProfile = () => {
             </div>
             
         </div>
+    </div>
     );
 };
 
