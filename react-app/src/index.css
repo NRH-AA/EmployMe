@@ -23,10 +23,10 @@
 }
 
 [data-theme='dark'] {
-    --body-background-color: rgb(56, 56, 56);
+    --body-background-color: rgb(0, 0, 0);
     
     --button-text-color: white;
-    --button-background-color: rgb(0, 4, 226);
+    --button-background-color: rgb(0, 4, 255);
     --button-box-shadow-color: black;
     --button-background-color-hover: rgb(0, 4, 253);
     --button-box-shadow-color-hover: black;
@@ -35,8 +35,8 @@
     --button-background-color-disabled: rgb(0, 3, 185);
     --button-box-shadow-color-disabled: black;
     
-    --div-background-color: rgb(2, 2, 2);
-    --div-box-shadow-color: rgb(41, 41, 41);
+    --div-background-color: rgb(53, 53, 53);
+    --div-box-shadow-color: rgb(100, 100, 100);
     --profile-button-i-color: black;
     
     --text-color-primary: white;
@@ -48,7 +48,7 @@
 [data-theme='blue'] {
     --body-background-color: rgb(0, 1, 54);
     
-    --button-text-color: rgb(0, 0, 3);
+    --button-text-color: white;
     --button-background-color: rgb(0, 4, 255);
     --button-box-shadow-color: rgb(3, 0, 173);
     
@@ -65,8 +65,8 @@
     --div-box-shadow-color: rgb(15, 0, 218);
     --profile-button-i-color: rgb(2, 0, 109);
     
-    --text-color-primary: rgb(0, 26, 255);
-    --text-color-secondary: rgb(17, 0, 255);
+    --text-color-primary: white;
+    --text-color-secondary: rgb(190, 190, 190);
     
     --link-text-color: rgb(0, 4, 226);
 }
