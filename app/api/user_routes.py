@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, User, JobListing
+from app.models import db, User, JobListing, Post
 from sqlalchemy import desc, asc
 from app.utils import (
     upload_file_to_s3, allowed_file, get_unique_filename)
@@ -24,46 +24,22 @@ def all_users2():
 @login_required
 def get_searched_users():
     data = request.get_json()
-    type = data['searchType']
     sText = data['searchText']
     offset = data['offset'] or 0
     
     results = None
-    users = []
-    if type == 'Jobs':
-        if not sText or sText == '':
-            results = JobListing.query.order_by('occupation').limit(10).offset(offset)
-        else:
-            results = JobListing.query.where(
-                JobListing.occupation.ilike(sText + '%%') |
-                JobListing.title.ilike(sText + '%%')
-            ).order_by(desc(JobListing.occupation)).limit(10).offset(offset)
-        
-        
-        jobs = [job.to_dict() for job in results]
-        return {'users': [], 'companies': [], 'jobs': jobs}
+    if not sText or sText == '':
+        results = User.query.order_by('updatedAt').limit(6).offset(offset)
+    else:
+        results = User.query.where(
+            User.first_name.ilike(sText + '%%') |
+            User.last_name.ilike(sText + '%%')
+        ).order_by(desc(User.first_name)).limit(6).offset(offset)
     
+    if not results is None:
+        return {'posts': [user.posts.to_dict() for user in results]}
     
-    elif type == 'Companies':
-        return {'users': [], 'companies': [], 'jobs': []}    
-    
-    elif type == 'Users':
-        if not sText or sText == '':
-            results = User.query.order_by('updatedAt').limit(10).offset(offset)
-        else:
-            results = User.query.where(
-                User.first_name.ilike(sText + '%%') |
-                User.middle_name.ilike(sText + '%%') |
-                User.last_name.ilike(sText + '%%') |
-                User.work_email.ilike(sText + '%%') |
-                User.occupation.ilike(sText + '%%')
-            ).order_by(asc(User.first_name)).limit(10).offset(offset)
-            
-        users = [user.to_dict_all() for user in results]
-        return {'users': users, 'companies': [], 'jobs': []}
-    
-    
-    return {'users': [], 'companies': [], 'jobs': []}
+    return {'posts': []}
     
 
 @user_routes.route('/<int:id>', methods=['GET'])
