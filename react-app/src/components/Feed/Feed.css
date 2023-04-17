@@ -128,13 +128,14 @@
     width: 115%;
     min-height: 150px;
     max-height: 150px;
-    margin-left: 5px;
+    margin-left: 1px;
+    border: 2px solid black;
     cursor: pointer;
 }
 
 .feed-post-image-sidebar {
     height: auto;
-    max-height: 150px;
+    max-height: 154px;
     overflow-y: auto;
     min-width: 30%;
     max-width: 30%;
@@ -142,6 +143,8 @@
 
 .feed-post-sidebar-image {
     width: 85%;
+    height: 33%;
+    border: 2px solid black;
     cursor: pointer;
 }
 
