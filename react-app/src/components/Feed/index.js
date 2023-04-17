@@ -18,7 +18,8 @@ const Feed = () => {
     const [previewImages, setPreviewImages] = useState({});
     
     const [offset, setOffset] = useState(0);
-    const [newsObj, setNewsObj] = useState({});
+    const [newsOffset, setNewsOffset] = useState(0);
+    const [newsLimit, setNewsLimit] = useState([]);
     
     
     
@@ -72,21 +73,34 @@ const Feed = () => {
     
     const userSkillArray = sessionUser?.skills?.split(';') || [];
     
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
-    
-    if (sessionNews && !newsObj?.author) {
-        setNewsObj(sessionNews[0]);
+    // News
+    if (sessionNews && !newsLimit.length) {
+        const newNews = sessionNews.slice(0, 10);
+        setNewsLimit(newNews);
     }
     
     const updateNews = () => {
         if (sessionNews?.length) {
-            setNewsObj(sessionNews[getRandomInt(sessionNews.length - 1)]);
+            const newNews = sessionNews.slice(newsOffset, newsOffset + 10);
+            setNewsLimit(newNews);
         }
     }
     
-    const setPreviewImage = (postId, postIndex, imageIndex) => {
+    const showNewsAuthor = (news) => {
+        if (!news.author) return null;
+        let splitAuthor = news.author.split('(')[1];
+        if (splitAuthor) {
+            news.author = splitAuthor.split(')')[0];
+        } 
+        
+        return (<>
+            <p className="text-primary feed-news-text">- {news.author}</p>
+            <p className='text-secondary feed-news-title'>{news.title.slice(0, 80)} ...</p>
+        </>)
+    }
+    
+    // Posts Preview Image
+    const setPreviewImage = (postId, imageIndex) => {
         const newPreviews = {...previewImages};
         let url = '';
         for (const post of posts) {
@@ -113,12 +127,15 @@ const Feed = () => {
                     />
                     
                     <p className='text-primary'>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
-                    <p className='text-secondary'>{sessionUser?.occupation}</p>
                     
                     <div id="feed-user-profile-skills-div">
                         {userSkillArray && userSkillArray.map((skill, i) =>
-                            <button key={i} className="feed-skill-p button-main">{skill}</button>
+                            <p key={i} className="text-secondary feed-skill-p">{skill}</p>
                         )}
+                    </div>
+                    
+                    <div id='feed-user-connections-div'>
+                        <h4 className='text-primary'>Connections</h4>
                     </div>
                     
                 </div>
@@ -162,7 +179,7 @@ const Feed = () => {
                                             title="Click to set as preview image" 
                                             src={image.url}
                                             alt={`Post Side ${i}`}
-                                            onClick={() => setPreviewImage(post.id, i, j)}
+                                            onClick={() => setPreviewImage(post.id, j)}
                                         />
                                     )}
                                 </div>
@@ -181,19 +198,22 @@ const Feed = () => {
                 
                 <div id="feed-news-container" data-theme={theme}>
                     <div id="feed-news-div">
-                        {newsObj?.author && 
-                        <div className='news-article-div'>
-                            <div id='news-article-top-div'>
-                                <h3 className='text-primary'>{newsObj.author}</h3>
-                                <img src={newsObj.urlToImage} alt='Artiacle'/>
+                        <h3 style={{marginLeft: "10px", fontSize: "16px"}} className='text-primary'>EmployMe News</h3>
+                        {newsLimit?.map((news, i) => 
+                            <div key={i}>
+                                {showNewsAuthor(news)}
                             </div>
+                        )}
+                        
+                        
+                        {/* {newsObj?.author && 
+                        <div className='news-article-div'>
                             
                             <h4 className='text-primary'>{newsObj.description.split('.')[0]}</h4>
-                            <p className='text-secondary'>{newsObj.content.split('[')[0]}</p>
-                        </div>} 
+                        </div>}  */}
                     </div>
                     
-                    {(!newsObj || !newsObj.author) ?
+                    {(!newsLimit?.length) ?
                         <p>
                             News cannot be populated on production servers. 
                             This is a limit from the API.
@@ -202,7 +222,7 @@ const Feed = () => {
                         <button id="feed-news-button" className='button-main' data-theme={theme}
                             type='button'
                             title='See More News'
-                            onClick={(e) => updateNews(e)}
+                            onClick={() => {setNewsOffset(newsOffset + 10); updateNews()}}
                         >More News</button>
                     }
                     
