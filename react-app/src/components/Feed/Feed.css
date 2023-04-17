@@ -121,13 +121,13 @@
 }
 
 .feed-post-image-preview-navlink {
-    width: auto;
+    width: 100%;
 }
 
 .feed-post-image-preview {
-    min-width: 115%;
-    max-width: 115%;
-    height: 150px;
+    width: 115%;
+    min-height: 150px;
+    max-height: 150px;
     margin-left: 5px;
     cursor: pointer;
 }
@@ -136,7 +136,8 @@
     height: auto;
     max-height: 150px;
     overflow-y: auto;
-    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
 }
 
 .feed-post-sidebar-image {
