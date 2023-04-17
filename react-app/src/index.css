@@ -71,7 +71,31 @@
     --link-text-color: rgb(0, 4, 226);
 }
 
-
+[data-theme='purple'] {
+    --body-background-color: rgb(56, 0, 61);
+    
+    --button-text-color: rgb(0, 0, 0);
+    --button-background-color: rgb(0, 214, 214);
+    --button-box-shadow-color: rgb(0, 255, 255);
+    
+    --button-background-color-hover: rgb(0, 211, 211);
+    --button-box-shadow-color-hover: rgb(0, 138, 138);
+    
+    --button-background-color-active: rgb(0, 158, 158);
+    --button-box-shadow-color-active: rgb(0, 182, 182);
+    
+    --button-background-color-disabled: rgb(0, 136, 136);
+    --button-box-shadow-color-disabled: rgb(0, 175, 175);
+    
+    --div-background-color: rgb(100, 0, 146);
+    --div-box-shadow-color: rgb(204, 0, 245);
+    --profile-button-i-color: rgb(2, 0, 109);
+    
+    --text-color-primary: white;
+    --text-color-secondary: rgb(190, 190, 190);
+    
+    --link-text-color: rgb(0, 4, 226);
+}
 
 
 
@@ -133,6 +157,7 @@ body {
 ::-webkit-scrollbar {
     background: rgb(70, 70, 70);
     width: 12px;
+    border-radius: 100vh;
 }
 
 ::-webkit-scrollbar-thumb {

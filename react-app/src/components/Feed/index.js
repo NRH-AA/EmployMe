@@ -61,9 +61,9 @@ const Feed = () => {
     
     useBottomScrollListener(handleScroll);
     
-    const themes = ['light', 'dark', 'blue'];
     const switchTheme = () => {
-		const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue' : 'light';
+		const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue'
+        : theme === 'blue' ? 'purple' : 'light';
         dispatch(changeThemeThunk(sessionUser.id, newTheme));
 		setTheme(newTheme);
 	}

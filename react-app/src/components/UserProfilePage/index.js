@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { setWindowPath, getSingleUser, createPost, changeTheme } from "../../store/session";
+import { setWindowPath, getSingleUser, createPost, changeTheme, changeThemeThunk } from "../../store/session";
 import CreatePostModal from "./CreatePostModal";
 import OpenModalButton from "../OpenModalButton";
 import SkillsModal from "./SkillsModal";
@@ -53,6 +53,14 @@ const UserProfile = () => {
     useEffect(() => {
         if (theme !== sessionTheme) dispatch(changeTheme(theme));
     }, [theme])
+    
+    
+    useEffect(() => {
+        if (sessionSingleUser && (!occupation || !company)) {
+            setOccupation(sessionSingleUser?.occupation);
+            setCompany(sessionSingleUser?.company_name);
+        }
+    }, [sessionSingleUser]);
     
     // We dont have this users data. Lets go set it
     useEffect(() => {
@@ -192,6 +200,13 @@ const UserProfile = () => {
             return handleSubmitBio()
         }
     }
+    
+    const switchTheme = () => {
+		const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue'
+        : theme === 'blue' ? 'purple' : 'light';
+        dispatch(changeThemeThunk(sessionUser.id, newTheme));
+		setTheme(newTheme);
+	}
     
     return (
         <div id='user-profile-main-container' data-theme={sessionTheme}>
@@ -351,7 +366,14 @@ const UserProfile = () => {
                 )}
             </div>
             
+            <div id='user-profile-theme-button'>
+                <button className='button-main'
+                    onClick={() => switchTheme()}
+                >Change Theme</button>
+            </div>
+             
         </div>
+        
     </div>
     );
 };
