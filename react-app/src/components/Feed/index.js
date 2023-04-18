@@ -31,6 +31,10 @@ const Feed = () => {
         }
     }, [dispatch, theme, sessionUser, sessionNews]);
     
+    useEffect(() => {
+        if (theme !== sessionUser?.theme) setTheme(sessionUser?.theme);
+    }, [sessionUser, theme])
+    
     
     useEffect(() => {
         if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) {
