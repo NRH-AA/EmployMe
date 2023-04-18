@@ -55,21 +55,22 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 30px;
+    gap: 5px;
 }
 
 .feed-skill-p {
-    flex: 30%;
     margin-top: -10px;
 }
 
 .feed-news-text {
     font-size: 12px;
+    font-weight: 900;
     margin-left: 5px;
 }
 
 .feed-news-title {
     font-size: 12px;
-    margin-top: -5px;
+    margin-top: -10px;
     margin-left: 20px;
     width: 85%;
 }

@@ -42,6 +42,10 @@
     margin-top: 20px;
 }
 
+.user-profile-occupation-p {
+    margin-top: -15px;
+}
+
 #user-profile-top-button {
     border: none;
     background: none;
@@ -58,7 +62,7 @@
 }
 
 #user-update-bio-occupation-input {
-    margin-top: 5px;
+    margin-top: -15px;
     border: none;
     box-shadow: 0px 0px 2px 2px rgb(145, 145, 145);
     font-weight: 700;
@@ -68,6 +72,10 @@
     outline: none;
     margin-bottom: 10px;
     text-align: center;
+}
+
+.user-profile-paper-plane {
+    font-size: 22px;
 }
 
 #user-update-bio-company-input {
