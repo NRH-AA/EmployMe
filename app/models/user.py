@@ -15,6 +15,9 @@ connections = db.Table(
         add_prefix_for_prod('users.id')), primary_key=True)
 )
 
+if environment == 'production':
+    connections.schema = SCHEMA
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -115,5 +118,6 @@ class User(db.Model, UserMixin):
             'images': [image.to_dict() for image in self.images],
             'messages': [message.to_dict() for message in self.messages],
             'posts': [post.to_dict() for post in self.posts],
-            'connections': [user.to_dict() for user in self.connection]
+            'connections': [user.to_dict() for user in self.connection],
+            'connecting': [user.to_dict() for user in self.connecting]
         }
