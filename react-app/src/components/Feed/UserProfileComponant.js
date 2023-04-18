@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -5,6 +6,11 @@ import { useHistory } from "react-router-dom";
 const UserProfileComponant = () => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
+    const [connections, setConnections] = useState(0);
+    
+    useEffect(() => {
+        if (sessionUser?.connections?.length !== connections) setConnections(sessionUser?.connections?.length);
+    }, [sessionUser])
     
     const userSkillArray = sessionUser?.skills?.split(';') || [];
     
@@ -14,7 +20,7 @@ const UserProfileComponant = () => {
             title="Go to your profile"
             src={sessionUser?.profile_picture} 
             alt={sessionUser?.first_name}
-            onClick={(e) => history.push(`/profile/${sessionUser?.id}`)}
+            onClick={() => history.push(`/profile/${sessionUser?.id}`)}
         />
                     
         <p className='text-primary'>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
@@ -26,7 +32,7 @@ const UserProfileComponant = () => {
         </div>
                     
         <div id='feed-user-connections-div'>
-            <h4 className='text-primary'>Connections {sessionUser?.connections?.length}</h4>
+            <h4 className='text-primary'>Connections {connections}</h4>
         </div>
     </>
     );
