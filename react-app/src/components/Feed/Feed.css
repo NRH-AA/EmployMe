@@ -1,6 +1,6 @@
 #feed-container {
     margin: auto;
-    padding-top: 20px;
+    padding-top: 5px;
     width: 100%;
     height: auto;
     min-height: 100vh;
@@ -9,22 +9,23 @@
 
 #feed-content-container {
     display: flex;
-    width: 1020px;
+    width: 100%;
     margin: auto;
-    justify-content: space-around;
     margin-top: 20px;
+    justify-content: center;
+    gap: 20px;
 }
 
 #feed-user-profile-data {
     display: sticky;
     height: fit-content;
     padding: 5px;
-    width: 22%;
+    width: 20%;
+    max-width: 220px;
     background-color: var(--div-background-color);
     box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
     color: var(--text-color-primary);
     border-radius: 10px;
-    margin-left: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,6 +85,8 @@
 #feed-posts-container {
     display: flex;
     flex-direction: column;
+    width: 38%;
+    max-width: 550px;
     gap: 10px;
     padding-bottom: 50px;
 }
@@ -99,7 +102,7 @@
 }
 
 .feed-post-container {
-    width: 360px;
+    width: 100%;
     height: auto;
     background-color: var(--div-background-color);
     box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
@@ -129,23 +132,23 @@
     margin: 0px;
 }
 
+.feed-post-image-preview-navlink {
+    width: 100%;
+}
 
 .feed-post-image-container {
     width: 100%;
     height: auto;
     margin-top: 10px;
     display: flex;
-    gap: 40px;
-}
-
-.feed-post-image-preview-navlink {
-    width: 100%;
 }
 
 .feed-post-image-preview {
-    width: 115%;
-    min-height: 150px;
-    max-height: 150px;
+    position: relative;
+    width: 95%;
+    max-width: 400px;
+    min-height: 200px;
+    max-height: 200px;
     margin-left: 1px;
     border: 2px solid black;
     cursor: pointer;
@@ -153,15 +156,16 @@
 
 .feed-post-image-sidebar {
     height: auto;
-    max-height: 154px;
+    max-height: 204px;
     overflow-y: auto;
-    min-width: 30%;
-    max-width: 30%;
+    max-width: 100px;
+    margin-right: 10px;
 }
 
 .feed-post-sidebar-image {
-    width: 85%;
-    height: 33%;
+    width: 90%;
+    max-width: 90px;
+    height: 30%;
     border: 2px solid black;
     cursor: pointer;
 }
@@ -176,7 +180,8 @@
 }
 
 #feed-news-container {
-    width: 25%;
+    width: 28%;
+    max-width: 280px;
     height: fit-content;
     margin-right: 20px;
     background-color: var(--div-background-color);

@@ -2,10 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk, changeTheme, changeThemeThunk, resetState } from "../../store/session";
-import UserProfileComponant from "./UserProfileComponant";
-import UserPostComponant from "./UserPostComponant";
-import NewsComponant from "./NewsComponant";
+import { setWindowPath, getPostsThunk, appendPostsThunk, changeTheme, changeThemeThunk, resetState } from "../../store/session";
+import UserProfileComponent from "./UserProfileComponent";
+import UserPostComponent from "./UserPostComponent";
+import NewsComponent from "./NewsComponent";
 import './Feed.css';
 
 const Feed = () => {
@@ -71,12 +71,12 @@ const Feed = () => {
             <div id="feed-content-container">
             
                 <div id="feed-user-profile-data">
-                    <UserProfileComponant />
+                    <UserProfileComponent />
                 </div>
                 
                 <div id="feed-posts-container">
                     {posts?.length && posts?.map((post, i) => 
-                        <UserPostComponant post={post} key={i} />
+                        <UserPostComponent post={post} key={i} />
                     )}
                     
                     <button className='button-main'
@@ -84,7 +84,7 @@ const Feed = () => {
                     >See more</button>
                 </div>
                 
-                <NewsComponant />
+                <NewsComponent />
             
             </div>
             

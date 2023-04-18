@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getNewsThunk } from "../../store/session";
 
-const NewsComponant = () => {
+const NewsComponent = () => {
     const dispatch = useDispatch();
     
     const sessionUser = useSelector(state => state.session.user);
@@ -17,7 +17,7 @@ const NewsComponant = () => {
     
     const updateNews = () => {
         if (sessionNews?.length) {
-            const newNews = sessionNews.slice(newsOffset, newsOffset + 10);
+            const newNews = sessionNews.slice(newsOffset, newsOffset + 6);
             setNewsLimit(newNews);
         }
     }
@@ -72,4 +72,4 @@ const NewsComponant = () => {
     );  
 };
 
-export default NewsComponant;
+export default NewsComponent;

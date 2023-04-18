@@ -4,7 +4,7 @@ import { NavLink, useHistory } from "react-router-dom";
 
 
 
-const UserPostComponant = ({post}) => {
+const UserPostComponent = ({post}) => {
     const history = useHistory();
     
     const sessionUser = useSelector(state => state.session.user);
@@ -93,4 +93,4 @@ const UserPostComponant = ({post}) => {
     
 }
 
-export default UserPostComponant;
+export default UserPostComponent;
