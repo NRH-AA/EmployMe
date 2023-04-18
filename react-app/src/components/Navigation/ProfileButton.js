@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import UserJobListingsPage from "./UserJobListingsPage";
-import { logout, changeTheme } from "../../store/session";
+import { logout } from "../../store/session";
 import CreateJobModal from "./CreateJobModal";
 import './Navigation.css';
 

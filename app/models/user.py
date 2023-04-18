@@ -5,6 +5,16 @@ from datetime import datetime
 
 default_image = 'https://www.computerhope.com/jargon/g/guest-user.png'
 
+
+connections = db.Table(
+    "connections",
+    db.Model.metadata,
+    db.Column('connecter', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('connecty', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -36,6 +46,15 @@ class User(db.Model, UserMixin):
     job_listings = db.relationship("JobListing", back_populates="user")
     images = db.relationship("UserImage")
     messages = db.relationship("Message")
+    
+    connection = db.relationship(
+        "User",
+        secondary="connections",
+        primaryjoin=connections.c.connecty == id,
+        secondaryjoin=connections.c.connecter == id,
+        backref="connecting"
+    )
+
 
     @property
     def password(self):
@@ -95,5 +114,7 @@ class User(db.Model, UserMixin):
             'job_listings': [job.to_dict() for job in self.job_listings],
             'images': [image.to_dict() for image in self.images],
             'messages': [message.to_dict() for message in self.messages],
-            'posts': [post.to_dict() for post in self.posts]
+            'posts': [post.to_dict() for post in self.posts],
+            'connections': [user.to_dict() for user in self.connection],
+            'connecting': [user.to_dict() for user in self.connecting]
         }

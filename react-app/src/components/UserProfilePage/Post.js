@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { updatePost } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import './Post.css';
@@ -47,7 +46,7 @@ const Post = ({post, user}) => {
     
     useEffect(() => {
         if (isSubmitted) setErrors(validatePostEdit());
-    }, [text, title])
+    }, [isSubmitted, text, title])
     
     useEffect(() => {
         if (!user?.active && isUpdating) setIsUpdating(false);
@@ -91,7 +90,10 @@ const Post = ({post, user}) => {
     
     
     const handleEditButtonPressed = () => {
-        if (!isUpdating) return setIsUpdating(true);
+        if (!isUpdating) {
+            resetPostData();
+            return setIsUpdating(true);
+        }
         else return handleSubmitEdit();
     }
     
@@ -154,7 +156,7 @@ const Post = ({post, user}) => {
                     <button className='post-ellipsis-button'
                         title='Edit Post'
                         onClick={(e) => handleEditButtonPressed(e)}
-                    >{!isUpdating ? <i class="fas fa-ellipsis-h"/> : <i className="fa fa-paper-plane post-paper-plane"/>}
+                    >{!isUpdating ? <i className="fas fa-ellipsis-h"/> : <i className="fa fa-paper-plane post-paper-plane"/>}
                     </button>
                 }
             </div>
@@ -163,11 +165,11 @@ const Post = ({post, user}) => {
     
     
     
-    const hasPostImages = pictures[0].url && pictures[0].url !== default_picture ||
-                          pictures[1].url && pictures[1].url !== default_picture ||
-                          pictures[2].url && pictures[2].url !== default_picture ||
-                          pictures[3].url && pictures[3].url !== default_picture ||
-                          pictures[4].url && pictures[4].url !== default_picture;
+    const hasPostImages = (pictures[0].url && pictures[0].url !== default_picture) ||
+                          (pictures[1].url && pictures[1].url !== default_picture) ||
+                          (pictures[2].url && pictures[2].url !== default_picture) ||
+                          (pictures[3].url && pictures[3].url !== default_picture) ||
+                            (pictures[4].url && pictures[4].url !== default_picture);
     
     const showPostImages = () => {
         

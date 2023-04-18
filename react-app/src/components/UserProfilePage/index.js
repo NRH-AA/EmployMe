@@ -3,16 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { setWindowPath, getSingleUser, createPost, changeTheme, changeThemeThunk } from "../../store/session";
-import CreatePostModal from "./CreatePostModal";
+import { setWindowPath, getSingleUser, createPost, changeTheme, changeThemeThunk, updateUserInfoThunk } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
-import SkillsModal from "./SkillsModal";
-// import EducationModal from "./EducationModal";
-// import WorkHistoryModal from "./WorkHistoryModal";
-// import AchievementsModal from "./AchievementsModal";
-// import RecommendationsModal from "./RecommendationsModal";
 import ProfilePictureModal from "./ProfilePictureModal";
-import DeleteProfileModal from "./DeleteProfileModal";
 import Post from './Post';
 import './UserProfile.css';
 
@@ -34,8 +27,19 @@ const UserProfile = () => {
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({})
     
-    const [occupation, setOccupation] = useState(sessionSingleUser?.occupation || "");
-    const [company, setCompany] = useState(sessionSingleUser?.company_name || "");
+    const [occupation, setOccupation] = useState(sessionUser?.occupation || "");
+    const [company, setCompany] = useState(sessionUser?.company_name || "");
+    
+    const hasConnection = () => {
+        const connections = sessionUser?.connections;
+        if (!connections) return false;
+        for (const conn of connections) {
+            if (conn.id === sessionSingleUser?.id) return true;
+        }
+        return false;
+    }
+    const [connected, setConnected] = useState(hasConnection());
+    
     const validateBio = () => {
         const newErrors = {};
         if (occupation && occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
@@ -43,6 +47,10 @@ const UserProfile = () => {
 
         return newErrors;
     };
+    
+    useEffect(() => {
+        setConnected(hasConnection());
+    }, [sessionUser, sessionSingleUser])
     
     // Update current path
     useEffect(() => {
@@ -52,20 +60,22 @@ const UserProfile = () => {
     // Update theme to match user specific theme
     useEffect(() => {
         if (theme !== sessionTheme) dispatch(changeTheme(theme));
-    }, [theme])
+    }, [dispatch, theme, sessionTheme])
     
     
     useEffect(() => {
-        if (sessionSingleUser && (!occupation || !company)) {
-            setOccupation(sessionSingleUser?.occupation);
-            setCompany(sessionSingleUser?.company_name);
+        if (sessionUser?.id === sessionSingleUser?.id) {
+            if (sessionUser && (!occupation || !company)) {
+                setOccupation(sessionUser?.occupation);
+                setCompany(sessionUser?.company_name);
+            }
         }
-    }, [sessionSingleUser]);
+    }, [sessionUser, sessionSingleUser, occupation, company]);
     
     // We dont have this users data. Lets go set it
     useEffect(() => {
         if (!sessionSingleUser || sessionSingleUser.id !== parseInt(userId)) dispatch(getSingleUser(parseInt(userId)));
-    }, [dispatch, sessionSingleUser]);
+    }, [dispatch, sessionSingleUser, userId]);
     
     // Error validations for BIO information
     useEffect(() => {
@@ -208,47 +218,85 @@ const UserProfile = () => {
 		setTheme(newTheme);
 	}
     
+    const handleConnection = async () => {
+        if (sessionUser?.id === sessionSingleUser?.id) return;
+        
+        const ret = await fetch(`/api/connections`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                connecter: sessionUser.id,
+                connecting: sessionSingleUser.id
+            })
+        });
+        
+        if (ret.ok) {
+            await dispatch(updateUserInfoThunk(sessionUser.id));
+            await dispatch(getSingleUser(sessionSingleUser.id));
+            return;
+        }
+        
+        alert('There was an error connecting. Please try again.');
+    }
+    
+    const showUserProfileTop = () => {
+        return (<>
+            <div id='user-profile-button-div'>
+                {(sessionSingleUser?.id === sessionUser?.id) && 
+                    <button id='user-profile-top-button'
+                        title='Click to edit profile'
+                        onClick={(e) => handleEditProfileButton(e)}
+                    >{!isUpdatingBio ? <i className="fa-solid fa-ellipsis-vertical"></i> : <i className="fa fa-paper-plane user-profile-paper-plane"/>}
+                    </button>
+                }
+            </div>
+                
+                
+            <OpenModalButton
+                className="user-profile-img-button"
+                buttonText={<img className="user-profile-img"
+                    title='Click to edit profile picture'
+                    src={sessionSingleUser?.profile_picture}
+                    alt={sessionSingleUser?.first_name}
+                />}
+                modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
+            />
+                
+            {!isUpdatingBio ? <>
+                <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
+                <p className='text-secondary user-profile-occupation-p'>{sessionSingleUser?.occupation}</p>
+                {(sessionUser?.id !== sessionSingleUser?.id) &&
+                    <button
+                        onClick={() => handleConnection()}
+                    >{!connected ? 'Connect' : 'Remove Connection'} </button>
+                }
+            </> : <>
+                {errors?.occupation && <p 
+                    className='user-update-bio-error-p'
+                >{errors.occupation}</p>}
+                
+                <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
+                <input id='user-update-bio-occupation-input'
+                    title='What do you do?'
+                    value={occupation}
+                    maxLength={20}
+                    onKeyDown={(e) => submitEnterDown(e)}
+                    onChange={(e) => setOccupation(e.target.value)}
+                    autoFocus
+                />
+            </>}
+        </>);
+    };
+    
+    
     return (
         <div id='user-profile-main-container' data-theme={sessionTheme}>
         <div id="user-profile-container">
+            
             <div id='user-profile-top-div'>
-                
-                <div id='user-profile-button-div'>
-                    {(sessionSingleUser?.id === sessionUser?.id) && 
-                        <button id='user-profile-top-button'
-                            title='Click to edit profile'
-                            onClick={(e) => handleEditProfileButton(e)}
-                        >{!isUpdatingBio ? <i className="fa-solid fa-ellipsis-vertical"></i> : <i className="fa fa-paper-plane"/>}
-                        </button>
-                    }
-                </div>
-                
-                
-                <OpenModalButton
-                    className="user-profile-img-button"
-                    buttonText={<img className="user-profile-img"
-                        title='Click to edit profile picture'
-                        src={sessionSingleUser?.profile_picture}
-                        alt={sessionSingleUser?.first_name}
-                    />}
-                    modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
-                />
-                
-                {!isUpdatingBio ? <h4 className='text-primary'>{sessionSingleUser?.occupation}</h4>
-                : <>
-                    {errors?.occupation && <p 
-                        className='user-update-bio-error-p'
-                    >{errors.occupation}</p>}
-                    
-                    <input id='user-update-bio-occupation-input'
-                        title='What do you do?'
-                        value={occupation}
-                        maxLength={20}
-                        onKeyDown={(e) => submitEnterDown(e)}
-                        onChange={(e) => setOccupation(e.target.value)}
-                        autoFocus
-                    />
-                </>}
+                {showUserProfileTop()}
             </div>
             
             <div id='user-profile-info-main-container'>
@@ -361,8 +409,8 @@ const UserProfile = () => {
             
 
             <div id="user-profile-posts-container">
-                {sessionSingleUser?.posts && sessionSingleUser?.posts.map(post => 
-                    <Post post={post} user={sessionSingleUser}/>
+                {sessionSingleUser?.posts && sessionSingleUser?.posts.map((post, i) => 
+                    <Post key={i} post={post} user={sessionSingleUser}/>
                 )}
             </div>
             

@@ -27,7 +27,7 @@ function SignupFormPage() {
   
   useEffect(() => {
     if (hasSubmitted) setErrors(validateFormErrors())
-  }, [firstName, lastName, companyName, email, phone, workEmail, username, password, confirmPassword, age])
+  }, [hasSubmitted, firstName, lastName, companyName, email, phone, workEmail, username, password, confirmPassword, age])
   
   if (sessionUser) return <Redirect to="/" />;
   
@@ -39,7 +39,7 @@ function SignupFormPage() {
     if (companyName && (companyName.length < 2 || companyName.length > 40)) newErrors.companyName = 'Company name (2-40) characters';
     if (!email || (email.length < 4 || email.length > 30)) newErrors.email = 'Email (4-30) characters';
     if (!workEmail || (workEmail.length < 4 || workEmail.length > 35)) newErrors.workEmail = 'Work Email (4-35) characters';
-    if (!phone || (phone.length != 10)) newErrors.phone = 'Phone (10) characters';
+    if (!phone || (phone.length !== 10)) newErrors.phone = 'Phone (10) characters';
     if (!username || (username.length < 2 || username.length > 20)) newErrors.username = 'Username (2-20) characters';
     if (!password || (password.length < 6 || password.length > 30)) newErrors.password = 'password (2-30) characters';
     if (!age || (age < 16 || age > 110)) newErrors.age = 'Age (16-110)';
