@@ -268,7 +268,7 @@ const UserProfile = () => {
                 <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
                 <p className='text-secondary user-profile-occupation-p'>{sessionSingleUser?.occupation}</p>
                 {(sessionUser?.id !== sessionSingleUser?.id) &&
-                    <button
+                    <button className='button-main'
                         onClick={() => handleConnection()}
                     >{!connected ? 'Connect' : 'Remove Connection'} </button>
                 }
@@ -304,17 +304,12 @@ const UserProfile = () => {
                     <h4 className='text-primary'>Personal Information</h4>
                     <div id='user-profile-info-div'>
                         <div>
-                            <p className='text-primary'>NAME:</p>
-                            <p className='text-secondary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</p>
-                        </div>
-                            
-                        <div>
-                            <p className='text-primary'>EMAIL:</p>
+                            <p className='text-primary'>Work Email:</p>
                             <p className='text-secondary'>{sessionSingleUser?.work_email}</p>
                         </div>
                             
                         <div>
-                            <p className='text-primary'>COMPANY:</p>
+                            <p className='text-primary'>Company:</p>
                             {!isUpdatingBio ? <>
                                 <p className='text-secondary'>{sessionSingleUser?.company_name || 'None'}</p>
                             </> : <>
@@ -332,7 +327,7 @@ const UserProfile = () => {
                         </div>
                             
                         <div>
-                            <p className='text-primary'>PHONE:</p>
+                            <p className='text-primary'>Phone:</p>
                             <p className='text-secondary'>{sessionSingleUser?.phone_number}</p>
                         </div>
                     </div>

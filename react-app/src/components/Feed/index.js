@@ -5,6 +5,7 @@ import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { setWindowPath, getPostsThunk, appendPostsThunk, getNewsThunk, changeTheme, changeThemeThunk, resetState } from "../../store/session";
 import UserProfileComponant from "./UserProfileComponant";
 import UserPostComponant from "./UserPostComponant";
+import NewsComponant from "./NewsComponant";
 import './Feed.css';
 
 const Feed = () => {
@@ -12,24 +13,19 @@ const Feed = () => {
     
     const sessionUser = useSelector(state => state.session.user);
     const sessionPath = useSelector(state => state.session.path);
-    const sessionNews = useSelector(state => state.session.news);
     const [theme, setTheme] = useState(sessionUser?.theme);
     const posts = useSelector(state => state.session.posts);
     
     const [offset, setOffset] = useState(0);
-    const [newsOffset, setNewsOffset] = useState(0);
-    const [newsLimit, setNewsLimit] = useState([]);
-    
     
     useEffect(() => {
         if (sessionUser) {
             dispatch(changeTheme(theme));
             dispatch(getPostsThunk());
-            if (!sessionNews) dispatch(getNewsThunk());
         } else {
             dispatch(resetState);
         }
-    }, [dispatch, theme, sessionUser, sessionNews]);
+    }, [dispatch, theme, sessionUser]);
     
     useEffect(() => {
         if (theme !== sessionUser?.theme) setTheme(sessionUser?.theme);
@@ -68,43 +64,6 @@ const Feed = () => {
     
     if (!sessionUser) return null;
     
-    // News
-    if (sessionNews && !newsLimit.length) {
-        const newNews = sessionNews.slice(0, 10);
-        setNewsLimit(newNews);
-    }
-    
-    const updateNews = () => {
-        if (sessionNews?.length) {
-            const newNews = sessionNews.slice(newsOffset, newsOffset + 10);
-            setNewsLimit(newNews);
-        }
-    }
-    
-    const showNewsAuthor = (news) => {
-        if (!news.author) return null;
-        let splitAuthor = news.author.split('(')[1];
-        if (splitAuthor) {
-            news.author = splitAuthor.split(')')[0];
-        } 
-        
-        return (<>
-            <p className="text-primary feed-news-text">- {news.author.toUpperCase()}</p>
-            <p className='text-secondary feed-news-title'>{news.title.slice(0, 80)} ...</p>
-        </>)
-    }
-    
-    const showNewsArea = () => {
-        return <div id="feed-news-div">
-        <h3 style={{marginLeft: "10px", fontSize: "16px"}} className='text-primary'>EmployMe News</h3>
-        {newsLimit?.map((news, i) => 
-            <div key={i}>
-                {showNewsAuthor(news)}
-            </div>
-        )}
-    </div>
-    }
-    
     
     return (
         <div id="feed-container" data-theme={theme}>
@@ -125,23 +84,7 @@ const Feed = () => {
                     >See more</button>
                 </div>
                 
-                <div id="feed-news-container">
-                    {showNewsArea()}
-                    
-                    {(!newsLimit?.length) ?
-                        <p>
-                            News cannot be populated on production servers. 
-                            This is a limit from the API.
-                        </p>
-                    :
-                        <button id="feed-news-button" className='button-main'
-                            type='button'
-                            title='See More News'
-                            onClick={() => {setNewsOffset(newsOffset + 10); updateNews()}}
-                        >More News</button>
-                    }
-                    
-                </div>
+                <NewsComponant />
             
             </div>
             
