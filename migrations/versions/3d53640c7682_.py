@@ -61,6 +61,13 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('connections',
+    sa.Column('connecter', sa.Integer(), nullable=False),
+    sa.Column('connecty', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['connecter'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['connecty'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('connecter', 'connecty')
+    )
     op.create_table('job_listings',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -115,6 +122,7 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE companies SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE connections SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE job_listings SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE messages SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE posts SET SCHEMA {SCHEMA};")
@@ -130,6 +138,7 @@ def downgrade():
     op.drop_table('posts')
     op.drop_table('messages')
     op.drop_table('job_listings')
+    op.drop_table('connections')
     op.drop_table('companies')
     op.drop_table('users')
     # ### end Alembic commands ###
