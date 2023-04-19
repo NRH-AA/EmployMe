@@ -79,9 +79,9 @@ const Feed = () => {
                         <UserPostComponent post={post} key={i} />
                     )}
                     
-                    <button className='button-main'
+                    {posts?.length && <button className='button-main'
                         onClick={(e) => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
-                    >See more</button>
+                    >See more</button>}
                 </div>
                 
                 <NewsComponent />
@@ -91,22 +91,26 @@ const Feed = () => {
             
             <div id="feed-footer-div">
                 <NavLink className="footer-p"
+                    title='About EmployMe'
                     to='/about'
                 ><i className="fa fa-info-circle"></i></NavLink>
                     
                 <NavLink className="footer-p"
+                    title='GitHub'
                     to={{pathname: "https://github.com/NRH-AA"}}
                     target="_blank"
                 ><i className="fa-brands fa-github"></i></NavLink>
                     
                 <NavLink className="footer-p"
+                    title='LinkedIn'
                     to={{pathname: "https://www.linkedin.com/in/nathan-heinz-5b3718231/"}}
                     target="_blank"
                 ><i className="fa-brands fa-linkedin"></i></NavLink>
                 
-                <button className='button-main'
+                <button className='theme-change-button'
+                    title='Change Theme'
                     onClick={() => switchTheme()}
-                >Change Theme</button>
+                ><i class="fa fa-tachometer"/></button>
             </div>
         </div>
     );

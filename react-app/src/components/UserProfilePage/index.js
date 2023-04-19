@@ -23,7 +23,6 @@ const UserProfile = () => {
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     const [addPostPicture, setAddPostPicture] = useState(false);
     const [picture, setPicture] = useState('');
-    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({})
     
@@ -130,13 +129,11 @@ const UserProfile = () => {
         
         const postData = {
             userId: sessionUser.id,
-            title,
             text: description,
             urls
         }
         
         dispatch(createPost(postData));
-        setTitle('');
         setDescription('');
         setPicture('');
         setAddPostPicture(false);
@@ -345,14 +342,6 @@ const UserProfile = () => {
             {(sessionSingleUser?.id === sessionUser?.id) && 
             <div id='user-profile-create-post-container'>
                 <h4 className='text-primary'>What's on your mind?</h4>
-                
-                <input id='user-profile-create-post-title'
-                    placeholder='Title (Not Required)'
-                    maxLength={40}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    autoFocus
-                />
                 
                 {(addPostPicture && picture) ? 
                     <div className="create-post-image-div">

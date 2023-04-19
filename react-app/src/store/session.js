@@ -395,7 +395,6 @@ export const createPost = (postData) => async (dispatch) => {
 		},
 		body: JSON.stringify({
 			userId: postData.userId,
-			title: postData.title,
 			text: postData.text,
 			urls: postData.urls
 		})
@@ -438,7 +437,6 @@ export const updatePost = (postId, userId, postData) => async (dispatch) => {
 		},
 		body: JSON.stringify({
 			userId: userId,
-			postTitle: postData.postTitle || false,
 			postText: postData.postText || false,
 			images: postData.images
 		})

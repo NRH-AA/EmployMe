@@ -64,15 +64,17 @@
 }
 
 .feed-news-text {
+    font-size: 20px;
+}
+.feed-news-text > span {
     font-size: 12px;
     font-weight: 900;
-    margin-left: 5px;
 }
 
 .feed-news-title {
     font-size: 12px;
-    margin-top: -10px;
-    margin-left: 20px;
+    margin-top: 4px;
+    margin-left: 5px;
     width: 85%;
 }
 
@@ -140,6 +142,7 @@
     width: 100%;
     height: auto;
     margin-top: 10px;
+    padding-bottom: 10px;
     display: flex;
 }
 
@@ -177,6 +180,21 @@
     height: auto;
     margin-left: 5px;
     width: 98%;
+}
+
+.feed-post-text-seemore, .feed-post-text-seeless {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.feed-post-text-seemore:hover, .feed-post-text-seeless:hover {
+    color: var(--text-color-primary);
+}
+
+.feed-post-text-seeless {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    float: right;
 }
 
 #feed-news-container {
@@ -226,11 +244,10 @@
     margin-right: 10px;
     margin-bottom: 10px;
     border: none;
-    height: 25px;
-    width: 120px;
-    border-radius: 5px;
+    background: none;
     cursor: pointer;
     font-weight: 700;
+    color: var(--icon-color);
 }
 
 
@@ -253,13 +270,18 @@
     opacity: 1.0;
 }
 
-.fa-github, .fa-linkedin, .fa-info-circle {
+.theme-change-button {
+    background: none;
+    border: none;
+}
+
+.fa-github, .fa-linkedin, .fa-info-circle, .fa-tachometer {
     font-size: 25px;
-    color: var(--button-background-color);
+    color: var(--icon-color);
     transition: font-size 200ms;
 }
 
-.fa-github:hover, .fa-linkedin:hover, .fa-info-circle:hover {
+.fa-github:hover, .fa-linkedin:hover, .fa-info-circle:hover, .fa-tachometer:hover {
     font-size: 35px;
 }
 

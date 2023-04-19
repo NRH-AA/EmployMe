@@ -9,7 +9,6 @@ def seed_posts():
     for i in range(100):
         newPost = Post(
             user_id = randint(1, 20),
-            post_title = fake.sentence(),
             post_text = fake.paragraph(nb_sentences=5)
         )
         
@@ -17,7 +16,6 @@ def seed_posts():
     
     post1 = Post(
         user_id = 1,
-        post_title = 'Demo Post Title',
         post_text = 'Demo Post Text'
     )
     

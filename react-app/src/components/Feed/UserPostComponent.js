@@ -11,6 +11,7 @@ const UserPostComponent = ({post}) => {
     const posts = useSelector(state => state.session.posts);
     const [theme, setTheme] = useState(sessionUser?.theme);
     const [previewImages, setPreviewImages] = useState({});
+    const [showMore, setShowMore] = useState(false);
     
     useEffect(() => {
         if (posts?.length > 0) {
@@ -57,7 +58,21 @@ const UserPostComponent = ({post}) => {
         </div>
         
         <div className="feed-post-text-div">
-            <h4 className='text-primary'>{post.post_title}</h4>
+            {!showMore ? <p className='text-secondary'>{post.post_text.slice(0, 220)}
+                {post?.post_text?.length > 220 && 
+                    <button className='feed-post-text-seemore text-secondary'
+                        onClick={() => setShowMore(!showMore)}
+                    >...see more</button>
+                }
+            </p>
+            :
+                <p className='text-secondary'>{post.post_text}
+                    <button className='feed-post-text-seeless text-secondary'
+                        onClick={() => setShowMore(!showMore)}
+                    >show less</button>
+                </p>
+            }
+
             
             <div className='feed-post-image-container'>
             {previewImages[post.id] && 
@@ -86,7 +101,6 @@ const UserPostComponent = ({post}) => {
             }
             </div>
             
-            <p className='text-secondary'>{post.post_text}</p>
         </div>
     </div>
     )

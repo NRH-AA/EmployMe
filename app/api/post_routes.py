@@ -19,12 +19,10 @@ def get_posts():
 def create_post():
     data = request.get_json()
     user_id = data['userId']
-    title = data['title']
     text = data['text']
     urls = data['urls']
     
     post = Post(
-        post_title = title,
         post_text = text
     )
     
@@ -45,7 +43,6 @@ def create_post():
 @login_required
 def update_post(id):
     data = request.get_json()
-    post_title = data['postTitle'] or False
     post_text = data['postText'] or False
     user_id = data['userId'] or False
     images = data['images'] or []
@@ -66,9 +63,6 @@ def update_post(id):
     if not user:
         errors.user = 'User does not exist'
         return {'errors': errors}
-    
-    if post_title and (len(post_title) < 4 or len(post_title)) > 40:
-        errors.title = 'Title (4-40) characters'
         
     if post_text and (len(post_text) < 10 or len(post_text)) > 250:
         errors.text = 'Text (10-250) characters'
@@ -86,12 +80,6 @@ def update_post(id):
                 image = PostImage.query.get(img['id'])
                 image.url=img['url']
 
-                
-        
-    if 'title' in errors or 'text' in errors:
-        return {'errors': errors}, 400
-
-    post.post_title = post_title
     post.post_text = post_text
     post.updatedAt = datetime.now()
     user.updatedAt = datetime.now()
