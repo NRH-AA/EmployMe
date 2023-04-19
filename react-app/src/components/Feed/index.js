@@ -80,7 +80,7 @@ const Feed = () => {
                     )}
                     
                     {posts?.length && <button className='button-main'
-                        onClick={(e) => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
+                        onClick={() => {setOffset(offset + 6); dispatch(appendPostsThunk(offset))}}
                     >See more</button>}
                 </div>
                 

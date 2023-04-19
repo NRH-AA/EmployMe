@@ -12,6 +12,7 @@ const UserPostComponent = ({post}) => {
     const [theme, setTheme] = useState(sessionUser?.theme);
     const [previewImages, setPreviewImages] = useState({});
     const [showMore, setShowMore] = useState(false);
+    const [postText, setPostText] = useState(post?.post_text || '');
     
     useEffect(() => {
         if (posts?.length > 0) {
@@ -58,19 +59,29 @@ const UserPostComponent = ({post}) => {
         </div>
         
         <div className="feed-post-text-div">
-            {!showMore ? <p className='text-secondary'>{post.post_text.slice(0, 220)}
-                {post?.post_text?.length > 220 && 
-                    <button className='feed-post-text-seemore text-secondary'
-                        onClick={() => setShowMore(!showMore)}
-                    >...see more</button>
-                }
-            </p>
-            :
-                <p className='text-secondary'>{post.post_text}
+            {(post?.post_text?.length > 220 && !showMore) ? 
+            <>
+                <div className='feed-post-text-area'>
+                    <p className='text-secondary'>{post.post_text.slice(0, 220)}
+                        <button className='feed-post-text-seemore text-secondary'
+                            onClick={() => setShowMore(true)}
+                        >...see more</button>
+                    </p>
+                </div>
+            </> : (showMore && post?.post_text?.length > 220) ?
+            <>
+                <div className='feed-post-text-area'>
+                    <p className='text-secondary'>{post.post_text}</p>
                     <button className='feed-post-text-seeless text-secondary'
-                        onClick={() => setShowMore(!showMore)}
+                        onClick={() => setShowMore(false)}
                     >show less</button>
-                </p>
+                </div>
+            </> : (post?.post_text?.length <= 220 && !showMore) &&
+            <>
+                <div className='feed-post-text-area'>
+                    <p className='text-secondary'>{post.post_text}</p>
+                </div>
+            </>
             }
 
             
