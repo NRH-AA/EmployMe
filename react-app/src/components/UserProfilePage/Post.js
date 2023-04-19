@@ -24,21 +24,18 @@ const Post = ({post, user}) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showImage, setShowImage] = useState(post?.images?.[0]?.url || null);
-    const [title, setTitle] = useState(post?.post_title || '');
     const [text, setText] = useState(post?.post_text || '');
     const [errors, setErrors] = useState([]);
     
     
     const resetPostData = () => {
         setPictures(postImages);
-        setTitle(post?.post_title);
         setText(post?.post_text);
     }
     
     const validatePostEdit = () => {
         const newErrors = {};
-        
-        if (title && (title.length < 4 || title.length > 40)) newErrors.title = 'Title (4-40) characters';
+
         if (!text || (text.length < 10 || text.length > 250)) newErrors.text = 'Text (10-250) characters';
     
         return newErrors;
@@ -46,7 +43,7 @@ const Post = ({post, user}) => {
     
     useEffect(() => {
         if (isSubmitted) setErrors(validatePostEdit());
-    }, [isSubmitted, text, title])
+    }, [isSubmitted, text])
     
     useEffect(() => {
         if (!user?.active && isUpdating) setIsUpdating(false);
@@ -68,13 +65,12 @@ const Post = ({post, user}) => {
             if (img.url !== '' && img.url !== default_picture) images.push(img);
         });
         
-        if (!images.length > 0 && title === post.post_title && text === post.post_text) {
+        if (!images.length > 0 && text === post.post_text) {
             resetPostData();   
             return setIsUpdating(false);
         }
         
         const postData = {
-            postTitle: title,
             postText: text,
             images
         }
@@ -142,19 +138,9 @@ const Post = ({post, user}) => {
     const showPostTitle = () => {
         return (
             <div className="post-title-bar-div" data-theme={sessionTheme}>
-                {!isUpdating ? <h4 className='text-primary'>{post?.post_title}</h4>
-                :
-                    <input className='post-title-edit-input'
-                        placeholder="Title"
-                        maxLength={40}
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                }
-                
                 {(user?.id === sessionUser?.id) && 
                     <button className='post-ellipsis-button'
-                        title='Edit Post'
+                        title={!isUpdating ? 'Edit Post' : 'Submit Edit'}
                         onClick={(e) => handleEditButtonPressed(e)}
                     >{!isUpdating ? <i className="fas fa-ellipsis-h"/> : <i className="fa fa-paper-plane post-paper-plane"/>}
                     </button>
@@ -236,8 +222,6 @@ const Post = ({post, user}) => {
     return (
         <div className="profile-post-div-container">
             
-            
-            {errors?.title && <p className='post-title-error-p'>{errors.title}</p>}
             {showPostTitle()}
             
             {showPostImages()}

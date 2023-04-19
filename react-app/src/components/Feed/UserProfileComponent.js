@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 
-const UserProfileComponant = () => {
+const UserProfileComponent = () => {
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const [connections, setConnections] = useState(0);
@@ -38,4 +38,4 @@ const UserProfileComponant = () => {
     );
 };
 
-export default UserProfileComponant;
+export default UserProfileComponent;

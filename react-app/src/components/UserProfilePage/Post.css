@@ -12,13 +12,7 @@
 
 
 .post-title-bar-div {
-    margin-left: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.post-title-bar-div > h4 {
-    margin-bottom: 10px;
+    width: 100%;
 }
 
 .profile-post-text-container {
@@ -28,8 +22,10 @@
 .post-ellipsis-button {
     border: none;
     background: none;
+    float: right;
     margin-right: 10px;
     margin-top: 10px;
+    margin-bottom: 10px;
     color: var(--button-background-color);
     cursor: pointer;
 }

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getNewsThunk } from "../../store/session";
 
-const NewsComponant = () => {
+const NewsComponent = () => {
     const dispatch = useDispatch();
     
     const sessionUser = useSelector(state => state.session.user);
@@ -17,7 +17,7 @@ const NewsComponant = () => {
     
     const updateNews = () => {
         if (sessionNews?.length) {
-            const newNews = sessionNews.slice(newsOffset, newsOffset + 10);
+            const newNews = sessionNews.slice(newsOffset, newsOffset + 6);
             setNewsLimit(newNews);
         }
     }
@@ -30,7 +30,7 @@ const NewsComponant = () => {
         } 
         
         return (<>
-            <p className="text-primary feed-news-text">- {news.author.toUpperCase()}</p>
+            <li className="text-primary feed-news-text"><span>{news.author.toUpperCase()}</span></li>
             <p className='text-secondary feed-news-title'>{news.title.slice(0, 80)} ...</p>
         </>)
     }
@@ -39,9 +39,9 @@ const NewsComponant = () => {
         return <div id="feed-news-div">
         <h3 style={{marginLeft: "10px", fontSize: "16px"}} className='text-primary'>EmployMe News</h3>
         {newsLimit?.map((news, i) => 
-            <div key={i}>
+            <ul key={i}>
                 {showNewsAuthor(news)}
-            </div>
+            </ul>
         )}
     </div>
     }
@@ -62,14 +62,14 @@ const NewsComponant = () => {
                     No news today.
                 </p>
             :
-                <button id="feed-news-button" className='button-main'
+                <button id="feed-news-button"
                     type='button'
                     title='See More News'
                     onClick={() => {setNewsOffset(newsOffset + 10); updateNews()}}
-                >More News</button>
+                ><i className="fa fa-arrow-right"/></button>
             }
         </div>
     );  
 };
 
-export default NewsComponant;
+export default NewsComponent;

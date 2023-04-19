@@ -36,54 +36,79 @@ function Navigation({ isLoaded }){
 	
 	return (
 		<div id="navigation-container" data-theme={sessionTheme}>
-			<div id="navigation-logo-search-div">
-				<img id="navigation-logo" src={Logo} alt="Home" onClick={(e) => handleLogoPressed(e)}/>
 				
-				{sessionPath === '/' && 
+				
 				<div id="searchbar-input-div" data-theme={sessionTheme}>
-					<input id="searchbar-input" type="text" 
-						placeholder='Search Bar'
-						value={search}
-						maxLength={40}
-						onKeyDown={(e) => keyDownSearch(e)}
-						onChange={(e) => setSearch(e.target.value)}
-						autoFocus
+					<img id='navigation-logo' src={Logo} alt='EmployMe Logo'
+						onClick={() => history.push('/')}
 					/>
-					<button id="search-button-submit"
-						// onClick={() => handleSearch()}
-						onClick={(e) => handleInvalidFeature(e)}
-					><i className="fas fa-search"></i></button>
-				</div>}
-				
-				<div id="navigation-button-bar-div">
-					<button className="navigation-button" type="button"
-						title="Home"
-						onClick={(e) => history.push('/')}
-					><i className="fa-solid fa-house"></i>
-					</button>
 					
-					<button className="navigation-button" type="button"
-						title="Jobs"
-						onClick={(e) => handleInvalidFeature(e)}
-					><i className="fa-solid fa-briefcase"></i></button>
-					
-					<button className="navigation-button" type="button"
-						title="Network"
-						onClick={(e) => handleInvalidFeature(e)}
-					><i className="fa-solid fa-users"></i></button>
-					
-					<button className="navigation-button" type="button"
-						title="Messages"
-						onClick={(e) => handleInvalidFeature(e)}
-					><i className='far fa-comment-dots'></i></button>
-					
-					<button className="navigation-button" type="button"
-						title="Notifications"
-						onClick={(e) => handleInvalidFeature(e)}
-					><i className="fa fa-bell"></i></button>
+					{sessionPath === '/' && 
+					<div id='searchbar-container'>
+						<button id="search-button-submit"
+							// onClick={() => handleSearch()}
+							onClick={(e) => handleInvalidFeature(e)}
+						><i className="fas fa-search"></i></button>
+						<input id="searchbar-input" type="text" 
+							placeholder='Search Bar'
+							value={search}
+							maxLength={40}
+							onKeyDown={(e) => keyDownSearch(e)}
+							onChange={(e) => setSearch(e.target.value)}
+							autoFocus
+						/>
+					</div>}
 				</div>
 				
-			</div>
+				<div id="navigation-button-bar-div">
+					
+					<div className='navigation-button-div'
+						onClick={() => history.push('/')}
+					>
+						<button className="navigation-button" type="button"
+							title="Home"
+						><i className="fa-solid fa-house"/>
+						</button>
+						<span>Home</span>
+					</div>
+					
+					<div className='navigation-button-div'
+						onClick={(e) => handleInvalidFeature(e)}
+					>
+						<button className="navigation-button" type="button"
+							title="Network"
+						><i className="fa-solid fa-users"></i></button>
+						<span>My Network</span>
+					</div>
+					
+					<div className='navigation-button-div'
+						onClick={(e) => handleInvalidFeature(e)}
+					>
+						<button className="navigation-button" type="button"
+							title="Jobs"
+						><i className="fa-solid fa-briefcase"/></button>
+						<span>Jobs</span>
+					</div>
+					
+					<div className='navigation-button-div'
+						onClick={(e) => handleInvalidFeature(e)}
+					>
+						<button className="navigation-button" type="button"
+							title="Messages"
+						><i className='far fa-comment-dots'/></button>
+						<span>Messaging</span>
+					</div>
+					
+					<div className='navigation-button-div'
+						onClick={(e) => handleInvalidFeature(e)}
+					>
+						<button className="navigation-button" type="button"
+							title="Notifications"
+						><i className="fa fa-bell"/></button>
+						<span>Notifications</span>
+					</div>
+					
+				</div>
 			
 			<div>
 				{isLoaded && <ProfileButton user={sessionUser} />}
