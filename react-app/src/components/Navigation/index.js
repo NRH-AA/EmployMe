@@ -37,7 +37,7 @@ function Navigation({ isLoaded }){
 	return (
 		<div id="navigation-container" data-theme={sessionTheme}>
 				
-				
+			<div id='navigation-inner-container'>
 				<div id="searchbar-input-div" data-theme={sessionTheme}>
 					<img id='navigation-logo' src={Logo} alt='EmployMe Logo'
 						onClick={() => history.push('/')}
@@ -112,6 +112,8 @@ function Navigation({ isLoaded }){
 			
 			<div>
 				{isLoaded && <ProfileButton user={sessionUser} />}
+			</div>
+			
 			</div>
 		</div>
 	);
