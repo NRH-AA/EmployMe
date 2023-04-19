@@ -17,14 +17,16 @@
   top: 0px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  z-index: 1;
 }
 
 #navigation-logo {
   width: 35px;
   height: 34px;
+  filter: invert(100%);
   margin-left: 10px;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
 }
 

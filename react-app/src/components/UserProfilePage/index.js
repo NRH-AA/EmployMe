@@ -111,7 +111,7 @@ const UserProfile = () => {
         const newErrors = {};
         
         if (!description) newErrors.description = 'Descripton is required';
-        else if (description.length < 10) newErrors.description = 'Description (10-250)';
+        else if (description.length < 10) newErrors.description = 'Description (10-1000)';
         
         return newErrors;
     }
@@ -373,7 +373,7 @@ const UserProfile = () => {
                 }
                 <textarea id='user-profile-create-post-textarea' 
                     placeholder="What would you like to say?"
-                    maxLength={250}
+                    maxLength={1000}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
