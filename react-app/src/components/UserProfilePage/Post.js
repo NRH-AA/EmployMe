@@ -36,7 +36,7 @@ const Post = ({post, user}) => {
     const validatePostEdit = () => {
         const newErrors = {};
 
-        if (!text || (text.length < 10 || text.length > 250)) newErrors.text = 'Text (10-250) characters';
+        if (!text || (text.length < 10 || text.length > 1000)) newErrors.text = 'Text (10-1000) characters';
     
         return newErrors;
     }
@@ -205,11 +205,12 @@ const Post = ({post, user}) => {
         return (
             <div className="profile-post-text-container">
                 {errors?.text && <p className='post-text-error-p'>{errors.text}</p>}
-                {!isUpdating ? <p className='text-secondary'>{post?.post_text}</p>
+                {!isUpdating ? 
+                    <textarea readOnly className='text-secondary profile-post-text-area'>{post?.post_text}</textarea>
                 :
                     <textarea className='post-text-edit-input'
                         placeholder="What would you like to say?"
-                        maxLength={250}
+                        maxLength={1000}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                     />

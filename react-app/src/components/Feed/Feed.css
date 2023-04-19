@@ -182,6 +182,12 @@
     width: 98%;
 }
 
+.feed-post-text-area {
+    inline-size: 96%;
+    overflow-wrap: break-word;
+    height: fit-content;
+}
+
 .feed-post-text-seemore, .feed-post-text-seeless {
     background: none;
     border: none;
