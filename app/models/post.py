@@ -22,7 +22,6 @@ class Post(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "post_title": self.post_title,
             "post_text": self.post_text,
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,

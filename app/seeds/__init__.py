@@ -3,7 +3,6 @@ from .users import seed_users, undo_users
 from .posts import seed_posts, undo_posts
 from .job_listings import seed_job_listings, undo_job_listings
 from .post_images import seed_post_images, undo_post_images
-from .connections import seed_connections, undo_connections
 
 
 from app.models.db import db, environment, SCHEMA

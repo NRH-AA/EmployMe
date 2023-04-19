@@ -8,39 +8,6 @@
   display: none;
 }
 
-#navigation-logo-search-div {
-  display: flex;
-  align-items: center;
-  height: 50px;
-  width: 100%;
-  gap: 85px;
-}
-
-#searchbar-input-div {
-  margin-left: -30px;
-  width: 40%;
-}
-
-#searchbar-input {
-  width: 100%;
-  height: 35px;
-  border: none;
-  background-color: rgb(226, 226, 226);
-  border-radius: 5px;
-  margin-left: -5px;
-  font-weight: 700;
-  font-size: 15px;
-  outline: none;
-  color: black;
-  cursor: text;
-  transition: background-color 300ms;
-}
-
-#searchbar-input::placeholder {
-  color: rgb(117, 117, 117);
-}
-
-
 #navigation-container {
   width: 100%;
   height: 50px;
@@ -54,18 +21,80 @@
 }
 
 #navigation-logo {
-  width: 50px;
-  height: 40px;
+  width: 35px;
+  height: 34px;
   margin-left: 10px;
   border-radius: 3px;
   cursor: pointer;
 }
 
-#navigation-button-bar-div {
-  margin: auto;
+#searchbar-container {
+  width: 280px;
+  border: none;
+  background-color: var(--searchbar-background-color);
+  border-radius: 5px;
+  margin-left: 10px;
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+#search-button-submit {
+  height: 90%;
+  width: 26px;
+  font-size: 14px;
+  border-radius: 5px;
+  color: var(--searchbar-button-color);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+#searchbar-input-div {
+  width: auto;
+  height: 35px;
+  display: flex;
+}
+
+#searchbar-input {
+  width: 240px;
+  height: 90%;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  background: none;
+  outline: none;
+  color: var(--searchbar-text-color);
+  transition: background-color 300ms;
+}
+
+#searchbar-input::placeholder {
+  color: var(--searchbar-placeholder-color);
+}
+
+#navigation-button-bar-div {
+  margin: auto;
+  margin-left: 85px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navigation-button-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--icon-color);
+  cursor: pointer;
+}
+.navigation-button-div:hover {
+  color: var(--icon-color-hover);
+}
+
+.navigation-button-div > span {
+  font-size: 11px;
+  font-weight: 500;
 }
 
 .navigation-button {
@@ -74,16 +103,13 @@
 }
 
 .fa-house, .fa-bell, .fa-briefcase, .fa-users, .fa-comment-dots {
-  font-size: 24px;
-  color: var(--button-background-color);
+  font-size: 20px;
+  color: var(--icon-color);
   cursor: pointer;
-  transition: font-size 100ms, margin-left 100ms, margin-right 100ms; 
 }
 
 .fa-house:hover, .fa-bell:hover, .fa-briefcase:hover, .fa-users:hover, .fa-comment-dots:hover {
-  margin-left: -3px;
-  margin-right: -4px;
-  font-size: 30px;
+  color: var(--icon-color-hover);
 }
 
 #profile-dropdown-div {
@@ -94,7 +120,7 @@
   height: 35px;
   width: 80px;
   border: none;
-  background-color: var(--button-background-color);
+  background-color: var(--icon-color);
   border-radius: 3px;
   margin-right: 10px;
   cursor: pointer;
@@ -148,17 +174,6 @@
 
 .user-dropdown-button:active {
   background-color: rgb(221, 221, 221);
-}
-
-#search-button-submit {
-    margin-left: -27px;
-    height: 26px;
-    width: 26px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    background: none;
-    cursor: pointer;
 }
 
 .create-job-listing-button {

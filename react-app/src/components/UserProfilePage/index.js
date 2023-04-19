@@ -23,7 +23,6 @@ const UserProfile = () => {
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
     const [addPostPicture, setAddPostPicture] = useState(false);
     const [picture, setPicture] = useState('');
-    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({})
     
@@ -130,13 +129,11 @@ const UserProfile = () => {
         
         const postData = {
             userId: sessionUser.id,
-            title,
             text: description,
             urls
         }
         
         dispatch(createPost(postData));
-        setTitle('');
         setDescription('');
         setPicture('');
         setAddPostPicture(false);
@@ -268,7 +265,7 @@ const UserProfile = () => {
                 <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
                 <p className='text-secondary user-profile-occupation-p'>{sessionSingleUser?.occupation}</p>
                 {(sessionUser?.id !== sessionSingleUser?.id) &&
-                    <button
+                    <button className='button-main'
                         onClick={() => handleConnection()}
                     >{!connected ? 'Connect' : 'Remove Connection'} </button>
                 }
@@ -304,17 +301,12 @@ const UserProfile = () => {
                     <h4 className='text-primary'>Personal Information</h4>
                     <div id='user-profile-info-div'>
                         <div>
-                            <p className='text-primary'>NAME:</p>
-                            <p className='text-secondary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</p>
-                        </div>
-                            
-                        <div>
-                            <p className='text-primary'>EMAIL:</p>
+                            <p className='text-primary'>Work Email:</p>
                             <p className='text-secondary'>{sessionSingleUser?.work_email}</p>
                         </div>
                             
                         <div>
-                            <p className='text-primary'>COMPANY:</p>
+                            <p className='text-primary'>Company:</p>
                             {!isUpdatingBio ? <>
                                 <p className='text-secondary'>{sessionSingleUser?.company_name || 'None'}</p>
                             </> : <>
@@ -332,7 +324,7 @@ const UserProfile = () => {
                         </div>
                             
                         <div>
-                            <p className='text-primary'>PHONE:</p>
+                            <p className='text-primary'>Phone:</p>
                             <p className='text-secondary'>{sessionSingleUser?.phone_number}</p>
                         </div>
                     </div>
@@ -350,14 +342,6 @@ const UserProfile = () => {
             {(sessionSingleUser?.id === sessionUser?.id) && 
             <div id='user-profile-create-post-container'>
                 <h4 className='text-primary'>What's on your mind?</h4>
-                
-                <input id='user-profile-create-post-title'
-                    placeholder='Title (Not Required)'
-                    maxLength={40}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    autoFocus
-                />
                 
                 {(addPostPicture && picture) ? 
                     <div className="create-post-image-div">
