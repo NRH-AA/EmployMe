@@ -15,10 +15,16 @@
   margin: auto;
   position: sticky;
   top: 0px;
+  z-index: 1;
+}
+
+#navigation-inner-container {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  z-index: 1;
+  height: 50px;
+  max-width: 1280px;
+  margin: auto;
 }
 
 #navigation-logo {
@@ -75,8 +81,6 @@
 }
 
 #navigation-button-bar-div {
-  margin: auto;
-  margin-left: 85px;
   display: flex;
   align-items: center;
   gap: 30px;
@@ -197,41 +201,4 @@
 .create-job-listing-button:active {
     background: linear-gradient(#d6d6d6, #5f5f5f);
     box-shadow: -1px -2px 6px 4px rgb(247, 247, 247);
-}
-
-
-@media (max-width: 700px) {
-  #searchbar-input-div {
-      display: none;
-  }
-  
-  #navigation-logo-search-div {
-    justify-content: space-between;
-    gap: 5px;
-  }
-}
-
-@media (max-width: 660px) {
-  #navigation-logo-search-div {
-    justify-content: left;
-    gap: 25%;
-  }
-}
-
-@media (max-width: 445px) {
-  #navigation-logo-search-div {
-    justify-content: left;
-    gap: 12%;
-  }
-}
-
-@media (max-width: 390px) {
-  #navigation-container {
-    width: 100%;
-  }
-  
-  #navigation-logo-search-div {
-    justify-content: left;
-    gap: 5%;
-  }
 }
