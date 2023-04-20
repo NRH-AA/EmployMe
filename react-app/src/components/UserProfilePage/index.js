@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
-import { setWindowPath, getSingleUser, createPost, changeTheme, changeThemeThunk, updateUserInfoThunk } from "../../store/session";
+
+import { getSingleUser, createPost, 
+        changeTheme, changeThemeThunk, 
+        updateUserInfoThunk 
+} from "../../store/session";
+
 import OpenModalButton from "../OpenModalButton";
 import ProfilePictureModal from "./ProfilePictureModal";
 import Post from './Post';
@@ -17,7 +22,6 @@ const UserProfile = () => {
     const sessionUser = useSelector((state) => state.session.user);
     const sessionSingleUser = useSelector(state => state.session.singleUser);
     const sessionTheme = useSelector(state => state.session.theme);
-    const sessionPath = useSelector(state => state.session.path);
     
     const [theme, setTheme] = useState(sessionUser?.theme);
     const [isUpdatingBio, setIsUpdatingBio] = useState(false);
@@ -50,11 +54,6 @@ const UserProfile = () => {
     useEffect(() => {
         setConnected(hasConnection());
     }, [sessionUser, sessionSingleUser])
-    
-    // Update current path
-    useEffect(() => {
-        if (!sessionPath || !sessionPath.includes('/profile')) dispatch(setWindowPath(window.location.pathname));
-    }, [dispatch, sessionPath]);
     
     // Update theme to match user specific theme
     useEffect(() => {
@@ -394,9 +393,10 @@ const UserProfile = () => {
                     ><i className="fa-solid fa-camera"/></button>
                 }
                     
-                <button id='user-profile-create-post-button' className='button-main' data-theme={sessionTheme}
+                <button id='user-profile-create-post-button'
+                    title='Create Post'
                     onClick={(e) => handleCreatePostSubmit(e)}
-                >Create</button>
+                ><i className="fa-solid fa-pen-to-square"/></button>
                 
             </div>}
             

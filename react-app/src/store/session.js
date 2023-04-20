@@ -3,12 +3,10 @@ const SET_USER = "session/SET_USER";
 const SET_ALL_USERS = "session/SET_ALL_USERS";
 const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-const SET_PATH = "session/SET_PATH";
 const GET_POSTS = "session/GET_POSTS";
 const APPEND_POSTS = "session/APPEND_POSTS";
 const GET_NEWS = "session/GET_NEWS";
 const CHANGE_THEME = "session/CHANGE_THEME";
-const SET_SINGLE_POST = "session/SET_SINGLE_POST";
 const REMOVE_SINGLE_USER = 'session/REMOVE_SINGLE_USER';
 
 const setUser = (user) => ({
@@ -34,11 +32,6 @@ const removeUser = () => ({
 	type: REMOVE_USER,
 });
 
-export const setWindowPath = (path) => ({
-	type: SET_PATH,
-	path
-});
-
 const setPosts = (posts) => ({
 	type: GET_POSTS,
 	payload: posts
@@ -53,12 +46,6 @@ const setNews = (data) => ({
 	type: GET_NEWS,
 	data
 });
-
-const setSinglePost = (data) => ({
-	type: SET_SINGLE_POST,
-	data
-});
-
 
 export const changeTheme = (theme) => ({
 	type: CHANGE_THEME,
@@ -304,17 +291,6 @@ export const getJobListing = (id) => async (dispatch) => {
 	return data
 };
 
-export const getPost = (id) => async (dispatch) => {
-	const response = await fetch(`/api/posts/${id}`);
-	const data = await response.json();
-	
-	if (response.ok) {
-		dispatch(setSinglePost(data));
-	}
-	
-	return data;
-};
-
 export const updateJobListing = (jobId, jobData) => async (dispatch) => {
 	const response = await fetch(`/api/jobs/${jobId}`, {
 		method: "PUT",
@@ -528,10 +504,8 @@ const initialState = {
 	user: null, 
 	users: null,
 	singleUser: null,
-	singlePost: null,
 	posts: null,
 	job: null,
-	path: null,
 	news: null,
 	theme: 'light'
 };
@@ -550,9 +524,6 @@ export default function reducer(state = initialState, action) {
 		case SET_SINGLE_USER:
 			newState.singleUser = {...action.payload};
 			return newState;
-		case SET_PATH:
-			newState.path = action.path;
-			return newState;
 		case GET_POSTS:
 			newState.posts = [...action.payload.posts];
 			return newState;
@@ -568,9 +539,6 @@ export default function reducer(state = initialState, action) {
 		case RESET_STATE:
 			newState = initialState;
 			return newState
-		case SET_SINGLE_POST:
-			newState.singlePost = action.data;
-			return newState;
 		case REMOVE_SINGLE_USER:
 			newState.singleUser = null;
 			return newState;

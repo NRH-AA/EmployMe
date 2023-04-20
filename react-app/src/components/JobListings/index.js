@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getJobListing, updateJobListing, changeJobActiveStatus, setWindowPath, updateUserInfoThunk } from "../../store/session";
+import { getJobListing, updateJobListing, changeJobActiveStatus, updateUserInfoThunk } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import DeleteJobModal from "./DeleteJobModal";
 import './JobListing.css'
@@ -10,7 +10,6 @@ import './JobListing.css'
 const JobListing = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    const sessionPath = useSelector(state => state.session.path);
     const [job, setJob] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
     const [title, setTitle] = useState(job?.title || '');
@@ -38,10 +37,6 @@ const JobListing = () => {
         
         setErrors(newErrors);
     }
-    
-    useEffect(() => {
-        if (!sessionPath || !sessionPath.includes('/job')) dispatch(setWindowPath(window.location.pathname));
-    }, [dispatch, sessionPath])
     
     useEffect(() => {
         if (!job || jobId !== job.id) getJobListingData();

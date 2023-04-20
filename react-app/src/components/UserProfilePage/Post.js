@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { updatePost } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
-import './Post.css';
 import DeletePostModal from "./DeletePostModal";
+import './Post.css';
 
 
 const Post = ({post, user}) => {
