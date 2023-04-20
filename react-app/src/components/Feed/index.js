@@ -2,9 +2,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import { setWindowPath, getPostsThunk, appendPostsThunk, 
-    changeTheme, changeThemeThunk, resetState, removeSingleUserAction
+
+import { getPostsThunk, appendPostsThunk, 
+        changeTheme, changeThemeThunk, resetState, 
+        removeSingleUserAction
 } from "../../store/session";
+
 import UserProfileComponent from "./UserProfileComponent";
 import UserPostComponent from "./UserPostComponent";
 import NewsComponent from "./NewsComponent";
@@ -14,7 +17,6 @@ const Feed = () => {
     const dispatch = useDispatch();
     
     const sessionUser = useSelector(state => state.session.user);
-    const sessionPath = useSelector(state => state.session.path);
     const sessionSingleUser = useSelector(state => state.session.singleUser);
     const [theme, setTheme] = useState(sessionUser?.theme);
     const posts = useSelector(state => state.session.posts);
@@ -33,13 +35,6 @@ const Feed = () => {
     useEffect(() => {
         if (theme !== sessionUser?.theme) setTheme(sessionUser?.theme);
     }, [sessionUser, theme])
-    
-    
-    useEffect(() => {
-        if (!sessionPath || (sessionPath !== '/' && sessionPath !== '')) {
-            dispatch(setWindowPath(window.location.pathname));
-        };
-    }, [dispatch, sessionPath]);
     
     useEffect(() => {
         if (sessionSingleUser) dispatch(removeSingleUserAction());

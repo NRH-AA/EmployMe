@@ -1,16 +1,13 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getAllUsersThunk } from '../../store/session';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import Logo from './logo.png';
 
 function Navigation({ isLoaded }){
-	const dispatch = useDispatch();
 	const history = useHistory();
 	const sessionUser = useSelector(state => state.session.user);
-	const sessionPath = useSelector(state => state.session.path);
 	const sessionTheme = useSelector(state => state.session.theme);
 	const [search, setSearch] = useState('');
 	
@@ -25,11 +22,6 @@ function Navigation({ isLoaded }){
 		};
 	};
 	
-	const handleLogoPressed = async () => {
-		await dispatch(getAllUsersThunk());
-		return history.push('/');
-	}
-	
 	const handleInvalidFeature = () => {
 		return alert('Feature coming soon!');
 	}
@@ -43,7 +35,6 @@ function Navigation({ isLoaded }){
 						onClick={() => history.push('/')}
 					/>
 					
-					{sessionPath === '/' && 
 					<div id='searchbar-container'>
 						<button id="search-button-submit"
 							// onClick={() => handleSearch()}
@@ -57,7 +48,7 @@ function Navigation({ isLoaded }){
 							onChange={(e) => setSearch(e.target.value)}
 							autoFocus
 						/>
-					</div>}
+					</div>
 				</div>
 				
 				<div id="navigation-button-bar-div">

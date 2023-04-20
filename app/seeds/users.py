@@ -38,8 +38,31 @@ profile_pictures = [
     'https://lumiere-a.akamaihd.net/v1/images/solo-db-chewie-on-falcon-gallery_7f6e39ec.jpeg',
     'https://hips.hearstapps.com/hmg-prod/images/cute-cat-photos-1593441022.jpg',
     'https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg',
-    'https://i.guim.co.uk/img/media/3f6d39f213b18361c95ad0d4672ebf5680d19e7d/0_19_3500_2100/master/3500.jpg',
+    'https://static.independent.co.uk/s3fs-public/thumbnails/image/2014/10/21/09/rowan-atkinson.jpg',
     'https://wallpapercave.com/wp/wp5554098.jpg'
+]
+
+userInfo = [
+    {'first_name': 'Rick', 'last_name': 'Roll'},
+    {'first_name': 'Bob', 'last_name': 'Ross'},
+    {'first_name': 'James', 'last_name': 'Bond'},
+    {'first_name': 'Peter', 'last_name': 'Griffin'},
+    {'first_name': 'Stan', 'last_name': 'Smith'},
+    {'first_name': 'Chicken', 'last_name': 'McCluck'},
+    {'first_name': 'Albert', 'last_name': 'Einstein'},
+    {'first_name': 'Gandolf', 'last_name': 'The Grey'},
+    {'first_name': 'Gollum', 'last_name': 'Smegal'},
+    {'first_name': 'Cloud', 'last_name': 'Shinra'},
+    {'first_name': 'Forest', 'last_name': 'Gump'},
+    {'first_name': 'Robin', 'last_name': 'Williams'},
+    {'first_name': 'Adam', 'last_name': 'Sandler'},
+    {'first_name': 'Some', 'last_name': 'Nerd'},
+    {'first_name': 'Anakin', 'last_name': 'Skywalker'},
+    {'first_name': 'Chew', 'last_name': 'baka'},
+    {'first_name': 'Detective', 'last_name': 'Mittens'},
+    {'first_name': 'Mark', 'last_name': 'Zuckerburg'},
+    {'first_name': 'Mr', 'last_name': 'Bean'},
+    {'first_name': 'Donkey', 'last_name': 'McShrek'}
 ]
 
 # Adds a demo user, you can add other users here if you want
@@ -59,13 +82,15 @@ def seed_users():
         age = 32
     )
     
+    db.session.add(demo)
+    
     for i in range(20):
         newUser = User(
             username=fake.user_name(),
             email=fake.email(),
             password='password',
-            first_name=fake.first_name(),
-            last_name=fake.last_name(),
+            first_name=userInfo[i]['first_name'],
+            last_name=userInfo[i]['last_name'],
             occupation=jobs[randint(0, len(jobs) - 1)],
             phone_number=fake.phone_number(),
             work_email=fake.company_email(),
@@ -75,7 +100,6 @@ def seed_users():
         
         db.session.add(newUser)
     
-    db.session.add(demo)
     db.session.commit()
 
 
