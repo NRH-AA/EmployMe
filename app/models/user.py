@@ -15,8 +15,18 @@ connections = db.Table(
         add_prefix_for_prod('users.id')), primary_key=True)
 )
 
+follows = db.Table(
+    "follows",
+    db.Model.metadata,
+    db.Column('follower', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('followed', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True)
+)
+
 if environment == 'production':
     connections.schema = SCHEMA
+    follows.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -56,6 +66,13 @@ class User(db.Model, UserMixin):
         primaryjoin=connections.c.connecty == id,
         secondaryjoin=connections.c.connecter == id,
         backref="connecting"
+    )
+    followers = db.relationship(
+        "User",
+        secondary="follows",
+        primaryjoin=follows.c.followed == id,
+        secondaryjoin=follows.c.follower == id,
+        backref="following"
     )
 
 
@@ -119,5 +136,7 @@ class User(db.Model, UserMixin):
             'messages': [message.to_dict() for message in self.messages],
             'posts': [post.to_dict() for post in self.posts],
             'connections': [user.to_dict() for user in self.connection],
-            'connecting': [user.to_dict() for user in self.connecting]
+            'connecting': [user.to_dict() for user in self.connecting],
+            'followers': [user.to_dict() for user in self.followers],
+            'following': [user.to_dict() for user in self.following]
         }

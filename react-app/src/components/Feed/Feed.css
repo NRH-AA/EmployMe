@@ -59,6 +59,7 @@
 #feed-user-profile-skills-div {
     width: 95%;
     text-align: center;
+    border-bottom: 2px solid rgb(66, 66, 66);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -67,7 +68,7 @@
 }
 
 .feed-skill-p {
-    margin-top: -10px;
+    margin-top: -25px;
 }
 
 .feed-news-text {
@@ -87,9 +88,12 @@
 
 
 #feed-user-connections-div {
-    position: static;
+    width: 100%;
 }
 
+.feed-user-connections-p {
+    margin-left: 10px;
+}
 
 #feed-posts-container {
     display: flex;
@@ -133,12 +137,38 @@
 .feed-post-top-right-div {
     display: flex;
     flex-direction: column;
+    width: 100%;
     margin-left: 5px;
     margin-top: 15px;
 }
 
+.feed-post-top-right-inner-div {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.feed-post-date-p {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
 .feed-post-top-right-p {
     margin: 0px;
+}
+
+.feed-post-post-time-p {
+    margin-top: 5px;
+}
+
+.feed-post-post-time-p {
+    margin: 0px;
+    padding: 0px;
+    margin-left: 15px;
+}
+
+.feed-post-post-time-p > li {
+    font-size: 12px;
 }
 
 .feed-post-image-preview-navlink {
