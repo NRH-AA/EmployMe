@@ -2,7 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import { setWindowPath, getPostsThunk, appendPostsThunk, changeTheme, changeThemeThunk, resetState } from "../../store/session";
+import { setWindowPath, getPostsThunk, appendPostsThunk, 
+    changeTheme, changeThemeThunk, resetState, removeSingleUserAction
+} from "../../store/session";
 import UserProfileComponent from "./UserProfileComponent";
 import UserPostComponent from "./UserPostComponent";
 import NewsComponent from "./NewsComponent";
@@ -13,6 +15,7 @@ const Feed = () => {
     
     const sessionUser = useSelector(state => state.session.user);
     const sessionPath = useSelector(state => state.session.path);
+    const sessionSingleUser = useSelector(state => state.session.singleUser);
     const [theme, setTheme] = useState(sessionUser?.theme);
     const posts = useSelector(state => state.session.posts);
     
@@ -37,6 +40,10 @@ const Feed = () => {
             dispatch(setWindowPath(window.location.pathname));
         };
     }, [dispatch, sessionPath]);
+    
+    useEffect(() => {
+        if (sessionSingleUser) dispatch(removeSingleUserAction());
+    }, [sessionSingleUser])
     
     
     const handleScroll = () => {
@@ -110,7 +117,7 @@ const Feed = () => {
                 <button className='theme-change-button'
                     title='Change Theme'
                     onClick={() => switchTheme()}
-                ><i class="fa fa-tachometer"/></button>
+                ><i className="fa fa-tachometer"/></button>
             </div>
         </div>
     );

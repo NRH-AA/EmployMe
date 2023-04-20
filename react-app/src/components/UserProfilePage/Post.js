@@ -9,28 +9,24 @@ import DeletePostModal from "./DeletePostModal";
 const Post = ({post, user}) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const sessionSingleUser = useSelector(state => state.session.singleUser);
     const sessionTheme = useSelector(state => state.session.theme);
     
     const default_picture = 'https://assets.website-files.com/61e2d9500e1bc451a3ea1aa3/629a49e7ab53625cb2c4e791_Brand-pattern.jpg';
-    const postImages = [...post?.images];
-    postImages[0] = postImages[0] ? {...postImages[0]} : {id: null, url: default_picture};
-    postImages[1] = postImages[1] ? {...postImages[1]} : {id: null, url: default_picture};
-    postImages[2] = postImages[2] ? {...postImages[2]} : {id: null, url: default_picture};
-    postImages[3] = postImages[3] ? {...postImages[3]} : {id: null, url: default_picture};
-    postImages[4] = postImages[4] ? {...postImages[4]} : {id: null, url: default_picture};
     
-    
-    const [pictures, setPictures] = useState(postImages);
+    const [pictures, setPictures] = useState(post?.images);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [showImage, setShowImage] = useState(post?.images?.[0]?.url || null);
     const [text, setText] = useState(post?.post_text || '');
+    const [showFullText, setShowFullText] = useState(false);
     const [errors, setErrors] = useState([]);
     
     
     const resetPostData = () => {
-        setPictures(postImages);
+        setPictures([...post?.images]);
         setText(post?.post_text);
+        setShowImage(pictures[0]?.url);
     }
     
     const validatePostEdit = () => {
@@ -43,16 +39,25 @@ const Post = ({post, user}) => {
     
     useEffect(() => {
         if (isSubmitted) setErrors(validatePostEdit());
-    }, [isSubmitted, text])
+    }, [isSubmitted, text]);
     
     useEffect(() => {
         if (!user?.active && isUpdating) setIsUpdating(false);
-    }, [user?.active, isUpdating])
+    }, [user?.active, isUpdating]);
     
+    useEffect(() => {
+        if (showImage !== pictures[0]?.url) {
+            resetPostData();
+            setShowImage(pictures[0]?.url !== default_picture ? pictures[0]?.url : '');
+        }
+    }, [showImage])
+    
+    useEffect(() => {
+        if (post) resetPostData();
+    }, [sessionSingleUser]);
     
     
     if (!user || !post) return null;
-    
     
     
     const handleSubmitEdit = async () => {
@@ -64,11 +69,6 @@ const Post = ({post, user}) => {
         pictures.forEach(img => {
             if (img.url !== '' && img.url !== default_picture) images.push(img);
         });
-        
-        if (!images.length > 0 && text === post.post_text) {
-            resetPostData();   
-            return setIsUpdating(false);
-        }
         
         const postData = {
             postText: text,
@@ -133,10 +133,17 @@ const Post = ({post, user}) => {
         }
         return false;
     }
-
     
-    const showPostTitle = () => {
-        return (
+    const hasPostImages = (pictures[0]?.url && pictures[0]?.url !== default_picture) ||
+                          (pictures[1]?.url && pictures[1]?.url !== default_picture) ||
+                          (pictures[2]?.url && pictures[2]?.url !== default_picture) ||
+                          (pictures[3]?.url && pictures[3]?.url !== default_picture) ||
+                            (pictures[4]?.url && pictures[4]?.url !== default_picture);
+    
+    
+    return (
+        <div className="profile-post-div-container">
+            
             <div className="post-title-bar-div" data-theme={sessionTheme}>
                 {(user?.id === sessionUser?.id) && 
                     <button className='post-ellipsis-button'
@@ -146,23 +153,9 @@ const Post = ({post, user}) => {
                     </button>
                 }
             </div>
-        );
-    };
-    
-    
-    
-    const hasPostImages = (pictures[0].url && pictures[0].url !== default_picture) ||
-                          (pictures[1].url && pictures[1].url !== default_picture) ||
-                          (pictures[2].url && pictures[2].url !== default_picture) ||
-                          (pictures[3].url && pictures[3].url !== default_picture) ||
-                            (pictures[4].url && pictures[4].url !== default_picture);
-    
-    const showPostImages = () => {
-        
-        if (!showImage && isUpdating) setShowImage(pictures[0].url);
-        if ((showImage === '' || showImage === default_picture) && !isUpdating) setShowImage(null);
-        
-        return (
+            
+            
+            
             <div className="post-images-container">
                 {(showImage && (showImage.url !== default_picture || isUpdating)) &&
                     <img className='post-image-preview'
@@ -195,19 +188,29 @@ const Post = ({post, user}) => {
                         })}
                 </div>
                 }
-                
             </div>
-        );
-    };
-    
-    
-    const showPostText = () => {
-        return (
+
+
+
+
             <div className="profile-post-text-container">
                 {errors?.text && <p className='post-text-error-p'>{errors.text}</p>}
-                {!isUpdating ? 
-                    <textarea readOnly className='text-secondary profile-post-text-area'>{post?.post_text}</textarea>
-                :
+                {(!isUpdating) ?
+                    (!showFullText && post?.post_text?.length > 220) ?
+                        <p className='text-secondary profile-post-text-area'>{post?.post_text.slice(0, 220)}
+                            <button className='feed-post-text-seemore text-secondary'
+                                onClick={() => setShowFullText(true)}
+                            >...see more</button>
+                        </p>
+                    : (post?.post_text?.length <= 220) ?
+                        <p className='text-secondary profile-post-text-area'>{post?.post_text.slice(0, 220)}</p>
+                    : (showFullText) &&
+                    <p className='text-secondary profile-post-text-area'>{post?.post_text}
+                        <button className='feed-post-text-seeless text-secondary'
+                            onClick={() => setShowFullText(false)}
+                        >show less</button>
+                    </p>
+                : (isUpdating) &&
                     <textarea className='post-text-edit-input'
                         placeholder="What would you like to say?"
                         maxLength={1000}
@@ -216,25 +219,12 @@ const Post = ({post, user}) => {
                     />
                 }
             </div>
-        );
-    };
-    
-    
-    return (
-        <div className="profile-post-div-container">
-            
-            {showPostTitle()}
-            
-            {showPostImages()}
-
-            {showPostText()}
             
             {(user?.id === sessionUser?.id) &&
                 <div className='post-edit-buttons-div'>
                     <OpenModalButton 
-                        title="Delete Post"
                         className='post-delete-button'
-                        buttonText={<i className="fa fa-trash"/>}
+                        buttonText={<i title="Delete Post" className="fa fa-trash"/>}
                         modalComponent={<DeletePostModal user={sessionUser} post={post}/>}
                     />
                 </div>

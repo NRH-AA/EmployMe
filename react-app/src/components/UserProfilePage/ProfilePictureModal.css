@@ -1,0 +1,59 @@
+#profile-picture-modal-container {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 2px 2px var(--div-box-shadow-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+#profile-picture-modal-img {
+    width: 250px;
+    height: 250px;
+    padding-bottom: 20px;
+}
+
+#profile-picture-modal-remove {
+    position: absolute;
+    margin-top: -140px;
+    margin-left: 130px;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    color: red;
+    background-color: black;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#upload-image-container {
+    width: 250px;
+    height: 250px;
+    margin-top: 10px;
+    text-indent: 24px;
+    background-color: rgb(94, 94, 94);
+    border: 2px dashed rgb(39, 39, 39);
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#profile-picture-modal-remove:hover {
+    opacity: 1.0;
+}
+
+#user-picture-button-div {
+    margin-top: 20px;
+    display: flex;
+    gap: 50px;
+}
+
+.update-profile-picture-button {
+    width: 120px;
+    height: 25px;
+    cursor: pointer;
+}
