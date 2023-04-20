@@ -6,9 +6,11 @@ import './DeletePost.css';
 const DeletePostModal = ({user, post}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const sessionUser = useSelector(state => state.session.user);
     const sessionTheme = useSelector(state => state.session.theme);
     
     const handleDelete = async () => {
+        if (sessionUser?.id === 1) return alert('Demo user cannot Delete posts.');
         await dispatch(deletePost(post.id, user.id));
         return closeModal();
     };

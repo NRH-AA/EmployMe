@@ -118,6 +118,8 @@ const UserProfile = () => {
     
     
     const handleCreatePostSubmit = () => {
+        if (sessionUser?.id === 1) return alert('Demo user cannot create posts.');
+        
         const newErrors = validatePostInformation();
         if (Object.values(newErrors).length > 0) return setErrors(newErrors);
         
@@ -160,6 +162,7 @@ const UserProfile = () => {
     
     
     const handleImageUpload = async (file) => {
+        if (sessionUser?.id === 1) return alert('Demo user cannot upload files.');
         const formData = new FormData();
         formData.append("image", file);
     
@@ -172,6 +175,7 @@ const UserProfile = () => {
     
     
     const updateImageFile = (e) => {
+        if (sessionUser?.id === 1) return alert('Demo user cannot upload files.');
         const file = e.target.files[0];
         handleImageUpload(file);
     };
@@ -187,6 +191,7 @@ const UserProfile = () => {
     if (!sessionSingleUser?.active && isUpdatingBio) setIsUpdatingBio(!isUpdatingBio);
     
     const handleEditProfileButton = () => {
+        if (sessionUser?.id === 1) return alert('Demo account cannot be modified.');
         if (!isUpdatingBio) return setIsUpdatingBio(true);
         else return handleSubmitBio()
     }

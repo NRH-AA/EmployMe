@@ -8,7 +8,7 @@ fake = Faker()
 def seed_posts():
     for i in range(100):
         newPost = Post(
-            user_id = randint(1, 20),
+            user_id = randint(1, 21),
             post_text = fake.paragraph(nb_sentences=5)
         )
         
