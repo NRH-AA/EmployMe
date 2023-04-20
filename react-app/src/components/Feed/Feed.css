@@ -128,7 +128,10 @@
 
 .feed-post-top-div > img {
     width: 75px;
+    min-width: 75px;
     height: 75px;
+    min-height: 75px;
+    border-radius: 50px;
     margin-left: 5px;
     margin-top: 5px;
     cursor: pointer;

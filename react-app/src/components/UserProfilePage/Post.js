@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { updatePost } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
-import './Post.css';
 import DeletePostModal from "./DeletePostModal";
+import './Post.css';
 
 
 const Post = ({post, user}) => {
@@ -46,13 +46,6 @@ const Post = ({post, user}) => {
     }, [user?.active, isUpdating]);
     
     useEffect(() => {
-        if (showImage !== pictures[0]?.url) {
-            resetPostData();
-            setShowImage(pictures[0]?.url !== default_picture ? pictures[0]?.url : '');
-        }
-    }, [showImage])
-    
-    useEffect(() => {
         if (post) resetPostData();
     }, [sessionSingleUser]);
     
@@ -86,6 +79,8 @@ const Post = ({post, user}) => {
     
     
     const handleEditButtonPressed = () => {
+        if (sessionUser?.id === 1) return alert('Demo user cannot edit posts.');
+        
         if (!isUpdating) {
             resetPostData();
             return setIsUpdating(true);
