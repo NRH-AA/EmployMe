@@ -2,8 +2,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 
-
-
 const UserPostComponent = ({post}) => {
     const history = useHistory();
     
@@ -12,7 +10,6 @@ const UserPostComponent = ({post}) => {
     const [theme, setTheme] = useState(sessionUser?.theme);
     const [previewImages, setPreviewImages] = useState({});
     const [showMore, setShowMore] = useState(false);
-    const [postText, setPostText] = useState(post?.post_text || '');
     
     useEffect(() => {
         if (posts?.length > 0) {
@@ -43,6 +40,9 @@ const UserPostComponent = ({post}) => {
         setPreviewImages(newPreviews);
     }
     
+    const postDateSplit = post.createdAt.split(' ');
+    const createdAtString = `${postDateSplit[2]}  ${postDateSplit[1]}  ${postDateSplit[3]}`; 
+    
     return (
         <div className="feed-post-container text-primary" data-theme={theme}>
         <div className="feed-post-top-div">
@@ -53,7 +53,10 @@ const UserPostComponent = ({post}) => {
                 onClick={() => history.push(`/profile/${post.user.id}`)}
             />
             <div className="feed-post-top-right-div">
-                <p className='feed-post-top-right-p text-primary'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
+                <div className='feed-post-top-right-inner-div'>
+                    <p className='feed-post-top-right-p text-primary'><b>{post.user.first_name + ' ' + post.user.last_name}</b></p>
+                    <p className='text-secondary feed-post-date-p'>{createdAtString}</p>
+                </div>
                 <p className='feed-post-top-right-p text-secondary'>{post.user.occupation}</p>
             </div>
         </div>
