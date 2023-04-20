@@ -46,7 +46,7 @@ const UserPostComponent = ({post}) => {
     return (
         <div className="feed-post-container text-primary" data-theme={theme}>
         <div className="feed-post-top-div">
-            <img
+            <img className='feed-user-profile-picture'
                 title={`Check out ${post.user.first_name}'s profile`}
                 src={post.user.profile_picture} 
                 alt={post.user.first_name}

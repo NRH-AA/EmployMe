@@ -16,6 +16,13 @@
     gap: 20px;
 }
 
+.feed-user-profile-picture {
+    height: 150px;
+    width: 150px;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
 #feed-user-profile-data {
     display: sticky;
     height: fit-content;
