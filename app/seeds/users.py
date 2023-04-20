@@ -19,6 +19,29 @@ jobs = [
     'Software Engineer'
 ]
 
+profile_pictures = [
+    'https://pbs.twimg.com/profile_images/1326707048478892033/Ln0v50LP_400x400.jpg',
+    'https://www.bobross.com/content/bob_ross_img.png',
+    'https://hips.hearstapps.com/hmg-prod/images/sean-connery-pointing-a-gun-up-with-his-finger-on-the-trigger-in-a-scene-from-the-film-james-bond-from-russia-with-love-1963-photo-by-united-artist_getty-images.jpg',
+    'https://www.looper.com/img/gallery/the-real-life-inspiration-for-family-guys-peter-griffin/intro-1672162426.jpg',
+    'https://i1.sndcdn.com/artworks-000672704347-vzhmdy-t500x500.jpg',
+    'https://i.imgflip.com/1s0sw9.jpg',
+    'https://hips.hearstapps.com/hmg-prod/images/gettyimages-3091504.jpg',
+    'https://cdn.vox-cdn.com/thumbor/JTU_mffWCBNC0NmjqOk6ycI8HDw=/0x0:3823x1595/1400x933/filters:focal(1607x493:2217x1103):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/70505683/ian_mckellan_gandalf_4k_lotr.0.jpg',
+    'https://hips.hearstapps.com/hmg-prod/images/gollum-banner-1553711488.jpg',
+    'https://imgix.bustle.com/uploads/image/2021/3/12/a3d3f106-52b7-406e-87d3-f9edb1e6fb73-ab18acbf-2db6-404e-9044-3c5d9e925b97-cloud_bmp_jpgcopy.jpeg?w=1200&h=630&fit=crop&crop=faces&fm=jpg',
+    'https://upload.wikimedia.org/wikipedia/en/thumb/9/94/Forest_Gump_Character.jpg/220px-Forest_Gump_Character.jpg',
+    'https://api.time.com/wp-content/uploads/2014/08/robin-williams-portrait-by-brigitte-lacombe.jpg',
+    'https://media1.popsugar-assets.com/files/thumbor/J7JlE_--VaBBOGnNoPJNgMhxkzU/0x159:4000x4159/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2020/03/31/019/n/1922398/856884545e83d1fc356e17.95060254_/i/Adam-Sandler.jpg',
+    'https://cdn.shopify.com/s/files/1/0575/4381/9429/products/Boland-Fancy-Dress-Nerd-Glasses_grande.jpg',
+    'https://deseret.brightspotcdn.com/dims4/default/d2a9ed4/2147483647/strip/false/crop/245x138+7+0/resize/1200x675!/quality/90/?url=https%3A%2F%2Fcdn.vox-cdn.com%2Fthumbor%2F6TukK_D2Du3cPL8ck6UmF2LFUSk%3D%2F0x0%3A260x138%2F260x138%2Ffilters%3Afocal%28130x69%3A131x70%29%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_asset%2Ffile%2F16728459%2F595115927.jpg',
+    'https://lumiere-a.akamaihd.net/v1/images/solo-db-chewie-on-falcon-gallery_7f6e39ec.jpeg',
+    'https://hips.hearstapps.com/hmg-prod/images/cute-cat-photos-1593441022.jpg',
+    'https://imageio.forbes.com/specials-images/imageserve/5c76b7d331358e35dd2773a9/0x0.jpg',
+    'https://i.guim.co.uk/img/media/3f6d39f213b18361c95ad0d4672ebf5680d19e7d/0_19_3500_2100/master/3500.jpg',
+    'https://wallpapercave.com/wp/wp5554098.jpg'
+]
+
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
@@ -46,7 +69,7 @@ def seed_users():
             occupation=jobs[randint(0, len(jobs) - 1)],
             phone_number=fake.phone_number(),
             work_email=fake.company_email(),
-            profile_picture=default_profile_picture,
+            profile_picture=profile_pictures[i],
             age=randint(18, 50)
         )
         

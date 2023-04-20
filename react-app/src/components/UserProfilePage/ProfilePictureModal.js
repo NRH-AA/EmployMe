@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { updateProfilePicture } from "../../store/session";
-import './UserProfile.css'
+import './ProfilePictureModal.css'
 
 const ProfilePictureModal = ({user}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const sessionTheme = useSelector(state => state.session.theme);
     const [picture, setPicture] = useState(user?.profile_picture);
     const [imageLoading, setImageLoading] = useState(false);
     const [errors, setErrors] = useState([]);
+    
     const default_image = 'https://www.computerhope.com/jargon/g/guest-user.png';
     
     
@@ -54,8 +56,8 @@ const ProfilePictureModal = ({user}) => {
     }
     
     return (
-        <div id="profile-picture-modal-container">
-            <h2 style={{margin: "0", padding: "20px", color: "blue"}}>Update Profile Picture</h2>
+        <div id="profile-picture-modal-container" data-theme={sessionTheme}>
+            <h2 className='text-primary'>Update Profile Picture</h2>
             
             {errors && errors.map(err => <p key={err}>{err}</p>)}
             {picture && <><img
@@ -68,9 +70,9 @@ const ProfilePictureModal = ({user}) => {
             >X</button></>}
             
             {!picture && <>
-                <div id="upload-image-container">
-                <input
-                    id="upload-img-input"
+                <div>
+                <input id="upload-image-container"
+                    title='Click to upload a file'
                     type="file"
                     accept="image/*"
                     onChange={updateImage}
@@ -80,10 +82,10 @@ const ProfilePictureModal = ({user}) => {
                 {imageLoading && <p id="picture-loading-message">Loading...</p>}
             
             <div id="user-picture-button-div">
-                <button className="user-profile-button-small user-profile-button-medium" 
+                <button className="button-main update-profile-picture-button" 
                     onClick={() => closeModal()}
                 >Close</button>
-                <button className="user-profile-button-small user-profile-button-medium" 
+                <button className="button-main update-profile-picture-button" 
                     onClick={(e) => handleSubmitPicture(e)}
                 >Update</button>
             </div>

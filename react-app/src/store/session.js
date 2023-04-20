@@ -8,6 +8,8 @@ const GET_POSTS = "session/GET_POSTS";
 const APPEND_POSTS = "session/APPEND_POSTS";
 const GET_NEWS = "session/GET_NEWS";
 const CHANGE_THEME = "session/CHANGE_THEME";
+const SET_SINGLE_POST = "session/SET_SINGLE_POST";
+const REMOVE_SINGLE_USER = 'session/REMOVE_SINGLE_USER';
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -22,6 +24,10 @@ const setAllUsers = (users) => ({
 const setSingleUserAction = (user) => ({
 	type: SET_SINGLE_USER,
 	payload: user
+});
+
+export const removeSingleUserAction = (user) => ({
+	type: REMOVE_SINGLE_USER
 });
 
 const removeUser = () => ({
@@ -45,6 +51,11 @@ const appendPosts = (posts) => ({
 
 const setNews = (data) => ({
 	type: GET_NEWS,
+	data
+});
+
+const setSinglePost = (data) => ({
+	type: SET_SINGLE_POST,
 	data
 });
 
@@ -196,6 +207,7 @@ export const updateProfilePicture = (userId, url) => async (dispatch) => {
 	
 	if (response.ok) {
 		dispatch(setUser(data));
+		dispatch(setSingleUserAction(data));
 	}
 	
 	return data
@@ -290,6 +302,17 @@ export const getJobListing = (id) => async (dispatch) => {
 	const response = await fetch(`/api/jobs/${id}`);
 	const data = await response.json();
 	return data
+};
+
+export const getPost = (id) => async (dispatch) => {
+	const response = await fetch(`/api/posts/${id}`);
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(setSinglePost(data));
+	}
+	
+	return data;
 };
 
 export const updateJobListing = (jobId, jobData) => async (dispatch) => {
@@ -505,6 +528,7 @@ const initialState = {
 	user: null, 
 	users: null,
 	singleUser: null,
+	singlePost: null,
 	posts: null,
 	job: null,
 	path: null,
@@ -544,6 +568,12 @@ export default function reducer(state = initialState, action) {
 		case RESET_STATE:
 			newState = initialState;
 			return newState
+		case SET_SINGLE_POST:
+			newState.singlePost = action.data;
+			return newState;
+		case REMOVE_SINGLE_USER:
+			newState.singleUser = null;
+			return newState;
 		default:
 			return state;
 	}

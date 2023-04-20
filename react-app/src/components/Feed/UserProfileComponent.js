@@ -16,7 +16,7 @@ const UserProfileComponent = () => {
     
     return (
     <>
-        <img
+        <img className='feed-user-profile-picture'
             title="Go to your profile"
             src={sessionUser?.profile_picture} 
             alt={sessionUser?.first_name}

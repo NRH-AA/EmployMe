@@ -35,13 +35,9 @@
 }
 
 .profile-post-text-area {
-    width: 96%;
-    height: 150px;
-    border: none;
-    background: none;
-    outline: none;
-    resize: none;
-    cursor: default;
+    inline-size: 96%;
+    overflow-wrap: break-word;
+    height: fit-content;
     margin-bottom: 20px;
 }
 
@@ -60,6 +56,7 @@
 
 .post-images-container {
     display: flex;
+    margin-top: 20px;
 }
 
 .post-image-preview {

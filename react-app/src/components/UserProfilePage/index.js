@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
 import { setWindowPath, getSingleUser, createPost, changeTheme, changeThemeThunk, updateUserInfoThunk } from "../../store/session";
@@ -251,15 +251,24 @@ const UserProfile = () => {
             </div>
                 
                 
-            <OpenModalButton
-                className="user-profile-img-button"
-                buttonText={<img className="user-profile-img"
-                    title='Click to edit profile picture'
-                    src={sessionSingleUser?.profile_picture}
-                    alt={sessionSingleUser?.first_name}
-                />}
-                modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
-            />
+            {(sessionSingleUser?.id === sessionUser?.id) ? 
+                <OpenModalButton className="user-profile-img-button"
+                    buttonText={<img className="user-profile-img"
+                        title='Click to edit profile picture'
+                        src={sessionSingleUser?.profile_picture}
+                        alt={sessionSingleUser?.first_name}
+                    />}
+                    modalComponent={<ProfilePictureModal user={sessionSingleUser}/>}
+                />
+            :
+                <NavLink to={{pathname: sessionSingleUser?.profile_picture}} target='_blank'>
+                    <img style={{marginBottom: "10px"}}className="user-profile-img"
+                        title='Click to edit profile picture'
+                        src={sessionSingleUser?.profile_picture}
+                        alt={sessionSingleUser?.first_name}
+                    />
+                </NavLink>
+            }
                 
             {!isUpdatingBio ? <>
                 <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
@@ -356,7 +365,7 @@ const UserProfile = () => {
                     </div>
                 : (addPostPicture) && <div className="create-post-image-div">
                     <input
-                    id="create-post-image-input"
+                        id="create-post-image-input"
                         type="file"
                         accept="image/*"
                         onChange={(e) => updateImageFile(e)}
