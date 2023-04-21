@@ -52,14 +52,18 @@ function ProfileButton({ user }) {
 }
   
   return (
-    <div id="profile-dropdown-div">
+    <div>
       
-      <button id="profile-dropdown-button" data-theme={sessionTheme}
-        onClick={openMenu} >
-        <i className="fa-solid fa-circle-user fa-2xl"></i>
-      </button>
+      <div id='profile-dropwdown-button-div'
+        onClick={openMenu}
+      >
+        <img id='profile-dropdown-button-img'
+            src={sessionUser?.profile_picture}
+            alt={sessionUser?.first_name}
+        />
+        <span className='text-secondary'>Me <i className="fa fa-caret-down"/></span>
       
-      <div className={ulClassName} ref={ulRef} data-theme={sessionTheme}>
+        <div className={ulClassName} ref={ulRef} data-theme={sessionTheme}>
         {user && (
           <div id="profile-dropdown-container"
             onMouseLeave={() => {setShowMenu(false)}}
@@ -96,6 +100,10 @@ function ProfileButton({ user }) {
           </div>
         )}
       </div>
+      
+      </div>
+      
+      
     </div>
   );
 }
