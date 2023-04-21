@@ -1,7 +1,7 @@
 .profile-dropdown {
   position: absolute;
-  top: 50px;
   right: 0px;
+  top: calc(100% + .1rem);
 }
 
 .hidden {
@@ -28,9 +28,9 @@
 }
 
 #navigation-logo {
-  width: 35px;
-  height: 34px;
-  margin-left: -30px;
+  width: 40px;
+  height: 37px;
+  margin-left: -25px;
   filter: invert(100%);
   border-radius: 5px;
   cursor: pointer;
@@ -45,35 +45,49 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  transition: width 200ms, margin-right 200ms;
+}
+#searchbar-container:focus-within {
+  width: 320px;
+  margin-right: -40px;
 }
 
 #search-button-submit {
   height: 90%;
   width: 26px;
-  font-size: 14px;
   border-radius: 5px;
-  color: var(--searchbar-button-color);
+  margin-left: 10px;
+  margin-right: -5px;
   border: none;
   background: none;
   cursor: pointer;
 }
+.fa-search {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--searchbar-button-color);
+}
 
 #searchbar-input-div {
   width: auto;
-  height: 35px;
+  height: 33.5px;
   display: flex;
 }
 
 #searchbar-input {
-  width: 240px;
+  width: 220px;
   height: 90%;
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: 550;
+  font-size: 13px;
+  margin-top: 2px;
   border: none;
   background: none;
   outline: none;
   color: var(--searchbar-text-color);
   transition: background-color 300ms;
+}
+#searchbar-input:focus-within {
+  width: 320px;
 }
 
 #searchbar-input::placeholder {
@@ -119,38 +133,38 @@
   color: var(--icon-color-hover);
 }
 
-#profile-dropdown-div {
-  width: 100%;
-}
-
-#profile-dropdown-button {
-  height: 35px;
-  width: 80px;
-  border: none;
-  background-color: var(--icon-color);
-  border-radius: 3px;
-  margin-right: 10px;
+#profile-dropwdown-button-div {
+  position: relative;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -10px;
   cursor: pointer;
+  border-right: 1px solid rgb(148, 148, 148);
 }
 
-#profile-dropdown-button > i {
-    color: var(--profile-button-i-color);
-    font-size: 24px;
-}
-
-#profile-dropdown-button > span {
-  font-size: 20px;
+#profile-dropwdown-button-div > span {
+  font-size: 11px;
   font-weight: 500;
-  font-family: sans-serif;
-  color: white;
+}
+
+#profile-dropwdown-button-div > span > i {
+  font-size: 12.5px;
+}
+
+#profile-dropdown-button-img {
+  width: 25px;
+  height: 25px;
 }
 
 #profile-dropdown-container {
-  width: 220px;
+  width: 240px;
   height: auto;
   background-color: var(--div-background-color);
   box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
   border-radius: 10px;
+  border-top-right-radius: 0px;
   margin-right: 20px;
   margin-top: 10px;
   padding: 5px;
