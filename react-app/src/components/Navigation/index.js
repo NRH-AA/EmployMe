@@ -41,9 +41,9 @@ function Navigation({ isLoaded }){
 							onClick={(e) => handleInvalidFeature(e)}
 						><i className="fas fa-search"></i></button>
 						<input id="searchbar-input" type="text" 
-							placeholder='Search Bar'
+							placeholder='Search'
 							value={search}
-							maxLength={40}
+							maxLength={35}
 							onKeyDown={(e) => keyDownSearch(e)}
 							onChange={(e) => setSearch(e.target.value)}
 							autoFocus
@@ -99,11 +99,15 @@ function Navigation({ isLoaded }){
 						<span>Notifications</span>
 					</div>
 					
+					<div>
+						{isLoaded && <ProfileButton user={sessionUser} />}
+					</div>
+					
 				</div>
 			
-			<div>
-				{isLoaded && <ProfileButton user={sessionUser} />}
-			</div>
+				<div>
+					
+				</div>
 			
 			</div>
 		</div>
