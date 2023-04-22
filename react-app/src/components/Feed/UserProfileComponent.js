@@ -8,6 +8,7 @@ const UserProfileComponent = () => {
     const sessionUser = useSelector(state => state.session.user);
     const [connections, setConnections] = useState(0);
     const [following, setFollowing] = useState(0);
+    const [hoveringImage, setHoveringImage] = useState(false);
     
     useEffect(() => {
         if (sessionUser?.connections?.length !== connections) setConnections(sessionUser?.connections?.length);
@@ -15,25 +16,40 @@ const UserProfileComponent = () => {
     }, [sessionUser])
     
     return (
-    <>
-        <img className='feed-user-profile-picture'
-            title="Go to your profile"
-            src={sessionUser?.profile_picture}
-            alt={sessionUser?.first_name}
-            onClick={() => history.push(`/profile/${sessionUser?.id}`)}
+    <div id='feed-user-profile-container'>
+        <img id='feed-user-cover-image'
+            src='https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2017/08/nature-design.jpg'
+            alt='Cover'
         />
-                    
-        <p className='text-primary'>{sessionUser?.first_name + ' ' + sessionUser?.last_name}</p>
-                    
-        <div id="feed-user-profile-skills-div">
-            <p className="text-secondary feed-skill-p">{sessionUser?.occupation}</p>
+        
+        <div id='feed-user-profile-content-container'>
+            <div id='feed-user-profile-content-top'
+                onMouseEnter={() => setHoveringImage(true)}
+                onMouseLeave={() => setHoveringImage(false)}
+            >
+                <img className='feed-user-profile-picture'
+                    title="Go to your profile"
+                    src={sessionUser?.profile_picture}
+                    alt={sessionUser?.first_name}
+                    onClick={() => history.push(`/profile/${sessionUser?.id}`)}
+                />
+                            
+                <p style={{marginTop: "20px", marginBottom: "0px"}}
+                    className={!hoveringImage ? 'text-primary' : 'text-primary feed-user-profile-name-link'}>
+                    {sessionUser?.first_name + ' ' + sessionUser?.last_name}
+                </p>
+            </div>
+                   
+            <div id="feed-user-profile-skills-div">
+                <p className="text-secondary feed-skill-p">{sessionUser?.bio}</p>
+            </div>
+                        
+            <div id='feed-user-connections-div'>
+                <p className='text-secondary feed-user-connections-p'>Connections: {connections}</p>
+                <p className='text-secondary feed-user-connections-p'>Following: {following}</p>
+            </div>
         </div>
-                    
-        <div id='feed-user-connections-div'>
-            <p className='text-secondary feed-user-connections-p'>Connections: {connections}</p>
-            <p className='text-secondary feed-user-connections-p'>Following: {following}</p>
-        </div>
-    </>
+    </div>
     );
 };
 

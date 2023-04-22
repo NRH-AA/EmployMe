@@ -66,16 +66,25 @@ function ProfileButton({ user }) {
         <div className={ulClassName} ref={ulRef} data-theme={sessionTheme}>
         {user && (
           <div id="profile-dropdown-container"
-            onMouseLeave={() => {setShowMenu(false)}}
+            // onMouseLeave={() => {setShowMenu(false)}}
           >
-            <p className="profile-dropdown-p text-primary">Welcome, {user?.first_name} {user?.last_name}</p>
+            
+            <div id='profile-dropdown-top-div'>
+              <img id='profile-dropdown-img'
+                src={sessionUser?.profile_picture}
+              />
+              <div>
+                <p className="profile-dropdown-p text-primary">{user?.first_name} {user?.last_name}</p>
+                <p className='profile-dropdown-p2 text-secondary'>{user?.bio}</p>
+              </div>
+            </div>
             
             <div id="profile-dropdown-button-div">
-              <button className="user-dropdown-button button-main"
+              <button className="profile-dropdown-view-profile-button button-main"
                 onClick={() => handleProfileButton()}
-              >Profile Page</button>
+              >View Profile</button>
               
-              <button className="user-dropdown-button button-main"
+              {/* <button className="user-dropdown-button button-main"
                 onClick={() => showInvalidFeature()}
               >Company Page</button>
               
@@ -89,8 +98,7 @@ function ProfileButton({ user }) {
                   className="user-dropdown-button button-main"
                   buttonText="Job Listings"
                   modalComponent={<UserJobListingsPage />}
-              />
-              
+              /> */}
               
               
               <button className="user-dropdown-button button-main"

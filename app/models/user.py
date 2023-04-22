@@ -4,7 +4,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 default_image = 'https://www.computerhope.com/jargon/g/guest-user.png'
-
+cover_image = 'https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2017/08/nature-design.jpg'
 
 connections = db.Table(
     "connections",
@@ -42,11 +42,13 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(255), nullable=False)
     middle_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255), nullable=False)
+    cover_image = db.Column(db.Text, default=cover_image)
     profile_picture = db.Column(db.Text, default=default_image)
     phone_number = db.Column(db.String(255))
     age = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String(255))
     occupation = db.Column(db.String(255))
+    bio = db.Column(db.String(255))
     jobs = db.Column(db.Text)
     education = db.Column(db.Text)
     skills = db.Column(db.Text)
@@ -100,6 +102,7 @@ class User(db.Model, UserMixin):
             'age': self.age,
             'company_name': self.company_name,
             'occupation': self.occupation,
+            'bio': self.bio,
             'jobs': self.jobs,
             'education': self.education,
             'work_email': self.work_email,
@@ -123,6 +126,7 @@ class User(db.Model, UserMixin):
             'age': self.age,
             'company_name': self.company_name,
             'occupation': self.occupation,
+            'bio': self.bio,
             'jobs': self.jobs,
             'education': self.education,
             'work_email': self.work_email,

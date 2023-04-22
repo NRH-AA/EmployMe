@@ -97,8 +97,8 @@
 #navigation-button-bar-div {
   display: flex;
   align-items: center;
-  margin-right: 20px;
-  gap: 30px;
+  margin-left: -10px;
+  gap: 40px;
 }
 
 .navigation-button-div {
@@ -170,6 +170,17 @@
   padding: 5px;
 }
 
+#profile-dropdown-img {
+  height: 60px;
+  width: 60px;
+}
+
+#profile-dropdown-top-div {
+  display: flex;
+  gap: 10px;
+}
+
+
 #profile-dropdown-button-div {
   display: flex;
   flex-direction: column;
@@ -178,8 +189,12 @@
 }
 
 .profile-dropdown-p {
-  text-align: center;
   cursor: default;
+  margin-top: 5px;
+}
+.profile-dropdown-p2 {
+  margin-top: -10px;
+  padding-bottom: 10px;
 }
 
 .user-dropdown-button {
@@ -187,6 +202,11 @@
   margin: auto;
   border-radius: 10px;
   margin-bottom: 2px;
+}
+
+.profile-dropdown-view-profile-button {
+  width: 95%;
+  margin: auto;
 }
 
 .user-dropdown-button:hover {

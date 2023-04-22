@@ -30,8 +30,9 @@ const UserProfile = () => {
     const [description, setDescription] = useState('');
     const [errors, setErrors] = useState({})
     
-    const [occupation, setOccupation] = useState(sessionUser?.occupation || "");
-    const [company, setCompany] = useState(sessionUser?.company_name || "");
+    const [bio, setBio] = useState(sessionSingleUser?.bio || '');
+    const [occupation, setOccupation] = useState(sessionSingleUser?.occupation || "");
+    const [company, setCompany] = useState(sessionSingleUser?.company_name || "");
     
     const hasConnection = () => {
         const connections = sessionUser?.connections;
@@ -66,6 +67,7 @@ const UserProfile = () => {
             if (sessionUser && (!occupation || !company)) {
                 setOccupation(sessionUser?.occupation);
                 setCompany(sessionUser?.company_name);
+                setBio(sessionUser?.bio);
             }
         }
     }, [sessionUser, sessionSingleUser, occupation, company]);
@@ -93,10 +95,13 @@ const UserProfile = () => {
         const newErrors = validateBio();
         if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
         
-        if (sessionSingleUser.occupation === occupation && sessionSingleUser.company_name === company) return setIsUpdatingBio(false);
+        if (sessionSingleUser.occupation === occupation && 
+            sessionSingleUser.company_name === company && 
+            sessionSingleUser.bio === bio) return setIsUpdatingBio(false);
         
         const info = {
             occupation,
+            bio,
             company_name: company
         }
         
@@ -274,26 +279,27 @@ const UserProfile = () => {
                 </NavLink>
             }
                 
+            
+            <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
             {!isUpdatingBio ? <>
-                <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
-                <p className='text-secondary user-profile-occupation-p'>{sessionSingleUser?.occupation}</p>
+                <p className='text-secondary user-profile-occupation-p'>{sessionSingleUser?.bio}</p>
                 {(sessionUser?.id !== sessionSingleUser?.id) &&
                     <button className='button-main'
                         onClick={() => handleConnection()}
                     >{!connected ? 'Connect' : 'Remove Connection'} </button>
                 }
             </> : <>
-                {errors?.occupation && <p 
+                {errors?.bio && <p 
                     className='user-update-bio-error-p'
-                >{errors.occupation}</p>}
-                
-                <h4 className='text-primary'>{sessionSingleUser?.first_name + ' ' + sessionSingleUser?.last_name}</h4>
-                <input id='user-update-bio-occupation-input'
-                    title='What do you do?'
-                    value={occupation}
-                    maxLength={20}
+                >{errors.bio}</p>}
+
+                <textarea id='user-update-bio-textarea'
+                    title='bio'
+                    placeholder='A short bio to sum up who you are'
+                    value={bio}
+                    maxLength={120}
                     onKeyDown={(e) => submitEnterDown(e)}
-                    onChange={(e) => setOccupation(e.target.value)}
+                    onChange={(e) => setBio(e.target.value)}
                     autoFocus
                 />
             </>}
@@ -314,15 +320,36 @@ const UserProfile = () => {
                     <h4 className='text-primary'>Personal Information</h4>
                     <div id='user-profile-info-div'>
                         <div>
+                            <p className='text-primary'>Occupation:</p>
+                            
+                            {!isUpdatingBio ?
+                                <p className='text-secondary'>{sessionSingleUser?.occupation || 'Unset'}</p>
+                            : <>
+                                {errors?.occupation && <p 
+                                    className='user-update-bio-error-p'
+                                >{errors.occupation}</p>}
+                            
+                                <input id='user-update-bio-occupation-input'
+                                    title='What do you do?'
+                                    value={occupation}
+                                    maxLength={20}
+                                    onKeyDown={(e) => submitEnterDown(e)}
+                                    onChange={(e) => setOccupation(e.target.value)}
+                                />
+                            </>}
+                            
+                        </div>
+                        
+                        <div>
                             <p className='text-primary'>Work Email:</p>
                             <p className='text-secondary'>{sessionSingleUser?.work_email}</p>
                         </div>
                             
                         <div>
                             <p className='text-primary'>Company:</p>
-                            {!isUpdatingBio ? <>
+                            {!isUpdatingBio ?
                                 <p className='text-secondary'>{sessionSingleUser?.company_name || 'None'}</p>
-                            </> : <>
+                            : <>
                                 {errors?.company && <p 
                                     className='user-update-bio-error-p'
                                 >{errors.company}</p>}
