@@ -68,6 +68,7 @@ class User(db.Model, UserMixin):
     updatedAt = db.Column(db.DateTime, default=datetime.now())
 
     posts = db.relationship("Post", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user")
     job_listings = db.relationship("JobListing", back_populates="user")
     images = db.relationship("UserImage")
     messages = db.relationship("Message")
