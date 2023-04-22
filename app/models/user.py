@@ -24,9 +24,19 @@ follows = db.Table(
         add_prefix_for_prod('users.id')), primary_key=True)
 )
 
+likes = db.Table(
+    'likes',
+    db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('post_id', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('posts.id')), primary_key=True)
+)
+
 if environment == 'production':
     connections.schema = SCHEMA
     follows.schema = SCHEMA
+    likes.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -75,6 +85,11 @@ class User(db.Model, UserMixin):
         primaryjoin=follows.c.followed == id,
         secondaryjoin=follows.c.follower == id,
         backref="following"
+    )
+    liked_posts = db.relationship(
+        "Post",
+        secondary="likes",
+        back_populates="user_likes"
     )
 
 
@@ -142,5 +157,6 @@ class User(db.Model, UserMixin):
             'connections': [user.to_dict() for user in self.connection],
             'connecting': [user.to_dict() for user in self.connecting],
             'followers': [user.to_dict() for user in self.followers],
-            'following': [user.to_dict() for user in self.following]
+            'following': [user.to_dict() for user in self.following],
+            'liked_posts': [post.to_dict() for post in self.liked_posts]
         }

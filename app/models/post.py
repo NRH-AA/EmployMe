@@ -17,6 +17,12 @@ class Post(db.Model):
     user = db.relationship("User", back_populates="posts")
     images = db.relationship("PostImage", cascade='all, delete-orphan')
     
+    user_likes = db.relationship(
+        "User",
+        secondary = "likes",
+        back_populates = "liked_posts"
+    )
+    
     def to_dict(self):
         return {
             "id": self.id,
@@ -25,5 +31,6 @@ class Post(db.Model):
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             "user": self.user.to_dict(),
-            'images': [image.to_dict() for image in self.images]
+            'images': [image.to_dict() for image in self.images],
+            'user_likes': [user.to_dict() for user in self.user_likes]
         }
