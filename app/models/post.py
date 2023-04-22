@@ -32,6 +32,7 @@ class Post(db.Model):
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             "user": self.user.to_dict(),
+            'comments': [comment.to_dict() for comment in self.comments],
             'images': [image.to_dict() for image in self.images],
             'user_likes': [user.to_dict() for user in self.user_likes]
         }

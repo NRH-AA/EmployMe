@@ -155,9 +155,10 @@ class User(db.Model, UserMixin):
             'images': [image.to_dict() for image in self.images],
             'messages': [message.to_dict() for message in self.messages],
             'posts': [post.to_dict() for post in self.posts],
+            'comments': [comment.to_dict() for comment in self.comments],
+            'liked_posts': [post.to_dict() for post in self.liked_posts],
             'connections': [user.to_dict() for user in self.connection],
             'connecting': [user.to_dict() for user in self.connecting],
             'followers': [user.to_dict() for user in self.followers],
-            'following': [user.to_dict() for user in self.following],
-            'liked_posts': [post.to_dict() for post in self.liked_posts]
+            'following': [user.to_dict() for user in self.following]
         }
