@@ -57,7 +57,6 @@ function Navigation({ isLoaded }){
 						onClick={() => history.push('/')}
 					>
 						<button className="navigation-button" type="button"
-							title="Home"
 						><i className="fa-solid fa-house"/>
 						</button>
 						<span>Home</span>
@@ -67,7 +66,6 @@ function Navigation({ isLoaded }){
 						onClick={(e) => handleInvalidFeature(e)}
 					>
 						<button className="navigation-button" type="button"
-							title="Network"
 						><i className="fa-solid fa-users"></i></button>
 						<span>My Network</span>
 					</div>
@@ -76,7 +74,6 @@ function Navigation({ isLoaded }){
 						onClick={(e) => handleInvalidFeature(e)}
 					>
 						<button className="navigation-button" type="button"
-							title="Jobs"
 						><i className="fa-solid fa-briefcase"/></button>
 						<span>Jobs</span>
 					</div>
@@ -85,7 +82,6 @@ function Navigation({ isLoaded }){
 						onClick={(e) => handleInvalidFeature(e)}
 					>
 						<button className="navigation-button" type="button"
-							title="Messages"
 						><i className='far fa-comment-dots'/></button>
 						<span>Messaging</span>
 					</div>
@@ -94,7 +90,6 @@ function Navigation({ isLoaded }){
 						onClick={(e) => handleInvalidFeature(e)}
 					>
 						<button className="navigation-button" type="button"
-							title="Notifications"
 						><i className="fa fa-bell"/></button>
 						<span>Notifications</span>
 					</div>

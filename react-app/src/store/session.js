@@ -158,15 +158,10 @@ export const updateBioData = (userId, info) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			first_name: info.first_name,
-			middle_name: info.middle_name,
-			last_name: info.last_name,
-			age: info.age,
 			occupation: info.occupation,
 			company_name: info.company_name,
-			work_email: info.work_email,
-			phone_number: info.phone_number
-		}),
+			bio: info.bio
+		})
 	});
 
 	const data = await response.json();
