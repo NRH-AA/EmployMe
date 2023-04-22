@@ -1,0 +1,112 @@
+.feed-post-container {
+    width: 100%;
+    height: auto;
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
+    border-radius: 10px;
+}
+
+.feed-post-top-div {
+    display: flex;
+}
+
+.feed-post-top-div > img {
+    width: 75px;
+    min-width: 75px;
+    height: 75px;
+    min-height: 75px;
+    border-radius: 50px;
+    margin-left: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.feed-post-top-right-div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+.feed-post-top-right-inner-div {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.feed-post-top-right-p {
+    margin: 0px;
+}
+
+.feed-post-date-p {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.feed-post-image-preview-navlink {
+    width: 100%;
+}
+
+.feed-post-text-div {
+    width: 100%;
+    height: auto;
+    margin-left: 5px;
+    width: 98%;
+}
+
+.feed-post-text-area {
+    inline-size: 96%;
+    overflow-wrap: break-word;
+    height: fit-content;
+}
+
+.feed-post-text-seemore, .feed-post-text-seeless {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.feed-post-text-seemore:hover, .feed-post-text-seeless:hover {
+    color: var(--text-color-primary);
+}
+
+.feed-post-text-seeless {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    float: right;
+}
+
+.feed-post-image-container {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+}
+
+.feed-post-image-preview {
+    position: relative;
+    width: 95%;
+    max-width: 400px;
+    min-height: 200px;
+    max-height: 200px;
+    margin-left: 1px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.feed-post-image-sidebar {
+    height: auto;
+    max-height: 204px;
+    overflow-y: auto;
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.feed-post-sidebar-image {
+    width: 90%;
+    max-width: 90px;
+    height: 30%;
+    border: 2px solid black;
+    cursor: pointer;
+}

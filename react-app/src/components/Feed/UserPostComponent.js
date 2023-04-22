@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import "./Posts.css";
 
 const UserPostComponent = ({post}) => {
     const history = useHistory();
@@ -46,7 +47,7 @@ const UserPostComponent = ({post}) => {
     return (
         <div className="feed-post-container text-primary" data-theme={theme}>
         <div className="feed-post-top-div">
-            <img className='feed-user-profile-picture'
+            <img
                 title={`Check out ${post.user.first_name}'s profile`}
                 src={post.user.profile_picture} 
                 alt={post.user.first_name}
