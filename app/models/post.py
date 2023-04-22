@@ -15,6 +15,7 @@ class Post(db.Model):
     updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user = db.relationship("User", back_populates="posts")
+    comments = db.relationship("Comment", back_populates="post")
     images = db.relationship("PostImage", cascade='all, delete-orphan')
     
     user_likes = db.relationship(
