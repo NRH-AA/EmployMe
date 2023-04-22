@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
+import "./UserProfile.css";
 
 const UserProfileComponent = () => {
     const history = useHistory();
@@ -40,8 +40,8 @@ const UserProfileComponent = () => {
                 </p>
             </div>
                    
-            <div id="feed-user-profile-skills-div">
-                <p className="text-secondary feed-skill-p">{sessionUser?.bio}</p>
+            <div id="feed-user-profile-bio-div">
+                <p className="text-secondary feed-bio-p">{sessionUser?.bio}</p>
             </div>
                         
             <div id='feed-user-connections-div'>

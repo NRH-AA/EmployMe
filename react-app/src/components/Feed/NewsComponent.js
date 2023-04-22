@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getNewsThunk } from "../../store/session";
+import "./News.css";
 
 const NewsComponent = () => {
     const dispatch = useDispatch();

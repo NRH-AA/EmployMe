@@ -1,0 +1,39 @@
+.feed-news-text {
+    font-size: 20px;
+}
+.feed-news-text > span {
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.feed-news-title {
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 5px;
+    width: 85%;
+}
+
+#feed-news-container {
+    width: 28%;
+    max-width: 280px;
+    height: fit-content;
+    margin-right: 20px;
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
+    border-radius: 10px;
+}
+
+#feed-news-div {
+    height: auto;
+}
+
+#feed-news-button {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--icon-color);
+}
