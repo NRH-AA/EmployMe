@@ -27,6 +27,8 @@
     --text-color-secondary: rgb(61, 61, 61);
     --profile-button-i-color: rgb(0, 0, 0);
     
+    --caret-color: black;
+    
     --link-text-color: grey;
 }
 
@@ -58,6 +60,8 @@
     --text-color-primary: white;
     --text-color-secondary: rgb(190, 190, 190);
     --profile-button-i-color: #1d2226;
+    
+    --caret-color: white;
     
     --link-text-color: rgb(0, 4, 226);
 }
@@ -93,6 +97,8 @@
     --text-color-primary: white;
     --text-color-secondary: rgb(204, 204, 204);
     
+    --caret-color: white;
+    
     --link-text-color: rgb(0, 4, 226);
 }
 
@@ -126,6 +132,8 @@
     
     --text-color-primary: white;
     --text-color-secondary: rgb(190, 190, 190);
+    
+    --caret-color: white;
     
     --link-text-color: rgb(0, 4, 226);
 }
