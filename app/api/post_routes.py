@@ -14,6 +14,12 @@ def get_posts():
     posts = Post.query.order_by(desc('createdAt')).limit(6).offset(offset)
     return {'posts': [post.to_dict() for post in posts]}
 
+@post_routes.route('/<int:id>')
+@login_required
+def get_post(id):
+    post = Post.query.get(id)
+    return post.to_dict()
+
 @post_routes.route('', methods=['POST'])
 @login_required
 def create_post():
@@ -102,3 +108,26 @@ def delete_post(id):
     db.session.commit()
     user = User.query.get(user_id)
     return user.to_dict_all()
+
+@post_routes.route('/<int:id>/likes', methods=['POST'])
+@login_required
+def handle_post_like(id):
+    data = request.get_json()
+    user_id = data['userId']
+    
+    user = User.query.get(user_id)
+    if not user_id or not user:
+        return {'errors': ['Invalid user id']}, 400
+    
+    post = Post.query.get(id)
+    if not post:
+        return {'errors': ['Could not find post']}, 400
+    
+    if user in post.user_likes:
+        post.user_likes.remove(user)
+        db.session.commit()
+        return {'message': 'Success'}
+    
+    post.user_likes.append(user)
+    db.session.commit()
+    return {'message': 'Success'}
