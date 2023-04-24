@@ -33,6 +33,10 @@
 
 .fa-ellipsis-h {
     font-size: 22px;
+    color: var(--icon-color);
+}
+.fa-ellipsis-h:hover {
+    color: var(--icon-color-hover);
 }
 
 .profile-post-text-area {
@@ -142,6 +146,10 @@
 .post-paper-plane {
     font-size: 20px;
     margin-top: 5px;
+    color: var(--icon-color);
+}
+.post-paper-plane:hover {
+    color: var(--icon-color-hover);
 }
 
 .post-delete-button {

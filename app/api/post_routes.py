@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import db, User, Post, PostImage
+from app.models import db, User, Post, PostImage, Comment
 from sqlalchemy import desc, asc
 from datetime import datetime
 
@@ -129,5 +129,34 @@ def handle_post_like(id):
         return {'message': 'Success'}
     
     post.user_likes.append(user)
+    db.session.commit()
+    return {'message': 'Success'}
+
+
+@post_routes.route('/<int:id>/comments', methods=['POST'])
+@login_required
+def handle_post_comment(id):
+    data = request.get_json()
+    user_id = data['userId']
+    comment = data['comment']
+    
+    user = User.query.get(user_id)
+    if not user_id or not user:
+        return {'errors': ['Invalid user id']}, 400
+    
+    post = Post.query.get(id)
+    if not post:
+        return {'errors': ['Could not find post']}, 400
+    
+    if not comment:
+        return {'errors': ['Invalid comment']}, 400
+    
+    new_comment = Comment(
+        post_id = post.id,
+        user_id = user.id,
+        text = comment
+    )
+    
+    db.session.add(new_comment)
     db.session.commit()
     return {'message': 'Success'}

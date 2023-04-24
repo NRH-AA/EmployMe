@@ -63,7 +63,9 @@
     
     --caret-color: white;
     
-    --link-text-color: rgb(0, 4, 226);
+    --comment-background-color: #505458;
+    
+    --link-text-color: rgb(0, 195, 255);
 }
 
 [data-theme='blue'] {

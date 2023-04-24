@@ -14,6 +14,9 @@ const UserPostComponent = ({post}) => {
     const [previewImages, setPreviewImages] = useState({});
     const [showMore, setShowMore] = useState(false);
     const [creatingComment, setCreatingComment] = useState(false);
+    const [showComments, setShowComments] = useState(false);
+    const [comment, setComment] = useState('');
+    const [commentsLimit, setCommentsLimit] = useState(1);
     
     useEffect(() => {
         if (posts?.length > 0) {
@@ -60,14 +63,43 @@ const UserPostComponent = ({post}) => {
         };
     };
     
-    const postDateSplit = post.createdAt.split(' ');
-    const createdAtString = `${postDateSplit[2]}  ${postDateSplit[1]}  ${postDateSplit[3]}`; 
+    const handlePostComment = async () => {
+        if (comment.length === 0) return;
+        
+        const res = await fetch(`/api/posts/${post.id}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId: sessionUser.id,
+                comment: comment
+            })
+        })
+        
+        if (res.ok) {
+            dispatch(updateFeedPostThunk(post.id));
+        };
+        
+        setCreatingComment(false);
+        setComment('');
+    }
     
-    const getPostStats = () => {
-        let statString = '';
-        const comments= post?.comments?.length;
-        if (comments > 0) statString += `${comments === 1 ? `${comments} comment` : `${comments} comments`}`;
-        return statString;
+    const postDateSplit = post.createdAt.split(' ');
+    const createdAtString = `${postDateSplit[2]}  ${postDateSplit[1]}  ${postDateSplit[3]}`;
+    
+    const commentTextArea = document.getElementsByClassName('feed-post-create-comment-textarea');
+    if (commentTextArea.length) {
+        const cArea = commentTextArea[0];
+        
+        if (cArea) {
+            cArea.style.height = `28px`;
+            cArea.addEventListener("input", OnInput, false);
+        }
+    }
+    
+    function OnInput() {
+        this.height = (this.scrollHeight) + "px";
     }
     
     return (
@@ -144,12 +176,19 @@ const UserPostComponent = ({post}) => {
             
             <div className='feed-post-stat-div'>
                 {(post.user_likes?.length > 0) && 
-                    <p className='feed-post-stats-p'><img className='feed-post-likes-image'
+                    <p className='feed-post-likes-p'><img className='feed-post-likes-image'
                         src='https://static.licdn.com/sc/h/emei2gdl9ikg7penkh9ij9llx'
+                        alt='Post Likes'
                     />{post.user_likes?.length}</p>
                 }
                 
-                <p className='text-secondary feed-post-stats-p'>{getPostStats()}</p>
+                {(post.comments?.length > 0) && 
+                    <p className='text-secondary feed-post-stats-p'
+                        onClick={() => {setCommentsLimit(1); setShowComments(!showComments)}}
+                    >
+                    {(post.comments.length === 1) ? `${post.comments.length} comment` : `${post.comments.length} comments`}
+                    </p>
+                }
             </div>
             
             <div className='feed-post-like-comment-div'>
@@ -172,10 +211,50 @@ const UserPostComponent = ({post}) => {
                 <div className='feed-post-create-comment-div'>
                     <img className='feed-post-create-comment-img'
                         src={sessionUser?.profile_picture}
+                        alt={sessionUser?.first_name}
                     />
                     <textarea className='feed-post-create-comment-textarea'
                         placeholder="Add a comment..."
+                        maxLength={250}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
                     />
+                </div>
+            }
+            
+            {(creatingComment && comment.length > 0) &&
+                <button className='button-main feed-post-submit-comment-button'
+                    onClick={() => handlePostComment()}
+                >Post</button>
+            }
+            
+            {((creatingComment || showComments) && post.comments?.length > 0) && 
+                <div className='feed-post-comments-container'>
+                    {post.comments.map((el, i) => {
+                        if (i < commentsLimit) {
+                        return <div key={i} className='feed-post-comment-div'>
+                            <img className='feed-post-comment-image'
+                                src={el.user.profile_picture}
+                                alt={el.user.first_name}
+                                onClick={() => history.push(`/profile/${el.user.id}`)}
+                            />
+                            <div className='feed-post-comment-text-div'>
+                                <p className='text-primary feed-post-comment-user-name'
+                                    onClick={() => history.push(`/profile/${el.user.id}`)}
+                                >{el.user.first_name} {el.user.last_name}</p>
+                                
+                                {el.user.bio && <p className='text-secondary'>{el.user?.bio?.split(0, 40)} {el.user.bio?.length > 40 && '...'}</p>}
+                                <p className='text-primary feed-post-comment-p'>{el.text}</p>
+                            </div>
+                        </div>
+                        } else return '';
+                    })}
+                
+                    {(post.comments?.length > commentsLimit) && 
+                        <button className='button-main feed-post-load-comments-button'
+                            onClick={() => setCommentsLimit(commentsLimit * 2)}
+                        >Load More</button>
+                    }
                 </div>
             }
             

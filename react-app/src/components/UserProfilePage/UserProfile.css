@@ -58,6 +58,10 @@
 
 .fa-ellipsis-vertical {
     font-size: 26px;
+    color: var(--icon-color);
+}
+.fa-ellipsis-vertical:hover {
+    color: var(--icon-color-hover);
 }
 
 #user-profile-top-div > h4 {
@@ -332,6 +336,10 @@
 
 .fa-camera {
     font-size: 28px;
+    color: var(--icon-color);
+}
+.fa-camera:hover {
+    color: var(--icon-color-hover);
 }
 
 

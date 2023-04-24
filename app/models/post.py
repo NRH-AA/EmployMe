@@ -36,3 +36,13 @@ class Post(db.Model):
             'images': [image.to_dict() for image in self.images],
             'user_likes': [user.to_dict() for user in self.user_likes]
         }
+
+    def to_dict_base(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "post_text": self.post_text,
+            "createdAt": self.createdAt,
+            "updatedAt": self.updatedAt,
+            "user": self.user.to_dict()
+        }
