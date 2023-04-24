@@ -17,6 +17,7 @@ const UserPostComponent = ({post}) => {
     const [showComments, setShowComments] = useState(false);
     const [comment, setComment] = useState('');
     const [commentsLimit, setCommentsLimit] = useState(1);
+    const [textAreaHeight, setTextAreaHeight] = useState(25);
     
     useEffect(() => {
         if (posts?.length > 0) {
@@ -85,22 +86,18 @@ const UserPostComponent = ({post}) => {
         setComment('');
     }
     
+    const handleCommentTextArea = (e) => {
+        setComment(e.target.value);
+        e.target.style.height = 'auto';
+        e.target.style.height = `${e.target.scrollHeight + 5}px`;
+    }
+    
+    const handleBlur = (e) => {
+        e.target.style.height = 'auto';
+    }
+    
     const postDateSplit = post.createdAt.split(' ');
     const createdAtString = `${postDateSplit[2]}  ${postDateSplit[1]}  ${postDateSplit[3]}`;
-    
-    const commentTextArea = document.getElementsByClassName('feed-post-create-comment-textarea');
-    if (commentTextArea.length) {
-        const cArea = commentTextArea[0];
-        
-        if (cArea) {
-            cArea.style.height = `28px`;
-            cArea.addEventListener("input", OnInput, false);
-        }
-    }
-    
-    function OnInput() {
-        this.height = (this.scrollHeight) + "px";
-    }
     
     return (
         <div className="feed-post-container text-primary" data-theme={theme}>
@@ -213,12 +210,15 @@ const UserPostComponent = ({post}) => {
                         src={sessionUser?.profile_picture}
                         alt={sessionUser?.first_name}
                     />
-                    <textarea className='feed-post-create-comment-textarea'
-                        placeholder="Add a comment..."
-                        maxLength={250}
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                    />
+                    
+                    
+                        <textarea className='feed-post-create-comment-input'
+                            value={comment}
+                            maxLength={250}
+                            onBlur={handleBlur}
+                            onChange={handleCommentTextArea}
+                            autoFocus
+                        />
                 </div>
             }
             
@@ -232,24 +232,24 @@ const UserPostComponent = ({post}) => {
                 <div className='feed-post-comments-container'>
                     {post.comments.map((el, i) => {
                         if (i < commentsLimit) {
-                        return <div key={i} className='feed-post-comment-div'>
-                            <img className='feed-post-comment-image'
-                                src={el.user.profile_picture}
-                                alt={el.user.first_name}
-                                onClick={() => history.push(`/profile/${el.user.id}`)}
-                            />
-                            <div className='feed-post-comment-text-div'>
-                                <p className='text-primary feed-post-comment-user-name'
+                            return <div key={i} className='feed-post-comment-div'>
+                                <img className='feed-post-comment-image'
+                                    src={el.user.profile_picture}
+                                    alt={el.user.first_name}
                                     onClick={() => history.push(`/profile/${el.user.id}`)}
-                                >{el.user.first_name} {el.user.last_name}</p>
-                                
-                                {el.user.bio && <p className='text-secondary'>{el.user?.bio?.split(0, 40)} {el.user.bio?.length > 40 && '...'}</p>}
-                                <p className='text-primary feed-post-comment-p'>{el.text}</p>
+                                />
+                                <div className='feed-post-comment-text-div'>
+                                    <p className='text-primary feed-post-comment-user-name'
+                                        onClick={() => history.push(`/profile/${el.user.id}`)}
+                                    >{el.user.first_name} {el.user.last_name}</p>
+                                        
+                                    {el.user.bio && <p className='text-secondary'>{el.user?.bio?.split(0, 40)} {el.user.bio?.length > 40 && '...'}</p>}
+                                    <p className='text-primary feed-post-comment-p'>{el.text}</p>
+                                </div>
                             </div>
-                        </div>
                         } else return '';
                     })}
-                
+                        
                     {(post.comments?.length > commentsLimit) && 
                         <button className='button-main feed-post-load-comments-button'
                             onClick={() => setCommentsLimit(commentsLimit * 2)}
