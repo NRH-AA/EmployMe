@@ -176,7 +176,8 @@
 
 
 .feed-post-create-comment-div {
-    height: 50px;
+    min-height: 50px;
+    height: auto;
     display: flex;
     align-items: center;
     gap: 2px;
@@ -186,20 +187,32 @@
     margin-left: 15px;
     height: 45px;
     width: 45px;
+    border-radius: 30px;
 }
 
-.feed-post-create-comment-textarea {
-    background: none;
-    border-radius: 30px;
-    border-color: var(--div-box-shadow-color);
+.feed-post-create-comment-input-div {
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-post-create-comment-input {
     width: 75%;
-    resize: none;
-    outline: none;
-    text-indent: 10px;
+    padding: 0px 10px;
     padding-top: 15px;
+    height: 30px;
+    background: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
     font-size: 14px;
+    text-indent: 10px;
     color: var(--text-color-secondary);
     caret-color: var(--caret-color);
+    border: 1px solid var(--div-box-shadow-color);
+    border-radius: 30px;
 }
 
 .feed-post-submit-comment-button {
@@ -215,13 +228,14 @@
 
 .feed-post-comment-div {
     display: flex;
-    gap: 2px;
+    gap: 5px;
     margin-bottom: 10px;
 }
 
 .feed-post-comment-image {
     width: 45px;
     height: 45px;
+    border-radius: 30px;
     cursor: pointer;
 }
 
