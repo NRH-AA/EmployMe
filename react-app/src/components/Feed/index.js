@@ -45,7 +45,7 @@ const Feed = () => {
         const scollable = document.documentElement.scrollHeight - window.innerHeight;
         const scrolled = window.scrollY;
 
-        if (Math.ceil(scrolled) === Math.ceil(scollable)) {
+        if (Math.ceil(scrolled) >= Math.ceil(scollable)) {
             const newOffset = offset + 6;
             dispatch(appendPostsThunk(newOffset));
             setOffset(newOffset);
