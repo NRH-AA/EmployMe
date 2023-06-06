@@ -4,7 +4,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 default_image = 'https://www.computerhope.com/jargon/g/guest-user.png'
-
+cover_image = 'https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2017/08/nature-design.jpg'
 
 connections = db.Table(
     "connections",
@@ -24,9 +24,19 @@ follows = db.Table(
         add_prefix_for_prod('users.id')), primary_key=True)
 )
 
+likes = db.Table(
+    'likes',
+    db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('post_id', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('posts.id')), primary_key=True)
+)
+
 if environment == 'production':
     connections.schema = SCHEMA
     follows.schema = SCHEMA
+    likes.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -42,11 +52,13 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(255), nullable=False)
     middle_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255), nullable=False)
+    cover_image = db.Column(db.Text, default=cover_image)
     profile_picture = db.Column(db.Text, default=default_image)
     phone_number = db.Column(db.String(255))
     age = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String(255))
     occupation = db.Column(db.String(255))
+    bio = db.Column(db.String(255))
     jobs = db.Column(db.Text)
     education = db.Column(db.Text)
     skills = db.Column(db.Text)
@@ -56,6 +68,7 @@ class User(db.Model, UserMixin):
     updatedAt = db.Column(db.DateTime, default=datetime.now())
 
     posts = db.relationship("Post", back_populates="user")
+    comments = db.relationship("Comment", back_populates="user")
     job_listings = db.relationship("JobListing", back_populates="user")
     images = db.relationship("UserImage")
     messages = db.relationship("Message")
@@ -73,6 +86,11 @@ class User(db.Model, UserMixin):
         primaryjoin=follows.c.followed == id,
         secondaryjoin=follows.c.follower == id,
         backref="following"
+    )
+    liked_posts = db.relationship(
+        "Post",
+        secondary="likes",
+        back_populates="user_likes"
     )
 
 
@@ -100,6 +118,7 @@ class User(db.Model, UserMixin):
             'age': self.age,
             'company_name': self.company_name,
             'occupation': self.occupation,
+            'bio': self.bio,
             'jobs': self.jobs,
             'education': self.education,
             'work_email': self.work_email,
@@ -123,6 +142,7 @@ class User(db.Model, UserMixin):
             'age': self.age,
             'company_name': self.company_name,
             'occupation': self.occupation,
+            'bio': self.bio,
             'jobs': self.jobs,
             'education': self.education,
             'work_email': self.work_email,
@@ -135,6 +155,8 @@ class User(db.Model, UserMixin):
             'images': [image.to_dict() for image in self.images],
             'messages': [message.to_dict() for message in self.messages],
             'posts': [post.to_dict() for post in self.posts],
+            'comments': [comment.to_dict() for comment in self.comments],
+            'liked_posts': [post.to_dict() for post in self.liked_posts],
             'connections': [user.to_dict() for user in self.connection],
             'connecting': [user.to_dict() for user in self.connecting],
             'followers': [user.to_dict() for user in self.followers],

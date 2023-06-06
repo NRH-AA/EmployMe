@@ -4,6 +4,7 @@ const SET_ALL_USERS = "session/SET_ALL_USERS";
 const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const GET_POSTS = "session/GET_POSTS";
+const UPDATE_FEED_POST = "session/UPDATE_POST";
 const APPEND_POSTS = "session/APPEND_POSTS";
 const GET_NEWS = "session/GET_NEWS";
 const CHANGE_THEME = "session/CHANGE_THEME";
@@ -35,6 +36,11 @@ const removeUser = () => ({
 const setPosts = (posts) => ({
 	type: GET_POSTS,
 	payload: posts
+});
+
+const updateFeedPostAction = (data) => ({
+	type: UPDATE_FEED_POST,
+	post: data
 });
 
 const appendPosts = (posts) => ({
@@ -158,15 +164,10 @@ export const updateBioData = (userId, info) => async (dispatch) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			first_name: info.first_name,
-			middle_name: info.middle_name,
-			last_name: info.last_name,
-			age: info.age,
 			occupation: info.occupation,
 			company_name: info.company_name,
-			work_email: info.work_email,
-			phone_number: info.phone_number
-		}),
+			bio: info.bio
+		})
 	});
 
 	const data = await response.json();
@@ -205,6 +206,15 @@ export const updateUserInfoThunk = (userId) => async (dispatch) => {
 	const data = await response.json();
 	if (response.ok) {
 		dispatch(setUser(data));
+	}
+	return data
+}
+
+export const updateFeedPostThunk = (postId) => async (dispatch) => {
+	const response = await fetch(`/api/posts/${postId}`);
+	const data = await response.json();
+	if (response.ok) {
+		dispatch(updateFeedPostAction(data));
 	}
 	return data
 }
@@ -529,6 +539,16 @@ export default function reducer(state = initialState, action) {
 			return newState;
 		case APPEND_POSTS:
 			newState.posts = [...newState.posts, ...action.payload.posts];
+			return newState;
+		case UPDATE_FEED_POST:
+			newState.posts = [...newState.posts];
+			for (let i in newState.posts) {
+				const post = newState.posts[i];
+				if (post.id === action.post.id) {
+					newState.posts[i] = {...action.post};
+					return newState;
+				}
+			}
 			return newState;
 		case GET_NEWS:
 			newState.news = action.data;

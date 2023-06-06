@@ -1,0 +1,62 @@
+#feed-user-profile-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#feed-user-cover-image {
+    position: absolute;
+    width: inherit;
+    height: 55px;
+    margin-top: -1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    box-shadow: 0px 0px 0px 1px var(--div-box-shadow-color);
+}
+
+#feed-user-profile-content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#feed-user-profile-content-top {
+    margin-top: 20px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.feed-user-profile-picture {
+    height: 70px;
+    width: 70px;
+    border-radius: 50px;
+    margin-left: 8%;
+}
+
+.feed-user-profile-name-link {
+    text-decoration: underline;
+    text-decoration-color: rgb(180, 124, 187);
+}
+
+#feed-user-profile-bio-div {
+    width: 95%;
+    text-align: center;
+    border-bottom: 2px solid rgb(66, 66, 66);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 30px;
+    gap: 5px;
+}
+
+.feed-bio-p {
+    margin-top: -15px;
+}
+
+#feed-user-connections-div {
+    width: 100%;
+}
+
+.feed-user-connections-p {
+    margin-left: 10px;
+}

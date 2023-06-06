@@ -15,7 +15,14 @@ class Post(db.Model):
     updatedAt = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user = db.relationship("User", back_populates="posts")
+    comments = db.relationship("Comment", back_populates="post")
     images = db.relationship("PostImage", cascade='all, delete-orphan')
+    
+    user_likes = db.relationship(
+        "User",
+        secondary = "likes",
+        back_populates = "liked_posts"
+    )
     
     def to_dict(self):
         return {
@@ -25,5 +32,17 @@ class Post(db.Model):
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             "user": self.user.to_dict(),
-            'images': [image.to_dict() for image in self.images]
+            'comments': [comment.to_dict() for comment in self.comments],
+            'images': [image.to_dict() for image in self.images],
+            'user_likes': [user.to_dict() for user in self.user_likes]
+        }
+
+    def to_dict_base(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "post_text": self.post_text,
+            "createdAt": self.createdAt,
+            "updatedAt": self.updatedAt,
+            "user": self.user.to_dict()
         }

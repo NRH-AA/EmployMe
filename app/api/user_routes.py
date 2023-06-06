@@ -54,10 +54,12 @@ def update_user(id):
     data = request.get_json()
     occupation = data['occupation'] or ''
     company_name = data['company_name'] or ''
+    bio = data['bio'] or ''
     
     user = User.query.get(id)
     user.occupation = occupation
     user.company_name = company_name
+    user.bio = bio
     
     db.session.commit()
     ret = User.query.get(id)
