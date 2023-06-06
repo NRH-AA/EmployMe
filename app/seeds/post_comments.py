@@ -7,8 +7,8 @@ fake = Faker()
 def seed_post_comments():
     for i in range(200):
         new_comment = Comment(
-            user_id = randint(0, 21),
-            post_id = randint(0, 100),
+            user_id = randint(1, 21),
+            post_id = randint(1, 100),
             text = fake.paragraph(nb_sentences=3)
         )
         
