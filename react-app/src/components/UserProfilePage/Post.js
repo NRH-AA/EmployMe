@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { updatePost } from "../../store/session";
+import { useState, useEffect, useCallback } from "react";
+import { updatePost } from "../../store/posts";
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "./DeletePostModal";
 import './Post.css';
@@ -23,23 +23,21 @@ const Post = ({post, user}) => {
     const [errors, setErrors] = useState([]);
     
     
-    const resetPostData = () => {
+    const resetPostData = useCallback(() => {
         setPictures([...post?.images]);
         setText(post?.post_text);
         setShowImage(pictures[0]?.url);
-    }
+    }, [post, pictures]);
     
-    const validatePostEdit = () => {
+    const validatePostEdit = useCallback(() => {
         const newErrors = {};
-
         if (!text || (text.length < 10 || text.length > 1000)) newErrors.text = 'Text (10-1000) characters';
-    
         return newErrors;
-    }
+    }, [text]);
     
     useEffect(() => {
         if (isSubmitted) setErrors(validatePostEdit());
-    }, [isSubmitted, text]);
+    }, [validatePostEdit, isSubmitted, text]);
     
     useEffect(() => {
         if (!user?.active && isUpdating) setIsUpdating(false);
@@ -47,7 +45,7 @@ const Post = ({post, user}) => {
     
     useEffect(() => {
         if (post) resetPostData();
-    }, [sessionSingleUser]);
+    }, [resetPostData, sessionSingleUser, post]);
     
     
     if (!user || !post) return null;

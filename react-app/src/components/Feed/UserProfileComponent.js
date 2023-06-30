@@ -13,7 +13,7 @@ const UserProfileComponent = () => {
     useEffect(() => {
         if (sessionUser?.connections?.length !== connections) setConnections(sessionUser?.connections?.length);
         if (sessionUser?.following?.length !== connections) setFollowing(sessionUser?.following?.length);
-    }, [sessionUser])
+    }, [sessionUser, connections]);
     
     return (
     <div id='feed-user-profile-container'>

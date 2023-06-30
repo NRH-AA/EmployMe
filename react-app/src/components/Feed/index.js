@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
-import { getPostsThunk, appendPostsThunk, 
-        changeTheme, changeThemeThunk, resetState, 
-        removeSingleUserAction
-} from "../../store/session";
+import { changeTheme, changeThemeThunk, 
+    resetState, removeSingleUserAction} from "../../store/session";
+
+import {getPostsThunk, appendPostsThunk} from '../../store/posts';
 
 import UserProfileComponent from "./UserProfileComponent";
 import UserPostComponent from "./UserPostComponent";
@@ -19,7 +19,7 @@ const Feed = () => {
     const sessionUser = useSelector(state => state.session.user);
     const sessionSingleUser = useSelector(state => state.session.singleUser);
     const [theme, setTheme] = useState(sessionUser?.theme);
-    const posts = useSelector(state => state.session.posts);
+    const posts = useSelector(state => state.posts.posts);
     
     const [offset, setOffset] = useState(0);
     
@@ -38,7 +38,7 @@ const Feed = () => {
     
     useEffect(() => {
         if (sessionSingleUser) dispatch(removeSingleUserAction());
-    }, [sessionSingleUser])
+    }, [sessionSingleUser, dispatch])
     
     
     const handleScroll = () => {

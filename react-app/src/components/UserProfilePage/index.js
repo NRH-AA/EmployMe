@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, NavLink } from "react-router-dom";
 import { updateBioData } from "../../store/session";
 import { useParams } from "react-router-dom";
 
-import { getSingleUser, createPost, 
-        changeTheme, changeThemeThunk, 
-        updateUserInfoThunk 
-} from "../../store/session";
+import { getSingleUser, changeTheme, 
+    changeThemeThunk, updateUserInfoThunk } from "../../store/session";
+
+import { createPost } from '../../store/posts';
 
 import OpenModalButton from "../OpenModalButton";
 import ProfilePictureModal from "./ProfilePictureModal";
@@ -19,7 +19,7 @@ const UserProfile = () => {
     const history = useHistory();
     const {userId} = useParams();
     
-    const sessionUser = useSelector((state) => state.session.user);
+    const sessionUser = useSelector(state => state.session.user);
     const sessionSingleUser = useSelector(state => state.session.singleUser);
     const sessionTheme = useSelector(state => state.session.theme);
     
@@ -34,27 +34,28 @@ const UserProfile = () => {
     const [occupation, setOccupation] = useState(sessionSingleUser?.occupation || "");
     const [company, setCompany] = useState(sessionSingleUser?.company_name || "");
     
-    const hasConnection = () => {
+    const hasConnection = useCallback(() => {
         const connections = sessionUser?.connections;
         if (!connections) return false;
         for (const conn of connections) {
             if (conn.id === sessionSingleUser?.id) return true;
         }
         return false;
-    }
+    }, [sessionUser, sessionSingleUser]);
+    
     const [connected, setConnected] = useState(hasConnection());
     
-    const validateBio = () => {
+    const validateBio = useCallback(() => {
         const newErrors = {};
         if (occupation && occupation && (occupation.length < 4 || occupation > 20)) newErrors.occupation = 'Occupation (4-20) characters';
         if (company && (company.length < 3 || company.length > 30)) newErrors.company = 'Company (3-30) characters';
 
         return newErrors;
-    };
+    }, [occupation, company]);
     
     useEffect(() => {
         setConnected(hasConnection());
-    }, [sessionUser, sessionSingleUser])
+    }, [hasConnection, sessionUser, sessionSingleUser])
     
     // Update theme to match user specific theme
     useEffect(() => {
@@ -80,7 +81,7 @@ const UserProfile = () => {
     // Error validations for BIO information
     useEffect(() => {
         if (isUpdatingBio) setErrors(validateBio());
-    }, [occupation, company]);
+    }, [validateBio, occupation, company, isUpdatingBio]);
     
     
     

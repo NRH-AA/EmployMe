@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import OpenModalButton from "../OpenModalButton";
-import UserJobListingsPage from "./UserJobListingsPage";
+//import OpenModalButton from "../OpenModalButton";
+//import UserJobListingsPage from "./UserJobListingsPage";
 import { logout } from "../../store/session";
-import CreateJobModal from "./CreateJobModal";
+//import CreateJobModal from "./CreateJobModal";
 import './Navigation.css';
 
 function ProfileButton({ user }) {
@@ -47,9 +47,9 @@ function ProfileButton({ user }) {
     return history.push(`/profile/${sessionUser.id}`) 
   }
   
-  const showInvalidFeature = () => {
-    alert('Feature coming soon!');
-}
+  // const showInvalidFeature = () => {
+  //   alert('Feature coming soon!');
+  // }
   
   return (
     <div>
@@ -72,6 +72,7 @@ function ProfileButton({ user }) {
             <div id='profile-dropdown-top-div'>
               <img id='profile-dropdown-img'
                 src={sessionUser?.profile_picture}
+                alt={sessionUser?.first_name}
               />
               <div>
                 <p className="profile-dropdown-p text-primary">{user?.first_name} {user?.last_name}</p>
