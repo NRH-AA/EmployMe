@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import { updateFeedPostThunk } from "../../store/session";
+import { updateFeedPostThunk } from "../../store/posts";
 import "./Posts.css";
 
 const UserPostComponent = ({post}) => {
@@ -9,7 +9,7 @@ const UserPostComponent = ({post}) => {
     const dispatch = useDispatch();
     
     const sessionUser = useSelector(state => state.session.user);
-    const posts = useSelector(state => state.session.posts);
+    const posts = useSelector(state => state.posts.posts);
     const [theme, setTheme] = useState(sessionUser?.theme);
     const [previewImages, setPreviewImages] = useState({});
     const [showMore, setShowMore] = useState(false);
@@ -17,7 +17,7 @@ const UserPostComponent = ({post}) => {
     const [showComments, setShowComments] = useState(false);
     const [comment, setComment] = useState('');
     const [commentsLimit, setCommentsLimit] = useState(1);
-    const [textAreaHeight, setTextAreaHeight] = useState(25);
+    //const [textAreaHeight, setTextAreaHeight] = useState(25);
     
     useEffect(() => {
         if (posts?.length > 0) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/session";
@@ -24,14 +24,7 @@ function SignupFormPage() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  
-  useEffect(() => {
-    if (hasSubmitted) setErrors(validateFormErrors())
-  }, [hasSubmitted, firstName, lastName, companyName, email, phone, workEmail, username, password, confirmPassword, age])
-  
-  if (sessionUser) return <Redirect to="/" />;
-  
-  const validateFormErrors = () => {
+  const validateFormErrors = useCallback(() => {
     const newErrors = {};
     
     if (!firstName || (firstName.length < 2 || firstName.length > 20)) newErrors.firstName = 'First name (2-20) characters';
@@ -46,9 +39,17 @@ function SignupFormPage() {
     if (confirmPassword && confirmPassword !== password) newErrors.confirmPassword = 'Password fields must match';
     
     return newErrors;
-  }
+  }, [firstName, lastName, companyName, email, workEmail, phone, username, password, age, confirmPassword]);
+  
+  useEffect(() => {
+    if (hasSubmitted) setErrors(validateFormErrors())
+  }, [validateFormErrors, hasSubmitted, firstName, lastName, companyName, email, phone, workEmail, username, password, confirmPassword, age])
   
   
+  
+  if (sessionUser) return <Redirect to="/" />;
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     

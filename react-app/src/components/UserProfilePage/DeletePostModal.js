@@ -1,6 +1,6 @@
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost } from "../../store/session";
+import { deletePost } from "../../store/posts";
 import './DeletePost.css';
 
 const DeletePostModal = ({user, post}) => {

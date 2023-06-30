@@ -1,16 +1,16 @@
 import { useModal } from "../../context/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteJobListing } from "../../store/session";
+import { useSelector } from "react-redux";
+//import { deleteJobListing } from "../../store/jobs";
 import { useHistory } from "react-router-dom";
 
 const DeleteJobModal = ({jobId}) => {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const history = useHistory();
     const sessionUser = useSelector((state) => state.session.user);
     const { closeModal } = useModal();
     
     const handleDelete = () => {
-        dispatch(deleteJobListing(jobId, sessionUser.id));
+        //dispatch(deleteJobListing(jobId, sessionUser.id));
         closeModal();
         return history.push(`/profile/${sessionUser.id}`);
     }
