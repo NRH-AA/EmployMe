@@ -35,6 +35,83 @@
     padding-bottom: 50px;
 }
 
+#feed-create-post-container {
+    height: auto;
+    min-height: 100px;
+    width: 100%;
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 1px 1px var(--div-box-shadow-color);
+    border-radius: 10px;
+}
+
+#feed-cp-img-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#feed-cp-user-profile-picture {
+    height: 50px;
+    width: 50px;
+    margin-left: 10px;
+}
+
+#feed-cp-textarea {
+    width: 80%;
+}
+#feed-cp-textarea::placeholder {
+    color: var(--text-color-secondary); 
+}
+
+#feed-cp-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 5px;
+}
+
+.feed-cp-button {
+    background: none;
+    border: none;
+    color: var(--text-color-primary);
+    font-size: 15px;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: background-color 200ms, border-radius 200ms;
+    cursor: pointer;
+}
+.feed-cp-button:hover {
+    background-color: rgb(77, 77, 77);
+    border-radius: 5px;
+}
+.feed-cp-button:disabled {
+    cursor: not-allowed;
+}
+
+.feed-cp-icon-image {
+    color: aqua;
+    font-size: 18px;
+}
+
+.feed-cp-icon-video {
+    color: rgb(0, 192, 0);
+    font-size: 18px;
+}
+
+.feed-cp-icon-event {
+    color: rgb(214, 139, 0);
+    font-size: 18px;
+}
+
+.feed-cp-icon-article {
+    color: rgb(216, 60, 21);
+    font-size: 18px;
+}
+
+
+
 #feed-footer-div {
     height: 35px;
     width: 100%;
