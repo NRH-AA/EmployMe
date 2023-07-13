@@ -22,6 +22,7 @@ const Feed = () => {
     const posts = useSelector(state => state.posts.posts);
     
     const [offset, setOffset] = useState(0);
+    const [postText, setPostText] = useState('');
     
     useEffect(() => {
         if (sessionUser) {
@@ -66,6 +67,15 @@ const Feed = () => {
     
     if (!sessionUser) return null;
     
+    const handleCommentTextArea = (e) => {
+        setPostText(e.target.value);
+        e.target.style.height = 'auto';
+        e.target.style.height = `${e.target.scrollHeight + 5}px`;
+    }
+    
+    const handleBlur = (e) => {
+        e.target.style.height = 'auto';
+    }
     
     return (
         <div id="feed-container" data-theme={theme}>
@@ -77,6 +87,44 @@ const Feed = () => {
                 </div>
                 
                 <div id="feed-posts-container">
+                    <div id='feed-create-post-container'>
+                        <div id='feed-cp-img-text'>
+                            <img id='feed-cp-user-profile-picture'
+                                title="Go to your profile"
+                                src={sessionUser?.profile_picture}
+                                alt={sessionUser?.first_name}
+                            />
+                            
+                            <textarea id='feed-cp-textarea' className='feed-post-create-comment-input'
+                                placeholder="Start a post"
+                                value={postText}
+                                maxLength={250}
+                                onBlur={handleBlur}
+                                onChange={handleCommentTextArea}
+                                autoFocus
+                            />
+                        </div>
+                        
+                        <div id='feed-cp-buttons-container'>
+                            <button className='feed-cp-button'
+                                disabled={true}
+                            ><i className="fa-solid fa-image feed-cp-icon-image"/> Photo</button>
+                            
+                            <button className='feed-cp-button'
+                                disabled={true}
+                            ><i className="fa-brands fa-youtube feed-cp-icon-video"/> Video</button>
+                            
+                            <button className='feed-cp-button'
+                                disabled={true}
+                            ><i className="fa-solid fa-calendar feed-cp-icon-event"/> Event</button>
+                            
+                            <button className='feed-cp-button'
+                                disabled={true}
+                            ><i class="fa-solid fa-newspaper feed-cp-icon-article"/> Write article</button>
+                        </div>
+                    </div>
+                    
+                    
                     {posts?.length && posts?.map((post, i) => 
                         <UserPostComponent post={post} key={i} />
                     )}
