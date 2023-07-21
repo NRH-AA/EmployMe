@@ -4,13 +4,17 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
+from flask_socketio import SocketIO, emit
+
 from .models import db, User
+
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.image_routes import image_routes
 from .api.post_routes import post_routes
 from .api.job_routes import job_routes
 from .api.connections import connections_routes
+
 from .seeds import seed_commands
 from .config import Config
 
@@ -26,6 +30,22 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+
+#Websocket setup
+if os.environ.get('FLASK_ENV') == "production":
+    origins = ["https://employme.onrender.com"]
+else:
+    origins = '*'
+
+socketio = SocketIO(cors_allowed_origins=origins)
+
+
+@socketio.on("chat")
+def handle_chat(data):
+    emit("chat", data, broadcast=True)
+
+
+
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
 
@@ -36,11 +56,14 @@ app.register_blueprint(image_routes, url_prefix='/api/images')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
 app.register_blueprint(job_routes, url_prefix='/api/jobs')
 app.register_blueprint(connections_routes, url_prefix='/api/connections')
+
 db.init_app(app)
 Migrate(app, db)
+socketio.init_app(app)
 
 # Application Security
 CORS(app)
+
 
 
 # Since we are deploying with Docker and Flask,
@@ -97,3 +120,8 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+
+# Run socketio
+if __name__ == '__main__':
+    socketio.run(app)

@@ -1,23 +1,24 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .user import User
-from .rooms import Room
 from datetime import datetime
 
-class Message(db.Model):
-    __tablename__ = 'messages'
+class Room(db.Model):
+    __tablename__ = 'rooms'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
-        
+
     id = db.Column(db.Integer, primary_key=True)
-    room_id = db.Column(db.Integer, db.ForeignKey(Room.id))
-    text = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     createdAt = db.Column(db.DateTime, default=datetime.now())
+    updatedAt = db.Column(db.DateTime, default=datetime.now())
+    
+    messages = db.relationship("Message")
     
     def to_dict(self):
         return {
             "id": self.id,
-            'roomId': self.room_id,
-            "text": self.text,
-            "createdAt": self.createdAt
+            "createdAt": self.createdAt,
+            "updatedAt": self.updatedAt,
+            'messages': [message.to_dict() for message in self.messages]
         }
