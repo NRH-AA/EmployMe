@@ -13,11 +13,13 @@ class Room(db.Model):
     createdAt = db.Column(db.DateTime, default=datetime.now())
     updatedAt = db.Column(db.DateTime, default=datetime.now())
     
-    messages = db.relationship("Message")
+    user = db.relationship("User", back_populates="rooms")
+    messages = db.relationship("Message", back_populates='room')
     
     def to_dict(self):
         return {
             "id": self.id,
+            'user': self.user.to_dict(),
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             'messages': [message.to_dict() for message in self.messages]
