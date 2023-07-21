@@ -71,7 +71,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship("Comment", back_populates="user")
     job_listings = db.relationship("JobListing", back_populates="user")
     images = db.relationship("UserImage")
-    messages = db.relationship("Message")
+    rooms = db.relationship("Room")
     
     connection = db.relationship(
         "User",
@@ -125,6 +125,7 @@ class User(db.Model, UserMixin):
             'skills': self.skills,
             'active': self.active,
             'theme': self.theme,
+            'rooms': self.rooms,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }
@@ -149,6 +150,7 @@ class User(db.Model, UserMixin):
             'skills': self.skills,
             'active': self.active,
             'theme': self.theme,
+            'rooms': self.rooms,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
             'job_listings': [job.to_dict() for job in self.job_listings],

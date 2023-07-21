@@ -11,6 +11,7 @@ import {getPostsThunk, appendPostsThunk} from '../../store/posts';
 import UserProfileComponent from "./UserProfileComponent";
 import UserPostComponent from "./UserPostComponent";
 import NewsComponent from "./NewsComponent";
+import MessageBox from '../Messages';
 import './Feed.css';
 
 const Feed = () => {
@@ -80,8 +81,10 @@ const Feed = () => {
     return (
         <div id="feed-container" data-theme={theme}>
             
+            
             <div id="feed-content-container">
             
+                <MessageBox />
                 <div id="feed-user-profile-data">
                     <UserProfileComponent />
                 </div>
@@ -137,7 +140,6 @@ const Feed = () => {
                 <NewsComponent />
             
             </div>
-            
             
             <div id="feed-footer-div">
                 <NavLink className="footer-p"
