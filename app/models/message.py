@@ -11,6 +11,7 @@ class Message(db.Model):
         
     id = db.Column(db.Integer, primary_key=True)
     room_id = db.Column(db.Integer, db.ForeignKey(Room.id))
+    sent_by = db.Column(db.Integer, db.ForeignKey(User.id))
     text = db.Column(db.Text, nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.now())
     
@@ -18,6 +19,7 @@ class Message(db.Model):
         return {
             "id": self.id,
             'roomId': self.room_id,
+            'sentBy': self.sent_by.to_dict(),
             "text": self.text,
             "createdAt": self.createdAt
         }
