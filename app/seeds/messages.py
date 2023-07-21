@@ -1,4 +1,4 @@
-from app.models import db, Message, environment, SCHEMA
+from app.models import db, User, Message, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_messages():

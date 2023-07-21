@@ -6,11 +6,12 @@ import './instance.css';
 
 let socket;
 
-const MessageInstance = () => {
+const MessageInstance = ({ roomId }) => {
     const user = useSelector(state => state.session.user);
     
     const [messages, setMessages] = useState([]);
     const [chatInput, setChatInput] = useState("");
+    const [room, setRoom] = useState(user.rooms[roomId]);
     
     useEffect(() => {
         socket = io();
@@ -20,6 +21,10 @@ const MessageInstance = () => {
         return (() => socket.disconnect());
     }, []);
     
+    useEffect(() => {
+        setRoom(user.rooms[roomId]);
+    }, [roomId]);
+    
     const handleSubmit = () => {
         socket.emit("chat", { user: user.username, msg: chatInput });
         setChatInput("");
@@ -27,6 +32,10 @@ const MessageInstance = () => {
     
     return (
         <div id='message-instance-container'>
+            
+            <div>
+                {room?.messages?.map((message, i) => <p key={i}>{message.owner.first_name}: {message.text}</p>)}
+            </div>
             
             {messages.map((message, ind) => (
                 <div key={ind}>{`${message.user}: ${message.msg}`}</div>

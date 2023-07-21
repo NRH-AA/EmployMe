@@ -15,11 +15,13 @@ class Message(db.Model):
     text = db.Column(db.Text, nullable=False)
     createdAt = db.Column(db.DateTime, default=datetime.now())
     
+    user = db.relationship("User")
+    room = db.relationship("Room", back_populates="messages")
+    
     def to_dict(self):
         return {
             "id": self.id,
-            'roomId': self.room_id,
-            'sentBy': self.sent_by.to_dict(),
+            'owner': self.user.to_dict(),
             "text": self.text,
             "createdAt": self.createdAt
         }
