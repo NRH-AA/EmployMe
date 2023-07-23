@@ -11,7 +11,6 @@ import {getPostsThunk, appendPostsThunk} from '../../store/posts';
 import UserProfileComponent from "./UserProfileComponent";
 import UserPostComponent from "./UserPostComponent";
 import NewsComponent from "./NewsComponent";
-import MessageBox from '../Messages';
 import './Feed.css';
 
 const Feed = () => {
@@ -122,7 +121,7 @@ const Feed = () => {
                             
                             <button className='feed-cp-button'
                                 disabled={true}
-                            ><i class="fa-solid fa-newspaper feed-cp-icon-article"/> Write article</button>
+                            ><i className="fa-solid fa-newspaper feed-cp-icon-article"/> Write article</button>
                         </div>
                     </div>
                     

@@ -17,6 +17,7 @@
     
     --div-background-color: white;
     --div-background-color-secondary: rgb(224, 224, 224);
+    --div-background-color-secondary-hover: white;
     --div-box-shadow-color: rgb(0, 0, 0);
     
     --searchbar-background-color: rgb(196, 196, 196);
@@ -51,6 +52,7 @@
     
     --div-background-color: #1d2226;
     --div-background-color-secondary: #2b3338;
+    --div-background-color-secondary-hover: #384349;
     --div-box-shadow-color: rgb(100, 100, 100);
     --profile-button-i-color: black;
     
@@ -91,6 +93,7 @@
     
     --div-background-color: rgb(8, 0, 124);
     --div-background-color-secondary: rgb(10, 0, 153);
+    --div-background-color-secondary-hover: rgb(12, 0, 179);
     --div-box-shadow-color: rgb(15, 0, 218);
     --profile-button-i-color: rgb(9, 0, 138);
     
@@ -127,6 +130,8 @@
     --icon-color-hover: rgb(0, 255, 255);
     
     --div-background-color: rgb(101, 0, 148);
+    --div-background-color-secondary: rgb(115, 0, 168);
+    --div-background-color-secondary-hover: rgb(125, 0, 184);
     --div-box-shadow-color: rgb(225, 0, 255);
     --profile-button-i-color: rgb(0, 83, 88);
     

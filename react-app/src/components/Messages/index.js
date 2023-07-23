@@ -14,37 +14,77 @@ const MessageBox = () => {
     
     const user = useSelector(state => state.session.user);
     const [theme, setTheme] = useState(user?.theme);
+    const [showMessages, setShowMessages] = useState(false);
+    
+    const [bottomOffset, setBottomOffset] = useState(0);
     
     const messageBoxClassName = user?.rooms ? 'messagebox-container' : 'hidden';
-    
     
     useEffect(() => {
         if (user) dispatch(changeTheme(theme));
     }, [dispatch, theme, user]);
     
+    useEffect(() => {
+        if (theme !== user?.theme) setTheme(user?.theme);
+    }, [user, theme]);
+    
+    if (!user) return null;
+    
+    const handleMessageBoxClick = () => {
+        if (!showMessages) {
+            setBottomOffset(user?.rooms?.length * 40);
+        } else {
+            setBottomOffset(0);
+        }
+        
+        setShowMessages(!showMessages)
+    };
+    
     return (
-        <div id={messageBoxClassName} data-theme={theme}>
+        <div id={messageBoxClassName} data-theme={theme}
+            style={{
+                position: 'sticky',
+                left: '100%',
+                bottom: `${bottomOffset}px`
+            }}
+            onClick={() => handleMessageBoxClick()}
+        >
             
-            <div id='messagebox-user-data'>
-                <div id='messagebox-user-data-left'>
-                    <img id='messagebox-user-image'
-                        src={user.profile_picture} 
-                        alt={user.first_name}
-                    />
-                    <p>Messaging</p>
+            <div id='messagebox-user-data-container'>
+                
+                <div id='messagebox-user-data'>
+                    <div id='messagebox-user-data-left'>
+                        <img id='messagebox-user-image'
+                            src={user.profile_picture} 
+                            alt={user.first_name}
+                        />
+                        <p>Messaging</p>
+                    </div>
+                    
+                    <div id='messagebox-user-data-right'>
+                        <button className='messagebox-user-data-button'
+                        
+                        ><i className="fa-solid fa-ellipsis messagebox-icon"/></button>
+                        
+                        <button className='messagebox-user-data-button'
+                        
+                        ><i className="fa-solid fa-plus messagebox-icon"/></button>
+                        
+                        <button className='messagebox-user-data-button'
+                        
+                        ><i className="fa-solid fa-angle-up messagebox-icon"/></button>
+                    </div>
                 </div>
                 
-                <div id='messagebox-user-data-right'>
-                    <button>B1</button>
-                    <button>B2</button>
-                    <button>B3</button>
-                </div>
+                
+                
             </div>
             
-            {false === true &&
+            
+            {showMessages &&
                 user?.rooms?.map((room, i) => 
-                    <div className='messagebox-instance'>
-                        
+                    <div key={i} className='messagebox-instance'>
+                        <MessageInstance roomId={i}/>
                     </div>
                 )
             }
