@@ -1,8 +1,42 @@
 #messagebox-container {
-    height: 100%;
-    width: 200px;
-    background-color: grey;
+    height: auto;
+    width: 300px;
+    background-color: var(--div-background-color-secondary);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     position: sticky;
-    top: 0px;
-    left: 0px;
+    bottom: 0px;
+    left: 100%;
+}
+
+#messagebox-user-data {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#messagebox-user-data-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+    color: var(--text-color-primary);
+}
+
+#messagebox-user-data-right {
+    margin-right: 20px;
+}
+
+#messagebox-user-image {
+    height: 32px;
+    width: 32px;
+}
+
+.messagebox-instance {
+    height: 50px;
+}
+
+.hidden {
+    display: none;
 }

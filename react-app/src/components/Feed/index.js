@@ -84,7 +84,6 @@ const Feed = () => {
             
             <div id="feed-content-container">
             
-                <MessageBox />
                 <div id="feed-user-profile-data">
                     <UserProfileComponent />
                 </div>
