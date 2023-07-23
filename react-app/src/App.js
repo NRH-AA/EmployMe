@@ -9,6 +9,7 @@ import Feed from "./components/Feed";
 import UserProfile from "./components/UserProfilePage";
 import JobListing from "./components/JobListings";
 import InfoModal from "./components/Feed/InfoModal";
+import MessageBox from "./components/Messages";
 import './index.css';
 
 
@@ -55,6 +56,8 @@ function App() {
           
         </Switch>
       )}
+      
+      <MessageBox />
     </>
   );
 }

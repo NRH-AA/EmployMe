@@ -45,6 +45,7 @@ const MessageInstance = ({ roomId }) => {
                 value={chatInput} 
                 onChange={(e) => setChatInput(e.target.value)}
             />
+            
             <button type='button' onClick={handleSubmit}>Send</button>
         </div>
     );
