@@ -1,6 +1,6 @@
 #messagebox-container {
     height: auto;
-    width: 300px;
+    width: 295px;
     background-color: var(--div-background-color-secondary);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -8,9 +8,13 @@
     bottom: 0px;
     left: 100%;
 }
+#messagebox-container:hover {
+    background-color: var(--div-background-color-secondary-hover);
+    cursor: pointer;
+}
 
 #messagebox-user-data {
-    height: 45px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,7 +29,24 @@
 }
 
 #messagebox-user-data-right {
-    margin-right: 20px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.messagebox-user-data-button {
+    background: none;
+    border: none;
+    color: var(--text-color-primary);
+}
+.messagebox-icon {
+    font-size: 18px;
+    padding: 5px;
+    margin: -4px;
+    border-radius: 15px;
+}
+.messagebox-icon:hover {
+    background-color: var(--button-background-color-hover);
+    cursor: pointer;
 }
 
 #messagebox-user-image {
