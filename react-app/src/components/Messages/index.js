@@ -35,7 +35,7 @@ const MessageBox = () => {
         
         if (showMessages) return;
         
-        setBottomOffset(user?.rooms?.length * 40);
+        setBottomOffset(user?.rooms?.length);
         setShowMessages(true);
     };
     
@@ -44,6 +44,14 @@ const MessageBox = () => {
         
         setBottomOffset(0);
         setShowMessages(false);
+    };
+    
+    const getMessageParticipant = (room) => {
+        for (let i = 0; i < room.messages.length; i++) {
+            if (room.messages[i].owner.id !== user.id) return room.messages[i].owner;
+        }
+        
+        return false;
     };
     
     return (
@@ -95,11 +103,29 @@ const MessageBox = () => {
             
             
             {showMessages &&
-                user?.rooms?.map((room, i) => 
-                    <div key={i} className='messagebox-instance'>
-                        <img src={room.user.profile_picture}/>
-                        {/* <MessageInstance roomId={i}/> */}
-                    </div>
+                user?.rooms?.map((room, i) => {
+                        const roomParticipant = getMessageParticipant(room);
+                        const roomLastMessage = room.messages[room.messages.length - 1];
+                    
+                        return <div key={i} className='messagebox-instance'>
+                            <img className='messagebox-instance-img'
+                                src={roomParticipant.profile_picture} 
+                                alt={roomParticipant.first_name}
+                            />
+                            
+                            <div className='messagebox-instance-text-div'>
+                                <p className='messagebox-instance-name-p'>
+                                    {`${roomParticipant.first_name} 
+                                    ${roomParticipant.last_name}`}
+                                </p>
+                                
+                                <p className='messagebox-instance-text-p'>
+                                    {`${roomLastMessage.text}`}
+                                </p>
+                            </div>
+                            {/* <MessageInstance roomId={i}/> */}
+                        </div>
+                    }
                 )
             }
             
