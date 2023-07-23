@@ -30,12 +30,18 @@ const MessageBox = () => {
     
     if (!user) return null;
     
-    const handleUpArrowClick = () => {
+    const handleUpArrowClick = (e) => {
+        e.preventDefault();
+        
+        if (showMessages) return;
+        
         setBottomOffset(user?.rooms?.length * 40);
         setShowMessages(true);
     };
     
-    const handleDownArrowClick = () => {
+    const handleDownArrowClick = (e) => {
+        e.preventDefault();
+        
         setBottomOffset(0);
         setShowMessages(false);
     };
@@ -47,6 +53,7 @@ const MessageBox = () => {
                 left: '100%',
                 bottom: `${bottomOffset}px`,
             }}
+            onClick={(e) => handleUpArrowClick(e)}
         >
             
             <div id='messagebox-user-data-container'>
@@ -72,11 +79,11 @@ const MessageBox = () => {
                         
                         {!showMessages ?
                             <button className='messagebox-user-data-button'
-                                onClick={() => handleUpArrowClick()}
+                                onClick={(e) => handleUpArrowClick(e)}
                             ><i className="fa-solid fa-angle-up messagebox-icon"/></button>
                         :
                             <button className='messagebox-user-data-button'
-                                onClick={() => handleDownArrowClick()}
+                                onClick={(e) => handleDownArrowClick(e)}
                             ><i className="fa-solid fa-angle-down messagebox-icon"/></button>
                         }
                     </div>
@@ -90,7 +97,8 @@ const MessageBox = () => {
             {showMessages &&
                 user?.rooms?.map((room, i) => 
                     <div key={i} className='messagebox-instance'>
-                        <MessageInstance roomId={i}/>
+                        <img src={room.user.profile_picture}/>
+                        {/* <MessageInstance roomId={i}/> */}
                     </div>
                 )
             }

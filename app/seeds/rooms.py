@@ -2,11 +2,17 @@ from app.models import db, Room, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_rooms():
-    room = Room(
+    roomOne = Room(
         user_id = 1
     )
     
-    db.session.add(room)
+    roomTwo = Room(
+        user_id = 1
+    )
+    
+    rooms = [roomOne, roomTwo]
+    
+    add_rooms = [db.session.add(room) for room in rooms]
     db.session.commit()
     
 def undo_rooms():
