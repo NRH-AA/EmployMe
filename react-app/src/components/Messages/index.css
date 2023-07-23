@@ -4,9 +4,6 @@
     background-color: var(--div-background-color-secondary);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    position: sticky;
-    bottom: 0px;
-    left: 100%;
 }
 #messagebox-container:hover {
     background-color: var(--div-background-color-secondary-hover);
@@ -37,6 +34,7 @@
     background: none;
     border: none;
     color: var(--text-color-primary);
+    pointer-events: all;
 }
 .messagebox-icon {
     font-size: 18px;
