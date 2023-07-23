@@ -2,20 +2,21 @@ from app.models import db, User, Message, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_messages():
-    message = Message(
+    messageOne = Message(
         room_id = 1,
-        sent_by = 1,
+        sent_by = 2,
         text = 'Test Message One'
     )
     
     messageTwo = Message(
-        room_id = 1,
-        sent_by = 2,
+        room_id = 2,
+        sent_by = 3,
         text = 'Test Message Two'
     )
     
-    db.session.add(message)
-    db.session.add(messageTwo)
+    messages = [messageOne, messageTwo]
+    
+    add_messages = [db.session.add(message) for message in messages]
     db.session.commit()
     
 def undo_messages():
