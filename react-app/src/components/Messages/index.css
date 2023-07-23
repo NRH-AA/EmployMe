@@ -54,6 +54,32 @@
 
 .messagebox-instance {
     height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color-primary);
+    background-color: var(--div-background-color-secondary-hover);
+}
+.messagebox-instance:hover {
+    background-color: var(--div-background-color);
+}
+
+.messagebox-instance-img {
+    margin-left: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+}
+
+.messagebox-instance-name-p {
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+.messagebox-instance-text-p {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 0px;
 }
 
 .hidden {

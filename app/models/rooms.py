@@ -19,7 +19,6 @@ class Room(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            'user': self.user.to_dict(),
             "createdAt": self.createdAt,
             "updatedAt": self.updatedAt,
             'messages': [message.to_dict() for message in self.messages]
