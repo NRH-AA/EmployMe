@@ -30,14 +30,14 @@ const MessageBox = () => {
     
     if (!user) return null;
     
-    const handleMessageBoxClick = () => {
-        if (!showMessages) {
-            setBottomOffset(user?.rooms?.length * 40);
-        } else {
-            setBottomOffset(0);
-        }
-        
-        setShowMessages(!showMessages)
+    const handleUpArrowClick = () => {
+        setBottomOffset(user?.rooms?.length * 40);
+        setShowMessages(true);
+    };
+    
+    const handleDownArrowClick = () => {
+        setBottomOffset(0);
+        setShowMessages(false);
     };
     
     return (
@@ -45,9 +45,8 @@ const MessageBox = () => {
             style={{
                 position: 'sticky',
                 left: '100%',
-                bottom: `${bottomOffset}px`
+                bottom: `${bottomOffset}px`,
             }}
-            onClick={() => handleMessageBoxClick()}
         >
             
             <div id='messagebox-user-data-container'>
@@ -70,9 +69,16 @@ const MessageBox = () => {
                         
                         ><i className="fa-solid fa-plus messagebox-icon"/></button>
                         
-                        <button className='messagebox-user-data-button'
                         
-                        ><i className="fa-solid fa-angle-up messagebox-icon"/></button>
+                        {!showMessages ?
+                            <button className='messagebox-user-data-button'
+                                onClick={() => handleUpArrowClick()}
+                            ><i className="fa-solid fa-angle-up messagebox-icon"/></button>
+                        :
+                            <button className='messagebox-user-data-button'
+                                onClick={() => handleDownArrowClick()}
+                            ><i className="fa-solid fa-angle-down messagebox-icon"/></button>
+                        }
                     </div>
                 </div>
                 
