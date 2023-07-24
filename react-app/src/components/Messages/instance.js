@@ -6,12 +6,11 @@ import './instance.css';
 
 let socket;
 
-const MessageInstance = ({ roomId }) => {
+const MessageInstance = ({ room }) => {
     const user = useSelector(state => state.session.user);
     
     const [messages, setMessages] = useState([]);
     const [chatInput, setChatInput] = useState("");
-    const [room, setRoom] = useState(user.rooms[roomId]);
     
     useEffect(() => {
         socket = io();
@@ -20,10 +19,6 @@ const MessageInstance = ({ roomId }) => {
         
         return (() => socket.disconnect());
     }, []);
-    
-    useEffect(() => {
-        setRoom(user.rooms[roomId]);
-    }, [roomId]);
     
     const handleSubmit = () => {
         socket.emit("chat", { user: user.username, msg: chatInput });
