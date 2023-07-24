@@ -123,12 +123,6 @@ const MessageBox = () => {
                         const roomParticipant = getMessageParticipant(room);
                         const roomLastMessage = room.messages[room.messages.length - 1];
                         
-                        // <OpenModalButton
-                        //     className="user-dropdown-button button-main"
-                        //     buttonText="Job Listings"
-                        //     modalComponent={<UserJobListingsPage />}
-                        // /> 
-                        
                         return <OpenModalButton key={i} 
                             className='messagebox-instance'
                             buttonText={getMessageInstanceText(roomParticipant, roomLastMessage)}

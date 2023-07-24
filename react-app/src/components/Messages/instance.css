@@ -1,3 +1,26 @@
 #message-instance-container {
-    height: 300px;
+    height: auto;
+    width: 80vw;
+    max-width: 600px;
+    max-height: 600px;
+    background-color: var(--div-background-color);
+    color: var(--text-color-primary);
+    padding-bottom: 5px;
+}
+
+#message-instance-previous-messages-div {
+    height: 50vh;
+    text-indent: 10px;
+    background-color: var(--div-background-color-secondary);
+    border: 2px solid black;
+}
+
+#message-instance-input-div {
+    height: fit-content;
+    display: flex;
+}
+
+#message-instance-input {
+    width: 90%;
+    resize: none;
 }
