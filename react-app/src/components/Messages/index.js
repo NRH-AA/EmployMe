@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 
+import OpenModalButton from "../OpenModalButton";
 import MessageInstance from './instance';
 
 import { changeTheme } from "../../store/session";
@@ -50,6 +51,26 @@ const MessageBox = () => {
         return false;
     };
     
+    const getMessageInstanceText = (roomParticipant, roomLastMessage) => {
+        return ( <>
+            <img className='messagebox-instance-img'
+                src={roomParticipant.profile_picture} 
+                alt={roomParticipant.first_name}
+            />
+                        
+            <div className='messagebox-instance-text-div'>
+                <p className='messagebox-instance-name-p'>
+                    {`${roomParticipant.first_name} 
+                    ${roomParticipant.last_name}`}
+                </p>
+                            
+                <p className='messagebox-instance-text-p'>
+                    {`${roomLastMessage.text}`}
+                </p>
+            </div>
+        </>);
+    };
+    
     return (
         <div id={messageBoxClassName} data-theme={theme}
             style={{
@@ -57,12 +78,13 @@ const MessageBox = () => {
                 left: '100%',
                 bottom: `${bottomOffset}px`,
             }}
-            onClick={(e) => handleClickMessageBox(e)}
         >
             
             <div id='messagebox-user-data-container'>
                 
-                <div id='messagebox-user-data'>
+                <div id='messagebox-user-data'
+                    onClick={(e) => handleClickMessageBox(e)}
+                >
                     <div id='messagebox-user-data-left'>
                         <img id='messagebox-user-image'
                             src={user.profile_picture} 
@@ -100,25 +122,18 @@ const MessageBox = () => {
                 user?.rooms?.map((room, i) => {
                         const roomParticipant = getMessageParticipant(room);
                         const roomLastMessage = room.messages[room.messages.length - 1];
-                    
-                        return <div key={i} className='messagebox-instance'>
-                            <img className='messagebox-instance-img'
-                                src={roomParticipant.profile_picture} 
-                                alt={roomParticipant.first_name}
-                            />
-                            
-                            <div className='messagebox-instance-text-div'>
-                                <p className='messagebox-instance-name-p'>
-                                    {`${roomParticipant.first_name} 
-                                    ${roomParticipant.last_name}`}
-                                </p>
-                                
-                                <p className='messagebox-instance-text-p'>
-                                    {`${roomLastMessage.text}`}
-                                </p>
-                            </div>
-                            {/* <MessageInstance roomId={i}/> */}
-                        </div>
+                        
+                        // <OpenModalButton
+                        //     className="user-dropdown-button button-main"
+                        //     buttonText="Job Listings"
+                        //     modalComponent={<UserJobListingsPage />}
+                        // /> 
+                        
+                        return <OpenModalButton key={i} 
+                            className='messagebox-instance'
+                            buttonText={getMessageInstanceText(roomParticipant, roomLastMessage)}
+                            modalComponent={<MessageInstance room={room} />}
+                        />
                     }
                 )
             }
