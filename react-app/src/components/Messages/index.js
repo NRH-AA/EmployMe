@@ -30,20 +30,16 @@ const MessageBox = () => {
     
     if (!user) return null;
     
-    const handleUpArrowClick = (e) => {
+    const handleClickMessageBox = (e) => {
         e.preventDefault();
         
-        if (showMessages) return;
-        
-        setBottomOffset(user?.rooms?.length);
-        setShowMessages(true);
-    };
-    
-    const handleDownArrowClick = (e) => {
-        e.preventDefault();
-        
-        setBottomOffset(0);
-        setShowMessages(false);
+        if (!showMessages) {
+            setBottomOffset(user?.rooms?.length);
+            setShowMessages(true);
+        } else {
+            setBottomOffset(0);
+            setShowMessages(false);
+        }
     };
     
     const getMessageParticipant = (room) => {
@@ -61,7 +57,7 @@ const MessageBox = () => {
                 left: '100%',
                 bottom: `${bottomOffset}px`,
             }}
-            onClick={(e) => handleUpArrowClick(e)}
+            onClick={(e) => handleClickMessageBox(e)}
         >
             
             <div id='messagebox-user-data-container'>
@@ -87,17 +83,15 @@ const MessageBox = () => {
                         
                         {!showMessages ?
                             <button className='messagebox-user-data-button'
-                                onClick={(e) => handleUpArrowClick(e)}
+                                onClick={(e) => handleClickMessageBox(e)}
                             ><i className="fa-solid fa-angle-up messagebox-icon"/></button>
                         :
                             <button className='messagebox-user-data-button'
-                                onClick={(e) => handleDownArrowClick(e)}
+                                onClick={(e) => handleClickMessageBox(e)}
                             ><i className="fa-solid fa-angle-down messagebox-icon"/></button>
                         }
                     </div>
                 </div>
-                
-                
                 
             </div>
             
