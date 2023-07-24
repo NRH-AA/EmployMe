@@ -1,12 +1,14 @@
 import { io } from 'socket.io-client';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useModal } from "../../context/Modal";
 
 import './instance.css';
 
 let socket;
 
 const MessageInstance = ({ room }) => {
+    const { closeModal } = useModal();
     const user = useSelector(state => state.session.user);
     
     const [messages, setMessages] = useState([]);
