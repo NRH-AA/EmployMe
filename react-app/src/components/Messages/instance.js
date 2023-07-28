@@ -29,14 +29,15 @@ const MessageInstance = ({ room }) => {
     
     useEffect(() => {
         socket = io();
-
+        
+        socket.emit('join', {userId: user.id, room: room.id});
         socket.on("chat", (chat) => setMessages(messages => [...messages, chat]));
         
         return (() => socket.disconnect());
     }, []);
     
     const handleSubmit = () => {
-        socket.emit("chat", { user: user.username, msg: chatInput });
+        socket.emit("chat", { user: user.username, room: room.id, msg: chatInput });
         setChatInput("");
     };
     
