@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 from .models import db, User
 
@@ -40,9 +40,34 @@ else:
 socketio = SocketIO(cors_allowed_origins=origins)
 
 
+@socketio.on('join')
+def on_join(data):
+    user_id = data['userId']
+    room = data['room']
+    
+    user = User.query.get(user_id)
+    
+    if not user:
+        return {'errors': 'Invalid user'}
+    
+    join_room(room)
+
+@socketio.on('leave')
+def on_leave(data):
+    user_id = data['userId']
+    room = data['room']
+    
+    user = User.query.get(user_id)
+    
+    if not user:
+        return {'errors': 'Invalid user'}
+    
+    leave_room(room)
+
 @socketio.on("chat")
 def handle_chat(data):
-    emit("chat", data, broadcast=True)
+    room = data['room']
+    emit("chat", data, to=room)
 
 
 

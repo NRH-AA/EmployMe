@@ -62,6 +62,7 @@
     gap: 10px;
     color: var(--text-color-primary);
     background-color: var(--div-background-color-secondary-hover);
+    cursor: pointer;
 }
 .messagebox-instance:hover {
     background-color: var(--div-background-color);

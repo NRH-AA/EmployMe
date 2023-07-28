@@ -33,10 +33,20 @@ likes = db.Table(
         add_prefix_for_prod('posts.id')), primary_key=True)
 )
 
+room_invites = db.Table(
+    "room_invites",
+    db.Model.metadata,
+    db.Column('owner', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True),
+    db.Column('participant', db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), primary_key=True)
+)
+
 if environment == 'production':
     connections.schema = SCHEMA
     follows.schema = SCHEMA
     likes.schema = SCHEMA
+    room_invites.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -91,6 +101,13 @@ class User(db.Model, UserMixin):
         "Post",
         secondary="likes",
         back_populates="user_likes"
+    )
+    room_invites = db.relationship(
+        'User',
+        secondary='room_invites',
+        primaryjoin=room_invites.c.owner == id,
+        secondaryjoin=room_invites.c.participant == id,
+        backref='rooms_invited'
     )
 
 

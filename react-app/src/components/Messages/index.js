@@ -76,7 +76,7 @@ const MessageBox = () => {
             style={{
                 position: 'sticky',
                 left: '100%',
-                bottom: `${bottomOffset}px`,
+                bottom: `${bottomOffset}px`
             }}
         >
             
