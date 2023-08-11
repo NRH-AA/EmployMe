@@ -172,6 +172,7 @@ class User(db.Model, UserMixin):
             'job_listings': [job.to_dict() for job in self.job_listings],
             'images': [image.to_dict() for image in self.images],
             'rooms': [room.to_dict() for room in self.rooms],
+            'room_invites': [room_invite.to_dict() for room_invite in self.room_invites],
             'posts': [post.to_dict() for post in self.posts],
             'comments': [comment.to_dict() for comment in self.comments],
             'liked_posts': [post.to_dict() for post in self.liked_posts],
