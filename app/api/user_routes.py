@@ -40,6 +40,26 @@ def get_searched_users():
         return {'posts': [user.posts.to_dict() for user in results]}
     
     return {'posts': []}
+
+@user_routes.route('/search', methods=['POST'])
+@login_required
+def get_search():
+    data = request.get_json()
+    searchType = data['searchType'] or 'users'
+    searchText = data['searchText'] or ''
+    offset = data['offset'] or 0
+    
+    if searchText == '':
+        return {'data': []}
+    
+    if searchType == 'users':
+        results = User.query.where(
+            User.first_name.ilike(searchText + '%%')
+        ).limit(10).offset(offset)
+        
+        return {'data': [user.to_dict() for user in results]}
+    
+    return {'data': []}
     
 
 @user_routes.route('/<int:id>', methods=['GET'])
