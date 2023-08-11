@@ -5,6 +5,8 @@ const SET_SINGLE_USER = "session/SET_SINGLE_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const CHANGE_THEME = "session/CHANGE_THEME";
 const REMOVE_SINGLE_USER = 'session/REMOVE_SINGLE_USER';
+const ADD_SEARCH_DATA = 'sesson/ADD_SEARCH_DATA';
+
 const RESET_STATE = 'session/RESET_STATE';
 export const resetState = ({
 	type: RESET_STATE
@@ -37,6 +39,34 @@ export const changeTheme = (theme) => ({
 	type: CHANGE_THEME,
 	theme
 });
+
+const addSearchData = (data) => ({
+	type: ADD_SEARCH_DATA,
+	payload: data
+});
+
+
+export const getSearchData = (searchData) => async (dispatch) => {
+	const response = await fetch(`/api/users/search`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			searchType: searchData.searchType,
+			searchText: searchData.searchText,
+			offset: searchData.offset
+		})
+	});
+	
+	const data = await response.json();
+	
+	if (response.ok) {
+		dispatch(addSearchData(data));
+	};
+	
+	return data;
+}
 
 export const changeThemeThunk = (userId, theme) => async (dispatch) => {
 	const response = await fetch(`/api/users/${userId}/theme`, {
@@ -267,7 +297,8 @@ const initialState = {
 	user: null, 
 	users: null,
 	singleUser: null,
-	theme: 'light'
+	theme: 'light',
+	search: null
 };
 export default function reducer(state = initialState, action) {
 	let newState = {...state}
@@ -292,6 +323,9 @@ export default function reducer(state = initialState, action) {
 			return newState
 		case REMOVE_SINGLE_USER:
 			newState.singleUser = null;
+			return newState;
+		case ADD_SEARCH_DATA:
+			newState.search = action.payload.data
 			return newState;
 		default:
 			return state;
